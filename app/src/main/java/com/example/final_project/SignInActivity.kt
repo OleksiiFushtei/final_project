@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
-import com.example.final_project.models.SignInData
+import com.example.final_project.models.SignInDataModel
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
@@ -18,33 +18,22 @@ class SignInActivity : AppCompatActivity() {
         usernameEditText.setOnFocusChangeListener { _, b -> validateUsername(b)}
         passwordEditText.setOnFocusChangeListener { _, b -> validatePassword(b) }
 
-
         buttonSI.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val checkData = SignInData(username, password)
+            val checkData = SignInDataModel(usernameEditText.text.toString(), passwordEditText.text.toString())
             //send it to server
             Toast.makeText(this@SignInActivity, checkData.username + " " + checkData.password, Toast.LENGTH_LONG).show()
         }
 
         buttonSU.setOnClickListener {
-            val signUp = Intent(this@SignInActivity,SignUpActivity::class.java)
-            intent.putExtra("keyId", 1)
-            startActivity(signUp)
+            val signUpIntent = Intent(this@SignInActivity,SignUpActivity::class.java)
+            signUpIntent.putExtra("keyId", 1)
+            startActivity(signUpIntent)
         }
 
         buttonFP.setOnClickListener {
             //maybe? idk
         }
 
-    }
-
-    private fun validatePassword(b: Boolean) {
-        if (passwordEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignInActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
-        }
     }
 
     private fun validateUsername(b: Boolean) {
@@ -55,5 +44,12 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    private fun validatePassword(b: Boolean) {
+        if (passwordEditText.text.isNullOrEmpty() && !b) {
+            val toast = Toast.makeText(this@SignInActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.TOP, 0,220)
+            toast.show()
+        }
+    }
 
 }
