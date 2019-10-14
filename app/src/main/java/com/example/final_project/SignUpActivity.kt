@@ -3,8 +3,11 @@ package com.example.final_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -32,7 +35,6 @@ class SignUpActivity : AppCompatActivity() {
 
         buttonBack.setOnClickListener {
             val signInIntent = Intent(this@SignUpActivity, SignInActivity::class.java)
-            signInIntent.putExtra("keyId", 2)
             startActivity(signInIntent)
         }
     }
@@ -67,7 +69,7 @@ class SignUpActivity : AppCompatActivity() {
             toast.setGravity(Gravity.TOP, 0,220)
             toast.show()
         } else if (confPasswordEditText.text.toString() != passwordEditText.text.toString()) {
-            val toast = Toast.makeText(this@SignUpActivity, "Passwords should be the same", Toast.LENGTH_LONG)
+            val toast = Toast.makeText(this@SignUpActivity, "Passwords should match", Toast.LENGTH_LONG)
             toast.setGravity(Gravity.TOP, 0,220)
             toast.show()
         }

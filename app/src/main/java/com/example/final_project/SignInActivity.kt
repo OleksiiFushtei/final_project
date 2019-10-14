@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import com.example.final_project.models.SignInDataModel
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -26,7 +27,6 @@ class SignInActivity : AppCompatActivity() {
 
         buttonSU.setOnClickListener {
             val signUpIntent = Intent(this@SignInActivity,SignUpActivity::class.java)
-            signUpIntent.putExtra("keyId", 1)
             startActivity(signUpIntent)
         }
 
@@ -38,17 +38,21 @@ class SignInActivity : AppCompatActivity() {
 
     private fun validateUsername(b: Boolean) {
         if (usernameEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignInActivity, "Username field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignInActivity, "Username field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (usernameEditText.text.isNotEmpty() && !b && usernameEditText.text.toString().length < 3) {
+           Toast.makeText(this@SignInActivity, "Username must be at least 3 characters long", Toast.LENGTH_LONG).show()
+        } else {
+            //confirm the data is OK somehow
         }
     }
 
     private fun validatePassword(b: Boolean) {
         if (passwordEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignInActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignInActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (passwordEditText.text.toString().isNotEmpty() && !b && passwordEditText.text.toString().length < 8) {
+            Toast.makeText(this@SignInActivity, "Password must be at least 6 characters long", Toast.LENGTH_LONG).show()
+        } else {
+            //confirm the data is OK somehow
         }
     }
 
