@@ -41,9 +41,11 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateUsername(b: Boolean) {
         if (usernameEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignUpActivity, "Username field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignUpActivity, "Username field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (usernameEditText.text.isNotEmpty() && !b && usernameEditText.text.toString().length < 3) {
+            Toast.makeText(this@SignUpActivity, "Username must be at least 3 characters long", Toast.LENGTH_LONG).show()
+        } else {
+            //confirm the data is OK somehow
         }
     }
 
@@ -57,9 +59,9 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validatePassword(b: Boolean) {
         if (passwordEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignUpActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignUpActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (passwordEditText.text.isNotEmpty() && !b && passwordEditText.text.toString().length < 6) {
+            Toast.makeText(this@SignUpActivity, "Password must be at least 6 characters long", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -77,17 +79,21 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateName(b: Boolean) {
         if (nameEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignUpActivity, "Name field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignUpActivity, "Name field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (nameEditText.text.isNotEmpty() && !b && nameEditText.text.toString().length < 2) {
+            Toast.makeText(this@SignUpActivity, "Name must be at least 2 characters long", Toast.LENGTH_LONG).show()
+        } else {
+            //confirm the data is OK somehow
         }
     }
 
     private fun validateSurname(b: Boolean) {
         if (surnameEditText.text.isNullOrEmpty() && !b) {
-            val toast = Toast.makeText(this@SignUpActivity, "Surname field shouldn't be empty", Toast.LENGTH_LONG)
-            toast.setGravity(Gravity.TOP, 0,220)
-            toast.show()
+            Toast.makeText(this@SignUpActivity, "Surname field shouldn't be empty", Toast.LENGTH_LONG).show()
+        } else if (surnameEditText.text.isNotEmpty() && !b && surnameEditText.text.toString().length < 2) {
+            Toast.makeText(this@SignUpActivity, "Surname must be at least 2 characters long", Toast.LENGTH_LONG).show()
+        } else {
+
         }
     }
 }
