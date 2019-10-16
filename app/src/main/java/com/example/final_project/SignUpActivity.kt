@@ -3,11 +3,8 @@ package com.example.final_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextWatcher
-import android.view.Gravity
+import android.util.Patterns.*
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -18,22 +15,24 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        buttonSU.isEnabled = false
-        buttonSU.isClickable = false
-
-        usernameEditText.setOnFocusChangeListener { _, b -> validateUsername(b) }
-        emailEditText.setOnFocusChangeListener { _, b -> validateEmail(b) }
-        passwordEditText.setOnFocusChangeListener { _, b -> validatePassword(b) }
-        confPasswordEditText.setOnFocusChangeListener { _, b -> validateConfPassword(b) }
-        nameEditText.setOnFocusChangeListener { _, b -> validateName(b) }
-        surnameEditText.setOnFocusChangeListener { _, b -> validateSurname(b) }
-
         buttonSU.setOnClickListener {
             //do final check
-            //
-            val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
-            //send to server
-            Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
+//            if (!validateUserName() && !validateEmail() && !validatePassword() && !validateConfPassword() && !validateName() && !validateSurName()) {
+//                //refuse and show errors
+//                Toast.makeText(this@SignUpActivity, "Something is not OK", Toast.LENGTH_SHORT).show()
+//            } else {
+//                //send to server
+//                val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
+//                Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
+//            }
+            if (validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()) {
+                //send to server
+                val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
+                Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
+            } else {
+                //refuse and show errors
+                Toast.makeText(this@SignUpActivity, "Something is not OK", Toast.LENGTH_SHORT).show()
+            }
         }
 
         buttonBack.setOnClickListener {
@@ -42,90 +41,66 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    //Enable "Sign Up" button
-    private fun enableButton() {
-        buttonSU.isEnabled = true
-        buttonSU.isClickable = true
-    }
-
-    //Disable "Sign Up" button
-    private fun disableButton() {
-        buttonSU.isEnabled = false
-        buttonSU.isClickable = false
-    }
-
-    //Validations of EditText fields
-    //kind of OK
-    private fun validateUsername(b: Boolean) {
-        if (usernameEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Username field shouldn't be empty", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else if (usernameEditText.text.isNotEmpty() && !b && usernameEditText.text.toString().length < 3) {
-            Toast.makeText(this@SignUpActivity, "Username must be at least 3 characters long", Toast.LENGTH_LONG).show()
-            disableButton()
+    private fun validateUserName() : Boolean =
+        if (usernameEditText.text.toString().isEmpty()) {
+            usernameEditText.error = "Username field shouldn't be empty"
+            false
         } else {
-            //confirm the data is OK somehow
-            enableButton()
+            true
         }
-    }
 
-    //TODO implement email validation via email pattern (check https://www.tutorialspoint.com/how-to-check-email-address-validation-in-android-on-edit-text)
-    private fun validateEmail(b: Boolean) {
-        if (emailEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Email field shouldn't be empty", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    //TODO
-    private fun validatePassword(b: Boolean) {
-        if (passwordEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Password field shouldn't be empty", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else if (passwordEditText.text.isNotEmpty() && !b && passwordEditText.text.toString().length < 6) {
-            Toast.makeText(this@SignUpActivity, "Password must be at least 6 characters long", Toast.LENGTH_LONG).show()
-            disableButton()
+    private fun validateEmail(): Boolean =
+        if (emailEditText.text.toString().isEmpty()) {
+            emailEditText.error = "Email field shouldn't be empty"
+            false
         } else {
-            enableButton()
+            if(EMAIL_ADDRESS.matcher(emailEditText.text.toString().trim()).matches()) {
+                true
+            } else {
+                emailEditText.error = "Invalid email address"
+                false
+            }
         }
-    }
 
-    //TODO
-    private fun validateConfPassword(b: Boolean) {
-        if (confPasswordEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Confirm Password field shouldn't be empty", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else if (confPasswordEditText.text.toString() != passwordEditText.text.toString()) {
-            Toast.makeText(this@SignUpActivity, "Passwords should match", Toast.LENGTH_LONG).show()
-            disableButton()
+    private fun validatePassword() : Boolean =
+        if (passwordEditText.text.toString().isEmpty()) {
+            passwordEditText.error = "Password field shouldn't be empty"
+            false
         } else {
-            enableButton()
+            if (passwordEditText.text.toString().length < 6) {
+                passwordEditText.error = "Password must be at least 6 characters long"
+                false
+            } else {
+                true
+            }
         }
-    }
 
-    //TODO
-    private fun validateName(b: Boolean) {
-        if (nameEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Name field shouldn't be empty", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else if (nameEditText.text.isNotEmpty() && !b && nameEditText.text.toString().length < 2) {
-            Toast.makeText(this@SignUpActivity, "Name must be at least 2 characters long", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else {
-            //confirm the data is OK somehow
-            enableButton()
+    private fun validateConfPassword(): Boolean =
+        when {
+            confPasswordEditText.text.toString().isEmpty() -> {
+                confPasswordEditText.error = "Confirm password field shouldn't be empty"
+                false
+            }
+            passwordEditText.text.toString() != confPasswordEditText.text.toString() -> {
+                confPasswordEditText.error = "Passwords should match"
+                false
+            }
+            else -> true
         }
-    }
 
-    //TODO
-    private fun validateSurname(b: Boolean) {
-        if (surnameEditText.text.isNullOrEmpty() && !b) {
-            Toast.makeText(this@SignUpActivity, "Surname field shouldn't be empty", Toast.LENGTH_LONG).show()
-            disableButton()
-        } else if (surnameEditText.text.isNotEmpty() && !b && surnameEditText.text.toString().length < 2) {
-            Toast.makeText(this@SignUpActivity, "Surname must be at least 2 characters long", Toast.LENGTH_LONG).show()
-            disableButton()
+    private fun validateName(): Boolean =
+        if (nameEditText.text.toString().isEmpty()) {
+            nameEditText.error = "Name field shouldn't be empty"
+            false
         } else {
-            enableButton()
+            true
         }
-    }
+
+    private fun validateSurName(): Boolean =
+        if (surnameEditText.text.toString().isEmpty()) {
+            surnameEditText.error = "Surname field shouldn't be empty"
+            false
+        } else {
+            true
+        }
 }
