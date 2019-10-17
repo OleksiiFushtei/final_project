@@ -21,13 +21,13 @@ class SignInActivity : AppCompatActivity() {
         )
 
         buttonSI.setOnClickListener {
-            if (!validateUserName() && !validatePassword()) {
-                //refuse and show errors
-                Toast.makeText(this@SignInActivity,"Something is not OK", Toast.LENGTH_LONG).show()
-            } else {
+            if (validateAll()) {
                 //send data to server
                 val checkData = SignInDataModel(usernameEditText.text.toString(), passwordEditText.text.toString())
                 Toast.makeText(this@SignInActivity, checkData.username + " " + checkData.password, Toast.LENGTH_LONG).show()
+            } else {
+                //refuse and show errors
+                Toast.makeText(this@SignInActivity,"Something is not OK", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -41,6 +41,8 @@ class SignInActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun validateAll(): Boolean = validateUserName() && validatePassword()
 
     private fun validateUserName(): Boolean =
         if (usernameEditText.text.toString().isEmpty()) {

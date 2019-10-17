@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns.*
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -17,15 +18,7 @@ class SignUpActivity : AppCompatActivity() {
 
         buttonSU.setOnClickListener {
             //do final check
-//            if (!validateUserName() && !validateEmail() && !validatePassword() && !validateConfPassword() && !validateName() && !validateSurName()) {
-//                //refuse and show errors
-//                Toast.makeText(this@SignUpActivity, "Something is not OK", Toast.LENGTH_SHORT).show()
-//            } else {
-//                //send to server
-//                val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
-//                Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
-//            }
-            if (validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()) {
+            if (validateAll()) {
                 //send to server
                 val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
                 Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
@@ -40,6 +33,8 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(signInIntent)
         }
     }
+
+    private fun validateAll(): Boolean = validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
 
     private fun validateUserName() : Boolean =
         if (usernameEditText.text.toString().isEmpty()) {
