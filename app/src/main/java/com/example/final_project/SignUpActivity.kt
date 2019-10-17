@@ -21,6 +21,7 @@ class SignUpActivity : AppCompatActivity() {
             if (validateAll()) {
                 //send to server
                 val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
+                //Retrofit
                 Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
             } else {
                 //refuse and show errors
