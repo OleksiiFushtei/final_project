@@ -1,5 +1,7 @@
 package com.example.final_project.models
 
-class SignInDataModel(override val username: String,
-                      override val password: String
+import com.google.gson.annotations.SerializedName
+
+class SignInDataModel(@SerializedName("userName") override val username: String,
+                      @SerializedName("password") override val password: String
 ) : ISignInDataModel

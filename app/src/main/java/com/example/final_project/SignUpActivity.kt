@@ -6,8 +6,14 @@ import android.os.Bundle
 import android.util.Patterns.*
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -16,12 +22,42 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl("localhost:5000")
+            .addConverterFactory(
+                GsonConverterFactory.create())
+            .build()
+
+        val apiInterface = retrofit.create(
+            ApiInterface::class.java)
+
         buttonSU.setOnClickListener {
             //do final check
             if (validateAll()) {
                 //send to server
                 val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
-                //Retrofit
+                //Retrofit part here
+                //TODO implement @PUT method 'registerUser'
+                val call = apiInterface.registerUser(checkData)
+                call.enqueue(object: Callback<SignUpDataModel> {
+                    override fun onFailure(
+                        call: Call<SignUpDataModel>,
+                        t: Throwable
+                    ) {
+                        TODO(
+                            "not implemented"
+                        ) //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onResponse(
+                        call: Call<SignUpDataModel>,
+                        response: Response<SignUpDataModel>
+                    ) {
+                        TODO(
+                            "not implemented"
+                        ) //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
                 Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
             } else {
                 //refuse and show errors

@@ -4,8 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.models.SignInDataModel
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.internal.GsonBuildConfig
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SignInActivity : AppCompatActivity() {
 
@@ -20,10 +29,40 @@ class SignInActivity : AppCompatActivity() {
             R.layout.activity_sign_in
         )
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl("localhost:5000")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val apiInterface = retrofit.create(ApiInterface::class.java)
+
         buttonSI.setOnClickListener {
             if (validateAll()) {
                 //send data to server
                 val checkData = SignInDataModel(usernameEditText.text.toString(), passwordEditText.text.toString())
+                //Retrofit part
+                //TODO implement login
+                val call = apiInterface.login(checkData)
+                call.enqueue(object: Callback<SignInDataModel> {
+                    override fun onFailure(
+                        call: Call<SignInDataModel>,
+                        t: Throwable
+                    ) {
+                        TODO(
+                            "not implemented"
+                        ) //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onResponse(
+                        call: Call<SignInDataModel>,
+                        response: Response<SignInDataModel>
+                    ) {
+                        TODO(
+                            "not implemented"
+                        ) //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
+
                 Toast.makeText(this@SignInActivity, checkData.username + " " + checkData.password, Toast.LENGTH_LONG).show()
             } else {
                 //refuse and show errors
@@ -39,6 +78,7 @@ class SignInActivity : AppCompatActivity() {
         buttonFP.setOnClickListener {
             //maybe? idk
         }
+
 
     }
 

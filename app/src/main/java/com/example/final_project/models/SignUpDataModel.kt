@@ -1,8 +1,10 @@
 package com.example.final_project.models
 
-class SignUpDataModel(override val username: String,
-                      override val email: String,
-                      override val password: String,
-                      override val name: String,
-                      override val surname: String
+import com.google.gson.annotations.SerializedName
+
+class SignUpDataModel(@SerializedName("userName") override val username: String,
+                      @SerializedName("email") override val email: String,
+                      @SerializedName("password") override val password: String,
+                      @SerializedName("name") override val name: String,
+                      @SerializedName("surname") override val surname: String
 ) : ISignUpDataModel
