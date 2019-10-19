@@ -15,67 +15,114 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity :
+    AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
         if (supportActionBar != null) supportActionBar?.hide()
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        super.onCreate(
+            savedInstanceState
+        )
+        setContentView(
+            R.layout.activity_sign_up
+        )
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("localhost:5000")
-            .addConverterFactory(
-                GsonConverterFactory.create())
-            .build()
+        val retrofit =
+            Retrofit.Builder()
+                .baseUrl(
+                    "localhost:5000"
+                )
+                .addConverterFactory(
+                    GsonConverterFactory.create()
+                )
+                .build()
 
-        val apiInterface = retrofit.create(
-            ApiInterface::class.java)
+        val apiInterface =
+            retrofit.create(
+                ApiInterface::class.java
+            )
 
         buttonSU.setOnClickListener {
             //do final check
             if (validateAll()) {
                 //send to server
-                val checkData = SignUpDataModel(usernameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString(), nameEditText.text.toString(), surnameEditText.text.toString())
+                val checkData =
+                    SignUpDataModel(
+                        usernameEditText.text.toString(),
+                        emailEditText.text.toString(),
+                        passwordEditText.text.toString(),
+                        nameEditText.text.toString(),
+                        surnameEditText.text.toString()
+                    )
                 //Retrofit part here
                 //TODO implement @PUT method 'registerUser'
-                val call = apiInterface.registerUser(checkData)
-                call.enqueue(object: Callback<SignUpDataModel> {
-                    override fun onFailure(
-                        call: Call<SignUpDataModel>,
-                        t: Throwable
-                    ) {
-                        TODO(
-                            "not implemented"
-                        ) //To change body of created functions use File | Settings | File Templates.
-                    }
+                val call =
+                    apiInterface.registerUser(
+                        checkData
+                    )
+                call.enqueue(
+                    object :
+                        Callback<SignUpDataModel> {
+                        override fun onFailure(
+                            call: Call<SignUpDataModel>,
+                            t: Throwable
+                        ) {
+                            if (call.isCanceled) {
 
-                    override fun onResponse(
-                        call: Call<SignUpDataModel>,
-                        response: Response<SignUpDataModel>
-                    ) {
-                        TODO(
-                            "not implemented"
-                        ) //To change body of created functions use File | Settings | File Templates.
-                    }
-                })
-                Toast.makeText(this@SignUpActivity, checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname, Toast.LENGTH_LONG).show()
+                            } else {
+
+                            }
+                        }
+
+                        override fun onResponse(
+                            call: Call<SignUpDataModel>,
+                            response: Response<SignUpDataModel>
+                        ) {
+                            if (response.isSuccessful) {
+
+                            } else {
+
+                            }
+                        }
+                    })
+                Toast.makeText(
+                    this@SignUpActivity,
+                    checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname,
+                    Toast.LENGTH_LONG
+                )
+                    .show()
             } else {
                 //refuse and show errors
-                Toast.makeText(this@SignUpActivity, "Something is not OK", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Something is not OK",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
 
         buttonBack.setOnClickListener {
-            val signInIntent = Intent(this@SignUpActivity, SignInActivity::class.java)
-            startActivity(signInIntent)
+            val signInIntent =
+                Intent(
+                    this@SignUpActivity,
+                    SignInActivity::class.java
+                )
+            startActivity(
+                signInIntent
+            )
         }
     }
 
-    private fun validateAll(): Boolean = validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
+    private fun validateAll(): Boolean =
+        validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
 
-    private fun validateUserName() : Boolean =
+    private fun validateUserName(): Boolean =
         if (usernameEditText.text.toString().isEmpty()) {
-            usernameEditText.error = "Username field shouldn't be empty"
+            usernameEditText.error =
+                "Username field shouldn't be empty"
             false
         } else {
             true
@@ -83,24 +130,31 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateEmail(): Boolean =
         if (emailEditText.text.toString().isEmpty()) {
-            emailEditText.error = "Email field shouldn't be empty"
+            emailEditText.error =
+                "Email field shouldn't be empty"
             false
         } else {
-            if(EMAIL_ADDRESS.matcher(emailEditText.text.toString().trim()).matches()) {
+            if (EMAIL_ADDRESS.matcher(
+                    emailEditText.text.toString().trim()
+                ).matches()
+            ) {
                 true
             } else {
-                emailEditText.error = "Invalid email address"
+                emailEditText.error =
+                    "Invalid email address"
                 false
             }
         }
 
-    private fun validatePassword() : Boolean =
+    private fun validatePassword(): Boolean =
         if (passwordEditText.text.toString().isEmpty()) {
-            passwordEditText.error = "Password field shouldn't be empty"
+            passwordEditText.error =
+                "Password field shouldn't be empty"
             false
         } else {
             if (passwordEditText.text.toString().length < 6) {
-                passwordEditText.error = "Password must be at least 6 characters long"
+                passwordEditText.error =
+                    "Password must be at least 6 characters long"
                 false
             } else {
                 true
@@ -110,11 +164,13 @@ class SignUpActivity : AppCompatActivity() {
     private fun validateConfPassword(): Boolean =
         when {
             confPasswordEditText.text.toString().isEmpty() -> {
-                confPasswordEditText.error = "Confirm password field shouldn't be empty"
+                confPasswordEditText.error =
+                    "Confirm password field shouldn't be empty"
                 false
             }
             passwordEditText.text.toString() != confPasswordEditText.text.toString() -> {
-                confPasswordEditText.error = "Passwords should match"
+                confPasswordEditText.error =
+                    "Passwords should match"
                 false
             }
             else -> true
@@ -122,7 +178,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateName(): Boolean =
         if (nameEditText.text.toString().isEmpty()) {
-            nameEditText.error = "Name field shouldn't be empty"
+            nameEditText.error =
+                "Name field shouldn't be empty"
             false
         } else {
             true
@@ -130,7 +187,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateSurName(): Boolean =
         if (surnameEditText.text.toString().isEmpty()) {
-            surnameEditText.error = "Surname field shouldn't be empty"
+            surnameEditText.error =
+                "Surname field shouldn't be empty"
             false
         } else {
             true

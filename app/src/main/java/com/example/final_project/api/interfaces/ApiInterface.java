@@ -1,7 +1,10 @@
 package com.example.final_project.api.interfaces;
 
+import androidx.annotation.Nullable;
+
 import com.example.final_project.models.SignInDataModel;
 import com.example.final_project.models.SignUpDataModel;
+import com.example.final_project.models.TokenModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,7 +18,7 @@ public interface ApiInterface {
     Call<SignUpDataModel> registerUser(@Body SignUpDataModel signUpDatamodel);
 
     @POST("/api/Token/Auth")
-    Call<SignInDataModel> login(@Body SignInDataModel signInDataModel);
+    Call<TokenModel> login(@Body SignInDataModel signInDataModel);
 
     //get list of available controllers
 //    @GET("/api/Controller")
