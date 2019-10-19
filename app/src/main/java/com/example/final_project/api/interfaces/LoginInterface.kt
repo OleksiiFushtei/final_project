@@ -13,7 +13,6 @@ interface LoginInterface {
         fun onLoginResponseSuccess(
             token: TokenModel
         )
-
         fun onLoginResponseFailure()
         fun onLoginCancelled()
         fun onLoginFailure()

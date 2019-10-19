@@ -1,6 +1,5 @@
 package com.example.final_project.api.helpers
 
-import androidx.annotation.Nullable
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.LoginInterface
 import com.example.final_project.models.SignInDataModel
@@ -27,10 +26,9 @@ class LoginHelper(
                     call: Call<TokenModel>,
                     t: Throwable
                 ) {
-                    if (call.isCanceled) {
-                        loginListener.onLoginCancelled()
-                    } else {
-                        loginListener.onLoginFailure()
+                    when {
+                        call.isCanceled -> loginListener.onLoginCancelled()
+                        else -> loginListener.onLoginFailure()
                     }
                 }
 
@@ -38,12 +36,11 @@ class LoginHelper(
                     call: Call<TokenModel>,
                     response: Response<TokenModel>
                 ) {
-                    if (response.isSuccessful) {
-                        loginListener.onLoginResponseSuccess(
+                    when {
+                        response.isSuccessful -> loginListener.onLoginResponseSuccess(
                             response.body()!!
                         )
-                    } else {
-                        loginListener.onLoginResponseFailure()
+                        else -> loginListener.onLoginResponseFailure()
                     }
                 }
 

@@ -1,7 +1,5 @@
 package com.example.final_project.api.interfaces;
 
-import androidx.annotation.Nullable;
-
 import com.example.final_project.models.SignInDataModel;
 import com.example.final_project.models.SignUpDataModel;
 import com.example.final_project.models.TokenModel;

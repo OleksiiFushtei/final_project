@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Patterns.*
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.example.final_project.api.helpers.SignUpHelper
 import com.example.final_project.api.interfaces.ApiInterface
+import com.example.final_project.api.interfaces.SignUpInterface
+import com.example.final_project.core.MainApplication
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
@@ -16,7 +19,31 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUpActivity :
-    AppCompatActivity() {
+    AppCompatActivity(),
+    SignUpInterface.SignUpListener {
+    override fun onSignUpResponseSuccess() {
+        TODO(
+            "not implemented"
+        ) //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSignUpResponseFailure() {
+        TODO(
+            "not implemented"
+        ) //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSignUpCancelled() {
+        TODO(
+            "not implemented"
+        ) //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSignUpFailure() {
+        TODO(
+            "not implemented"
+        ) //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -29,19 +56,12 @@ class SignUpActivity :
             R.layout.activity_sign_up
         )
 
-        val retrofit =
-            Retrofit.Builder()
-                .baseUrl(
-                    "localhost:5000"
-                )
-                .addConverterFactory(
-                    GsonConverterFactory.create()
-                )
-                .build()
+        val app: MainApplication =
+            application as MainApplication
 
-        val apiInterface =
-            retrofit.create(
-                ApiInterface::class.java
+        val signUpHelper =
+            SignUpHelper(
+                app.getApi()
             )
 
         buttonSU.setOnClickListener {
@@ -56,37 +76,12 @@ class SignUpActivity :
                         nameEditText.text.toString(),
                         surnameEditText.text.toString()
                     )
-                //Retrofit part here
-                //TODO implement @PUT method 'registerUser'
-                val call =
-                    apiInterface.registerUser(
-                        checkData
-                    )
-                call.enqueue(
-                    object :
-                        Callback<SignUpDataModel> {
-                        override fun onFailure(
-                            call: Call<SignUpDataModel>,
-                            t: Throwable
-                        ) {
-                            if (call.isCanceled) {
 
-                            } else {
+                signUpHelper.signUp(
+                    checkData,
+                    this
+                )
 
-                            }
-                        }
-
-                        override fun onResponse(
-                            call: Call<SignUpDataModel>,
-                            response: Response<SignUpDataModel>
-                        ) {
-                            if (response.isSuccessful) {
-
-                            } else {
-
-                            }
-                        }
-                    })
                 Toast.makeText(
                     this@SignUpActivity,
                     checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname,
