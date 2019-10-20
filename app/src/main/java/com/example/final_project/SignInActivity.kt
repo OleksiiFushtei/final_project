@@ -28,18 +28,15 @@ class SignInActivity :
         token: TokenModel
     ) {
         Hawk.put("token", token.token)
+
     }
 
     override fun onLoginResponseFailure() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this@SignInActivity, "Login Response Failure", Toast.LENGTH_SHORT).show()
     }
 
     override fun onLoginCancelled() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this@SignInActivity, "Login Cancelled", Toast.LENGTH_SHORT).show()
     }
 
     override fun onLoginFailure() {
@@ -71,7 +68,8 @@ class SignInActivity :
                 val checkData =
                     SignInDataModel(
                         usernameEditText.text.toString(),
-                        passwordEditText.text.toString()
+                        passwordEditText.text.toString(),
+                        "password"
                     )
 //                Toast.makeText(
 //                    this@SignInActivity,
