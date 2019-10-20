@@ -22,27 +22,41 @@ class SignUpActivity :
     AppCompatActivity(),
     SignUpInterface.SignUpListener {
     override fun onSignUpResponseSuccess() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        val signInIntent =
+            Intent(
+                this@SignUpActivity,
+                SignInActivity::class.java
+            )
+        startActivity(
+            signInIntent
+        )
     }
 
     override fun onSignUpResponseFailure() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(
+            this@SignUpActivity,
+            "Sign Up Response Failure",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onSignUpCancelled() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(
+            this@SignUpActivity,
+            "Sign Up Cancelled",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onSignUpFailure() {
-        TODO(
-            "not implemented"
-        ) //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(
+            this@SignUpActivity,
+            "Check your confection to the Internet",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onCreate(
@@ -81,13 +95,6 @@ class SignUpActivity :
                     checkData,
                     this
                 )
-
-                Toast.makeText(
-                    this@SignUpActivity,
-                    checkData.username + " " + checkData.email + " " + checkData.password + " " + checkData.name + " " + checkData.surname,
-                    Toast.LENGTH_LONG
-                )
-                    .show()
             } else {
                 //refuse and show errors
                 Toast.makeText(

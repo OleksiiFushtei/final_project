@@ -27,20 +27,45 @@ class SignInActivity :
     override fun onLoginResponseSuccess(
         token: TokenModel
     ) {
-        Hawk.put("token", token.token)
-
+        Hawk.put(
+            "token",
+            token.token
+        )
+        val mainActivity =
+            Intent(
+                this@SignInActivity,
+                MainActivity::class.java
+            )
+        startActivity(
+            mainActivity
+        )
     }
 
     override fun onLoginResponseFailure() {
-        Toast.makeText(this@SignInActivity, "Login Response Failure", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@SignInActivity,
+            "Username or password is not correct",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onLoginCancelled() {
-        Toast.makeText(this@SignInActivity, "Login Cancelled", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@SignInActivity,
+            "Login Cancelled",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onLoginFailure() {
-        Toast.makeText(this@SignInActivity, "Login Failure", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@SignInActivity,
+            "Check your confection to the Internet",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onCreate(
