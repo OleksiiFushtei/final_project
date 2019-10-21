@@ -1,22 +1,22 @@
 package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
-import com.example.final_project.api.interfaces.LoginInterface
+import com.example.final_project.api.interfaces.SignInInterface
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 import retrofit2.Call
 import retrofit2.Response
 
-class LoginHelper(
+class SignInHelper(
     private val apiInterface: ApiInterface
-) : LoginInterface {
+) : SignInInterface {
 
-    override fun login(
+    override fun signIn(
         signInDataModel: SignInDataModel,
-        loginListener: LoginInterface.LoginListener
+        signInListener: SignInInterface.SignInListener
     ) {
         val call =
-            apiInterface.login(
+            apiInterface.signIn(
                 signInDataModel
             )
         call.enqueue(
@@ -27,8 +27,8 @@ class LoginHelper(
                     t: Throwable
                 ) {
                     when {
-                        call.isCanceled -> loginListener.onLoginCancelled()
-                        else -> loginListener.onLoginFailure()
+                        call.isCanceled -> signInListener.onSignInCancelled()
+                        else -> signInListener.onSignInFailure()
                     }
                 }
 
@@ -37,10 +37,10 @@ class LoginHelper(
                     response: Response<TokenModel>
                 ) {
                     when {
-                        response.isSuccessful -> loginListener.onLoginResponseSuccess(
+                        response.isSuccessful -> signInListener.onSignInResponseSuccess(
                             response.body()!!
                         )
-                        else -> loginListener.onLoginResponseFailure()
+                        else -> signInListener.onSignInResponseFailure()
                     }
                 }
 

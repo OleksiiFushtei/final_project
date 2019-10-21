@@ -4,27 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.final_project.api.helpers.LoginHelper
-import com.example.final_project.api.interfaces.ApiInterface
-import com.example.final_project.api.interfaces.LoginInterface
+import com.example.final_project.api.helpers.SignInHelper
+import com.example.final_project.api.interfaces.SignInInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.internal.GsonBuildConfig
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SignInActivity :
     AppCompatActivity(),
-    LoginInterface.LoginListener {
-    override fun onLoginResponseSuccess(
+    SignInInterface.SignInListener {
+
+    override fun onSignInResponseSuccess(
         token: TokenModel
     ) {
         Hawk.put(
@@ -41,7 +33,7 @@ class SignInActivity :
         )
     }
 
-    override fun onLoginResponseFailure() {
+    override fun onSignInResponseFailure() {
         Toast.makeText(
             this@SignInActivity,
             "Username or password is not correct",
@@ -50,7 +42,7 @@ class SignInActivity :
             .show()
     }
 
-    override fun onLoginCancelled() {
+    override fun onSignInCancelled() {
         Toast.makeText(
             this@SignInActivity,
             "Login Cancelled",
@@ -59,7 +51,7 @@ class SignInActivity :
             .show()
     }
 
-    override fun onLoginFailure() {
+    override fun onSignInFailure() {
         Toast.makeText(
             this@SignInActivity,
             "Check your confection to the Internet",
@@ -82,8 +74,8 @@ class SignInActivity :
         val app: MainApplication =
             application as MainApplication
 
-        val loginHelper =
-            LoginHelper(
+        val signInHelper =
+            SignInHelper(
                 app.getApi()
             )
 
@@ -96,7 +88,7 @@ class SignInActivity :
                         passwordEditText.text.toString(),
                         "password"
                     )
-                loginHelper.login(
+                signInHelper.signIn(
                     checkData,
                     this
                 )

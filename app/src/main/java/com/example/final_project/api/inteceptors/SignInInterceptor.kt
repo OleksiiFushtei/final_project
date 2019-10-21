@@ -4,12 +4,15 @@ import com.orhanobut.hawk.Hawk
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class LoginInterceptor :
+class SignInInterceptor :
     Interceptor {
     override fun intercept(
         chain: Interceptor.Chain
     ): Response {
-        if (Hawk.contains("token")) {
+        if (Hawk.contains(
+                "token"
+            )
+        ) {
             val tokenValue =
                 Hawk.get<String>(
                     "token"
@@ -27,7 +30,9 @@ class LoginInterceptor :
                 request
             )
         } else {
-            return chain.proceed(chain.request())
+            return chain.proceed(
+                chain.request()
+            )
         }
     }
 }

@@ -13,10 +13,10 @@ import retrofit2.http.PUT;
 public interface ApiInterface {
 
     @PUT("/api/User")
-    Call<SignUpDataModel> registerUser(@Body SignUpDataModel signUpDatamodel);
+    Call<SignUpDataModel> signUp(@Body SignUpDataModel signUpDatamodel);
 
     @POST("/api/Token/Auth")
-    Call<TokenModel> login(@Body SignInDataModel signInDataModel);
+    Call<TokenModel> signIn(@Body SignInDataModel signInDataModel);
 
     //get list of available controllers
 //    @GET("/api/Controller")

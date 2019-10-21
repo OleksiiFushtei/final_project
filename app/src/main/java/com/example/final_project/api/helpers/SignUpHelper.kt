@@ -15,7 +15,7 @@ class SignUpHelper(
         signUpListener: SignUpInterface.SignUpListener
     ) {
         val call =
-            apiInterface.registerUser(
+            apiInterface.signUp(
                 signUpDataModel
             )
         call.enqueue(

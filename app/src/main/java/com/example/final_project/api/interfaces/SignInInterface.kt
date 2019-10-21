@@ -3,18 +3,18 @@ package com.example.final_project.api.interfaces
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 
-interface LoginInterface {
-    fun login(
+interface SignInInterface {
+    fun signIn(
         signInDataModel: SignInDataModel,
-        loginListener: LoginListener
+        signInListener: SignInListener
     )
 
-    interface LoginListener {
-        fun onLoginResponseSuccess(
+    interface SignInListener {
+        fun onSignInResponseSuccess(
             token: TokenModel
         )
-        fun onLoginResponseFailure()
-        fun onLoginCancelled()
-        fun onLoginFailure()
+        fun onSignInResponseFailure()
+        fun onSignInCancelled()
+        fun onSignInFailure()
     }
 }
