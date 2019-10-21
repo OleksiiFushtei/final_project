@@ -96,24 +96,10 @@ class SignInActivity :
                         passwordEditText.text.toString(),
                         "password"
                     )
-//                Toast.makeText(
-//                    this@SignInActivity,
-//                    checkData.username + " " + checkData.password,
-//                    Toast.LENGTH_LONG
-//                )
-//                    .show()
                 loginHelper.login(
                     checkData,
                     this
                 )
-            } else {
-                //refuse and show errors
-                Toast.makeText(
-                    this@SignInActivity,
-                    "Something is not OK",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
             }
         }
 
@@ -139,26 +125,28 @@ class SignInActivity :
         validateUserName() && validatePassword()
 
     private fun validateUserName(): Boolean =
-        if (usernameEditText.text.toString().isEmpty()) {
-            usernameEditText.error =
-                "Username field shouldn't be empty"
-            false
-        } else {
-            true
+        when {
+            usernameEditText.text.toString().isEmpty() -> {
+                usernameEditText.error =
+                    "Username field shouldn't be empty"
+                false
+            }
+            else -> true
         }
 
     private fun validatePassword(): Boolean =
-        if (passwordEditText.text.toString().isEmpty()) {
-            passwordEditText.error =
-                "Password field shouldn't be empty"
-            false
-        } else {
-            if (passwordEditText.text.toString().length < 6) {
+        when {
+            passwordEditText.text.toString().isEmpty() -> {
+                passwordEditText.error =
+                    "Password field shouldn't be empty"
+                false
+            }
+            passwordEditText.text.toString().length < 6 -> {
                 passwordEditText.error =
                     "Password must be at least 6 characters long"
                 false
-            } else {
-                true
             }
+            else -> true
         }
 }
+

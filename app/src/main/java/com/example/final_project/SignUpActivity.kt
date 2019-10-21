@@ -95,14 +95,6 @@ class SignUpActivity :
                     checkData,
                     this
                 )
-            } else {
-                //refuse and show errors
-                Toast.makeText(
-                    this@SignUpActivity,
-                    "Something is not OK",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
             }
         }
 
@@ -122,26 +114,35 @@ class SignUpActivity :
         validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
 
     private fun validateUserName(): Boolean =
-        if (usernameEditText.text.toString().isEmpty()) {
-            usernameEditText.error =
-                "Username field shouldn't be empty"
-            false
-        } else {
-            true
+        when {
+            usernameEditText.text.toString().isEmpty() -> {
+                usernameEditText.error =
+                    "Username field shouldn't be empty"
+                false
+            }
+            usernameEditText.text.toString().matches(
+                Regex(
+                    "^[a-z0-9_-]{3,50}\$"
+                )
+            ) -> {
+                usernameEditText.error =
+                    "Username should be 3 to 50 characters long"
+                false
+            }
+            else -> true
         }
 
     private fun validateEmail(): Boolean =
-        if (emailEditText.text.toString().isEmpty()) {
-            emailEditText.error =
-                "Email field shouldn't be empty"
-            false
-        } else {
-            if (EMAIL_ADDRESS.matcher(
-                    emailEditText.text.toString().trim()
-                ).matches()
-            ) {
-                true
-            } else {
+        when {
+            emailEditText.text.toString().isEmpty() -> {
+                emailEditText.error =
+                    "Email field shouldn't be empty"
+                false
+            }
+            EMAIL_ADDRESS.matcher(
+                emailEditText.text.toString().trim()
+            ).matches() -> true
+            else -> {
                 emailEditText.error =
                     "Invalid email address"
                 false
@@ -149,19 +150,20 @@ class SignUpActivity :
         }
 
     private fun validatePassword(): Boolean =
-        if (passwordEditText.text.toString().isEmpty()) {
-            passwordEditText.error =
-                "Password field shouldn't be empty"
-            false
-        } else {
-            if (passwordEditText.text.toString().length < 6) {
+        when {
+            passwordEditText.text.toString().isEmpty() -> {
+                passwordEditText.error =
+                    "Password field shouldn't be empty"
+                false
+            }
+            passwordEditText.text.toString().length < 6 -> {
                 passwordEditText.error =
                     "Password must be at least 6 characters long"
                 false
-            } else {
-                true
             }
+            else -> true
         }
+
 
     private fun validateConfPassword(): Boolean =
         when {
@@ -179,20 +181,22 @@ class SignUpActivity :
         }
 
     private fun validateName(): Boolean =
-        if (nameEditText.text.toString().isEmpty()) {
-            nameEditText.error =
-                "Name field shouldn't be empty"
-            false
-        } else {
-            true
+        when {
+            nameEditText.text.toString().isEmpty() -> {
+                nameEditText.error =
+                    "Name field shouldn't be empty"
+                false
+            }
+            else -> true
         }
 
     private fun validateSurName(): Boolean =
-        if (surnameEditText.text.toString().isEmpty()) {
-            surnameEditText.error =
-                "Surname field shouldn't be empty"
-            false
-        } else {
-            true
+        when {
+            surnameEditText.text.toString().isEmpty() -> {
+                surnameEditText.error =
+                    "Surname field shouldn't be empty"
+                false
+            }
+            else -> true
         }
 }
