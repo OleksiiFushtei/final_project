@@ -1,4 +1,4 @@
-package com.example.final_project.models
+package com.example.final_project.models.interfaces
 
 interface ISignInDataModel {
     val username: String

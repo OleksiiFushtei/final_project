@@ -1,5 +1,6 @@
 package com.example.final_project.models
 
+import com.example.final_project.models.interfaces.ISignInDataModel
 import com.google.gson.annotations.SerializedName
 
 class SignInDataModel(
