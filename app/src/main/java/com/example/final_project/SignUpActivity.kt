@@ -116,7 +116,7 @@ class SignUpActivity :
     private fun validateUserName(): Boolean =
         when {
             usernameEditText.text.toString().isEmpty() -> {
-                usernameEditText.error =
+                usernameTextInput.error =
                     "Username field shouldn't be empty"
                 false
             }
@@ -125,7 +125,7 @@ class SignUpActivity :
                     "^[a-z0-9_-]{3,50}\$"
                 )
             ) -> {
-                usernameEditText.error =
+                usernameTextInput.error =
                     "Username should be 3 to 50 characters long"
                 false
             }
@@ -135,7 +135,7 @@ class SignUpActivity :
     private fun validateEmail(): Boolean =
         when {
             emailEditText.text.toString().isEmpty() -> {
-                emailEditText.error =
+                emailTextInput.error =
                     "Email field shouldn't be empty"
                 false
             }
@@ -143,7 +143,7 @@ class SignUpActivity :
                 emailEditText.text.toString().trim()
             ).matches() -> true
             else -> {
-                emailEditText.error =
+                emailTextInput.error =
                     "Invalid email address"
                 false
             }
@@ -152,12 +152,12 @@ class SignUpActivity :
     private fun validatePassword(): Boolean =
         when {
             passwordEditText.text.toString().isEmpty() -> {
-                passwordEditText.error =
+                passwordTextInput.error =
                     "Password field shouldn't be empty"
                 false
             }
             passwordEditText.text.toString().length < 6 -> {
-                passwordEditText.error =
+                passwordTextInput.error =
                     "Password must be at least 6 characters long"
                 false
             }
@@ -168,12 +168,12 @@ class SignUpActivity :
     private fun validateConfPassword(): Boolean =
         when {
             confPasswordEditText.text.toString().isEmpty() -> {
-                confPasswordEditText.error =
+                confPasswordTextInput.error =
                     "Confirm password field shouldn't be empty"
                 false
             }
             passwordEditText.text.toString() != confPasswordEditText.text.toString() -> {
-                confPasswordEditText.error =
+                confPasswordTextInput.error =
                     "Passwords should match"
                 false
             }
@@ -183,7 +183,7 @@ class SignUpActivity :
     private fun validateName(): Boolean =
         when {
             nameEditText.text.toString().isEmpty() -> {
-                nameEditText.error =
+                nameTextInput.error =
                     "Name field shouldn't be empty"
                 false
             }
@@ -193,7 +193,7 @@ class SignUpActivity :
     private fun validateSurName(): Boolean =
         when {
             surnameEditText.text.toString().isEmpty() -> {
-                surnameEditText.error =
+                surnameTextInput.error =
                     "Surname field shouldn't be empty"
                 false
             }

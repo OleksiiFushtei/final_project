@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="top"
+        android:layout_gravity="top">
 
-    <ToggleButton
+    <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home_black_48dp"
+            android:contentDescription="@string/home_icon_decs" />
 
-    </ToggleButton>
+    <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/controllerSwitch"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:theme="@style/SwitchTheme"
+            android:text="@string/controller_name"
+            android:textSize="28sp" />
 
 </LinearLayout>

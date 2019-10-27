@@ -12,4 +12,9 @@
     <string name="new_password">New password</string>
     <string name="change_password">Change password</string>
     <string name="back">Back</string>
+    <string name="controller_name">Controller Name</string>
+    <string name="home_icon_decs">Home icon</string>
+    <string name="title_activity_controllers_list">
+        ControllersListActivity
+    </string>
 </resources>

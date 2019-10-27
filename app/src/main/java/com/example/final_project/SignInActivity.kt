@@ -11,6 +11,11 @@ import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.activity_sign_in.buttonFP
+import kotlinx.android.synthetic.main.activity_sign_in.buttonSI
+import kotlinx.android.synthetic.main.activity_sign_in.buttonSU
+import kotlinx.android.synthetic.main.activity_sign_in.passwordEditText
+import kotlinx.android.synthetic.main.activity_sign_in.usernameEditText
 
 class SignInActivity :
     AppCompatActivity(),
@@ -26,7 +31,7 @@ class SignInActivity :
         val mainActivity =
             Intent(
                 this@SignInActivity,
-                MainActivity::class.java
+                ControllersListActivity::class.java
             )
         startActivity(
             mainActivity
@@ -110,7 +115,6 @@ class SignInActivity :
             //maybe? idk
         }
 
-
     }
 
     private fun validateAll(): Boolean =
@@ -119,7 +123,7 @@ class SignInActivity :
     private fun validateUserName(): Boolean =
         when {
             usernameEditText.text.toString().isEmpty() -> {
-                usernameEditText.error =
+                usernameTextInput.error =
                     "Username field shouldn't be empty"
                 false
             }
@@ -129,12 +133,12 @@ class SignInActivity :
     private fun validatePassword(): Boolean =
         when {
             passwordEditText.text.toString().isEmpty() -> {
-                passwordEditText.error =
+                passwordTextInput.error =
                     "Password field shouldn't be empty"
                 false
             }
             passwordEditText.text.toString().length < 6 -> {
-                passwordEditText.error =
+                passwordTextInput.error =
                     "Password must be at least 6 characters long"
                 false
             }

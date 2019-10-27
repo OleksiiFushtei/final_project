@@ -1,8 +1,11 @@
 package com.example.final_project.api.interfaces;
 
+import com.example.final_project.models.ControllerModel;
 import com.example.final_project.models.SignInDataModel;
 import com.example.final_project.models.SignUpDataModel;
 import com.example.final_project.models.TokenModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,8 +22,8 @@ public interface ApiInterface {
     Call<TokenModel> signIn(@Body SignInDataModel signInDataModel);
 
     //get list of available controllers
-//    @GET("/api/Controller")
-//    Call<List<>>
+    @GET("/api/Controller")
+    Call<List<ControllerModel>> getListOfControllers(@Body List<ControllerModel> listOfControllers);
 
     //add new controller
 //    @PUT("/api/Controller")
