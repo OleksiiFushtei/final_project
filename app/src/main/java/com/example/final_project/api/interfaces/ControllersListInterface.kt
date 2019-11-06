@@ -1,0 +1,19 @@
+package com.example.final_project.api.interfaces
+
+import com.example.final_project.models.ControllerListItemModel
+
+interface ControllersListInterface {
+    fun getListOfController(
+        controllerListListener: ControllersListListener
+    )
+
+    interface ControllersListListener {
+        fun onGetControllersListResponseSuccess(
+            list: ArrayList<ControllerListItemModel>
+        )
+        fun onGetControllersListResponseFailure()
+        fun onGetControllersListCancelled()
+        fun onGetControllerListFailure()
+    }
+
+}

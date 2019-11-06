@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/ScriptSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="5dp"
+            android:text="@string/script_name"
+            android:textSize="28sp"
+            android:theme="@style/SwitchTheme" />
+
+</LinearLayout>

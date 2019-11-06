@@ -31,11 +31,12 @@ class SignInActivity :
         val mainActivity =
             Intent(
                 this@SignInActivity,
-                ControllersListActivity::class.java
+                ListOfControllersActivity::class.java
             )
         startActivity(
             mainActivity
         )
+        finish()
     }
 
     override fun onSignInResponseFailure() {
