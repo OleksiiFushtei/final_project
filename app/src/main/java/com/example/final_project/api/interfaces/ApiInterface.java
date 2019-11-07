@@ -31,23 +31,20 @@ public interface ApiInterface {
     @GET("/api/Controller")
     Call<List<ControllerListItemModel>> listControllers();
 
-    //not implemented
     //add new controller
     @PUT("/api/Controller")
     Call<ControllerModel> addController(@Body ControllerModel controllerModel);
 
-    //not implemented
     //edit controller's settings
     @POST("/api/Controller")
-    Call<ControllerModel> saveController(@Body ControllerModel controllerModel);
+    Call<ControllerModel> editController(@Body ControllerModel controllerModel);
 
-    //ok
-    //get controller by his 'id'
+    //get selected controller
     @GET("api/Controller/{id}")
     Call<ControllerModel> getController(@Path("id") int id);
 
-    //doesn't exist for now
+    //delete selected controller
     @DELETE("api/Controller/{id}")
-    Call<ControllerModel> deleteController(int id);
+    Call<ControllerModel> deleteController(@Path("id") int id);
 
 }

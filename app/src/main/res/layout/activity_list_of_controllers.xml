@@ -9,24 +9,40 @@
         android:orientation="vertical"
         tools:context=".ListOfControllersActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listOfControllers"
+    <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:scrollbars="vertical">
+            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listOfControllers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:scrollbars="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addControllerButton"
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addControllerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:src="@drawable/ic_add_white_36dp"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:tint="#fff" />
+
+    </FrameLayout>
+
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:src="@drawable/ic_add_white_36dp"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:tint="#fff" />
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:progressTint="@color/colorPrimaryDark" />
 
 </FrameLayout>

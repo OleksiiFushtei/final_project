@@ -7,21 +7,36 @@ interface ControllerInterface {
     interface ControllerAddInterface {
         fun addController(
             controllerModel: ControllerModel,
-            controllerAddListener: ControllerAddListener
+            controllerSaveListener: ControllerSaveListener
+        )
+    }
+
+    interface ControllerEditInterface {
+        fun editController(
+            controllerModel: ControllerModel,
+            controllerSaveListener: ControllerSaveListener
         )
     }
 
     interface ControllerGetInterface {
         fun getController(
+            id: Int,
             controllerGetListener: ControllerGetListener
         )
     }
 
-    interface ControllerAddListener {
-        fun onControllerAddResponseSuccess()
-        fun onControllerAddResponseFailure()
-        fun onControllerAddCancelled()
-        fun onControllerAddFailure()
+    interface ControllerDeleteInterface {
+        fun deleteController(
+            id: Int,
+            controllerDeleteListener: ControllerDeleteListener
+        )
+    }
+
+    interface ControllerSaveListener {
+        fun onControllerSaveResponseSuccess()
+        fun onControllerSaveResponseFailure()
+        fun onControllerSaveCancelled()
+        fun onControllerSaveFailure()
     }
 
     interface ControllerGetListener {
@@ -32,5 +47,12 @@ interface ControllerInterface {
         fun onGetControllerResponseFailure()
         fun onGetControllerCancelled()
         fun onGetControllerFailure()
+    }
+
+    interface ControllerDeleteListener {
+        fun onDeleteControllerResponseSuccess()
+        fun onDeleteControllerResponseFailure()
+        fun onDeleteControllerCancelled()
+        fun onDeleteControllerFailure()
     }
 }

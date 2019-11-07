@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".ListOfControllersActivity"></activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ControllerSettings" />
+        <activity android:name=".ControllerSettingsActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SignUpActivity" />

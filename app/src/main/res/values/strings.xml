@@ -33,4 +33,7 @@
     <string name="user_name">User name</string>
     <string name="delete">Delete</string>
     <string name="delete_controller">Delete Controller</string>
+    <string name="device_name">Device name</string>
+    <string name="sensor_name">Sensor name</string>
+    <string name="user_name">User name</string>
 </resources>

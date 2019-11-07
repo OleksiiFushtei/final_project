@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.final_project.ControllerSettings
+import com.example.final_project.ControllerSettingsActivity
 import com.example.final_project.MainActivity
-import com.example.final_project.OnSwitchToggled
 import com.example.final_project.R
 import com.example.final_project.models.ControllerListItemModel
 import kotlinx.android.synthetic.main.controller_row.view.*
@@ -17,7 +16,6 @@ import kotlinx.android.synthetic.main.controller_row.view.*
 class ControllerAdapter(
     private val items: ArrayList<ControllerListItemModel>,
     private val context: Context
-//    private val switchInterface: OnSwitchToggled
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -45,24 +43,6 @@ class ControllerAdapter(
     ) {
         holder.controllerRow.controllerName.text =
             items[position].controller.name
-//        holder.controllerRow.controllerSwitch.isEnabled =
-//            items[position].controller.status
-
-        holder.itemView.setOnLongClickListener {
-            val controllerSettingsIntent =
-                Intent(
-                    context,
-                    ControllerSettings::class.java
-                )
-            controllerSettingsIntent.putExtra(
-                "id",
-                position+1
-            )
-            context.startActivity(
-                controllerSettingsIntent
-            )
-            return@setOnLongClickListener true
-        }
         holder.itemView.setOnClickListener {
             val controllerIntent =
                 Intent(
@@ -71,18 +51,26 @@ class ControllerAdapter(
                 )
             controllerIntent.putExtra(
                 "id",
-                position+1
+                items[position].controller.id
             )
             context.startActivity(
                 controllerIntent
             )
         }
-//        holder.controllerRow.controllerSwitch.setOnCheckedChangeListener { _, isChecked ->
-//            switchInterface.changeStatus(
-//                holder.itemView.id,
-//                status = isChecked
-//            )
-//        }
+        holder.controllerRow.imageSettings.setOnClickListener {
+            val controllerSettingsIntent =
+                Intent(
+                    context,
+                    ControllerSettingsActivity::class.java
+                )
+            controllerSettingsIntent.putExtra(
+                "id",
+                items[position].controller.id
+            )
+            context.startActivity(
+                controllerSettingsIntent
+            )
+        }
     }
 }
 

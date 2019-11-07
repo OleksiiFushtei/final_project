@@ -3,6 +3,7 @@ package com.example.final_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.final_project.api.helpers.SignInHelper
 import com.example.final_project.api.interfaces.SignInInterface
@@ -85,9 +86,12 @@ class SignInActivity :
                 app.getApi()
             )
 
+        progressBar.visibility = View.GONE
+
         buttonSI.setOnClickListener {
             if (validateAll()) {
                 //send data to server
+                progressBar.visibility = View.VISIBLE
                 val checkData =
                     SignInDataModel(
                         usernameEditText.text.toString(),

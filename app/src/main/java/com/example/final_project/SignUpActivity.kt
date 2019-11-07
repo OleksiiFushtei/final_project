@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns.*
+import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.example.final_project.api.helpers.SignUpHelper
@@ -30,9 +31,11 @@ class SignUpActivity :
         startActivity(
             signInIntent
         )
+        finish()
     }
 
     override fun onSignUpResponseFailure() {
+        progressBar.visibility = View.GONE
         Toast.makeText(
             this@SignUpActivity,
             "Sign Up Response Failure",
@@ -42,6 +45,7 @@ class SignUpActivity :
     }
 
     override fun onSignUpCancelled() {
+        progressBar.visibility = View.GONE
         Toast.makeText(
             this@SignUpActivity,
             "Sign Up Cancelled",
@@ -51,6 +55,7 @@ class SignUpActivity :
     }
 
     override fun onSignUpFailure() {
+        progressBar.visibility = View.GONE
         Toast.makeText(
             this@SignUpActivity,
             "Check your confection to the Internet",
@@ -78,6 +83,9 @@ class SignUpActivity :
                 app.getApi()
             )
 
+        progressBar.visibility =
+            View.GONE
+
         buttonSU.setOnClickListener {
             //do final check
             if (validateAll()) {
@@ -90,6 +98,9 @@ class SignUpActivity :
                         nameEditText.text.toString(),
                         surnameEditText.text.toString()
                     )
+
+                progressBar.visibility =
+                    View.VISIBLE
 
                 signUpHelper.signUp(
                     checkData,
@@ -107,6 +118,7 @@ class SignUpActivity :
             startActivity(
                 signInIntent
             )
+            finish()
         }
     }
 
@@ -120,7 +132,7 @@ class SignUpActivity :
                     "Username field shouldn't be empty"
                 false
             }
-            usernameEditText.text.toString().matches(
+            !usernameEditText.text.toString().matches(
                 Regex(
                     "^[a-z0-9_-]{3,50}\$"
                 )
