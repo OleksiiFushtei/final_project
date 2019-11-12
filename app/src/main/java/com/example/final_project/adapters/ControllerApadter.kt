@@ -16,13 +16,13 @@ import kotlinx.android.synthetic.main.controller_row.view.*
 class ControllerAdapter(
     private val items: ArrayList<ControllerListItemModel>,
     private val context: Context
-) : RecyclerView.Adapter<ViewHolder>() {
+) : RecyclerView.Adapter<ViewHolderController>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
-        return ViewHolder(
+    ): ViewHolderController {
+        return ViewHolderController(
             LayoutInflater.from(
                 context
             ).inflate(
@@ -38,7 +38,7 @@ class ControllerAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: ViewHolder,
+        holder: ViewHolderController,
         position: Int
     ) {
         holder.controllerRow.controllerName.text =
@@ -52,6 +52,10 @@ class ControllerAdapter(
             controllerIntent.putExtra(
                 "id",
                 items[position].controller.id
+            )
+            controllerIntent.putExtra(
+                "name",
+                items[position].controller.name
             )
             context.startActivity(
                 controllerIntent
@@ -74,7 +78,7 @@ class ControllerAdapter(
     }
 }
 
-class ViewHolder(
+class ViewHolderController(
     view: View
 ) : RecyclerView.ViewHolder(
     view

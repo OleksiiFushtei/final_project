@@ -3,6 +3,7 @@ package com.example.final_project
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.final_project.adapters.FragmentsAdapter
+import com.example.final_project.fragments.SensorsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity :
@@ -19,17 +20,24 @@ class MainActivity :
         )
 
         toolbar.title =
-            "Tab Layout" //place controllerName here
-        setSupportActionBar(toolbar)
+            intent.getStringExtra(
+                "name"
+            )
+        setSupportActionBar(
+            toolbar
+        )
 
         val fragmentAdapter =
             FragmentsAdapter(
-                supportFragmentManager
+                supportFragmentManager,
+                intent.getIntExtra("id", 0)
             )
-        viewPager.adapter = fragmentAdapter
+        viewPager.adapter =
+            fragmentAdapter
 
-        tabLayout.setupWithViewPager(viewPager)
-
-
+        tabLayout.setupWithViewPager(
+            viewPager
+        )
     }
+
 }

@@ -14,26 +14,11 @@
     <string name="back">Back</string>
     <string name="controller_name">Controller Name</string>
     <string name="home_icon_decs">Home icon</string>
-    <string name="title_activity_controllers_list">
-        ControllersListActivity
-    </string>
     <string name="mac_address">MAC address</string>
-    <string name="add_controller">Add controller</string>
     <string name="save">Save</string>
     <string name="sensor_name">Sensor name</string>
-    <string name="device_name">Device name</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">
-        Hello
-        blank
-        fragment
-    </string>
-    <string name="script_name">Script Name</string>
-    <string name="user_name">User name</string>
-    <string name="delete">Delete</string>
     <string name="delete_controller">Delete Controller</string>
-    <string name="device_name">Device name</string>
-    <string name="sensor_name">Sensor name</string>
-    <string name="user_name">User name</string>
+    <string name="delete_sensor">Delete sensor</string>
 </resources>

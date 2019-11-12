@@ -1,7 +1,6 @@
 package com.example.final_project.core
 
 import android.app.Application
-import com.example.final_project.api.inteceptors.ControllersListInterceptor
 import com.example.final_project.api.inteceptors.SignInInterceptor
 import com.example.final_project.api.interfaces.ApiInterface
 import com.orhanobut.hawk.Hawk
@@ -31,9 +30,6 @@ class MainApplication :
                     SignInInterceptor()
                 )
                 .addInterceptor(
-                    ControllersListInterceptor()
-                )
-                .addInterceptor(
                     loggingInterceptor
                 )
                 .build()
@@ -44,7 +40,7 @@ class MainApplication :
                     client
                 )
                 .baseUrl(
-                    "https://fudokosmarthomeweb20191027060230.azurewebsites.net/"
+                    "https://fudokosmarthomeweb20191110084623.azurewebsites.net/"
                 )
                 .addConverterFactory(
                     GsonConverterFactory.create()

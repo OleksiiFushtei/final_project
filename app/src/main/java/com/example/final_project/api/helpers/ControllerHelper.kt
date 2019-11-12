@@ -24,6 +24,7 @@ class ControllerHelper(
         call.enqueue(
             object :
                 retrofit2.Callback<ControllerModel> {
+
                 override fun onFailure(
                     call: Call<ControllerModel>,
                     t: Throwable
@@ -58,6 +59,7 @@ class ControllerHelper(
         call.enqueue(
             object :
                 retrofit2.Callback<ControllerModel> {
+
                 override fun onFailure(
                     call: Call<ControllerModel>,
                     t: Throwable
@@ -81,40 +83,6 @@ class ControllerHelper(
         )
     }
 
-    override fun deleteController(
-        id: Int,
-        controllerDeleteListener: ControllerInterface.ControllerDeleteListener
-    ) {
-        val call =
-            apiInterface.deleteController(
-                id
-            )
-        call.enqueue(
-            object :
-                retrofit2.Callback<ControllerModel> {
-                override fun onFailure(
-                    call: Call<ControllerModel>,
-                    t: Throwable
-                ) {
-                    when {
-                        call.isCanceled -> controllerDeleteListener.onDeleteControllerCancelled()
-                        else -> controllerDeleteListener.onDeleteControllerFailure()
-                    }
-                }
-
-                override fun onResponse(
-                    call: Call<ControllerModel>,
-                    response: Response<ControllerModel>
-                ) {
-                    when {
-                        response.isSuccessful -> controllerDeleteListener.onDeleteControllerResponseSuccess()
-                        else -> controllerDeleteListener.onDeleteControllerResponseFailure()
-                    }
-                }
-            }
-        )
-    }
-
     override fun getController(
         id: Int,
         controllerGetListener: ControllerInterface.ControllerGetListener
@@ -126,6 +94,7 @@ class ControllerHelper(
         call.enqueue(
             object :
                 retrofit2.Callback<ControllerModel> {
+
                 override fun onFailure(
                     call: Call<ControllerModel>,
                     t: Throwable
@@ -145,6 +114,41 @@ class ControllerHelper(
                             response.body()!!
                         )
                         else -> controllerGetListener.onGetControllerResponseFailure()
+                    }
+                }
+            }
+        )
+    }
+
+    override fun deleteController(
+        id: Int,
+        controllerDeleteListener: ControllerInterface.ControllerDeleteListener
+    ) {
+        val call =
+            apiInterface.deleteController(
+                id
+            )
+        call.enqueue(
+            object :
+                retrofit2.Callback<ControllerModel> {
+
+                override fun onFailure(
+                    call: Call<ControllerModel>,
+                    t: Throwable
+                ) {
+                    when {
+                        call.isCanceled -> controllerDeleteListener.onDeleteControllerCancelled()
+                        else -> controllerDeleteListener.onDeleteControllerFailure()
+                    }
+                }
+
+                override fun onResponse(
+                    call: Call<ControllerModel>,
+                    response: Response<ControllerModel>
+                ) {
+                    when {
+                        response.isSuccessful -> controllerDeleteListener.onDeleteControllerResponseSuccess()
+                        else -> controllerDeleteListener.onDeleteControllerResponseFailure()
                     }
                 }
             }

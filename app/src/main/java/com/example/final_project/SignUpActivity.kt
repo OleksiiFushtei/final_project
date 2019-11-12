@@ -6,18 +6,11 @@ import android.os.Bundle
 import android.util.Patterns.*
 import android.view.View
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.example.final_project.api.helpers.SignUpHelper
-import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.SignUpInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.SignUpDataModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUpActivity :
     AppCompatActivity(),

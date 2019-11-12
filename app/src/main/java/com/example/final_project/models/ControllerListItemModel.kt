@@ -1,6 +1,6 @@
 package com.example.final_project.models
 
-import com.example.final_project.models.interfaces.IControllerListItem
+import com.example.final_project.models.interfaces.IControllerListItemModel
 import com.google.gson.annotations.SerializedName
 
 class ControllerListItemModel(
@@ -12,4 +12,4 @@ class ControllerListItemModel(
         "controller"
     )
     override val controller: ControllerModel
-) : IControllerListItem
+) : IControllerListItemModel
