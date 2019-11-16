@@ -14,7 +14,7 @@ class FragmentsAdapter (fm: FragmentManager, private val controllerId: Int) : Fr
     ): Fragment {
         return when (position) {
             0 -> SensorsFragment.newInstance(controllerId)
-            1 -> DevicesFragment()
+            1 -> DevicesFragment.newInstance(controllerId)
             2 -> ScriptsFragment()
             else -> UsersFragment()
         }

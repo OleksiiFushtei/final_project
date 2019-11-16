@@ -6,24 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.R
 import com.example.final_project.SensorSettingsActivity
 import com.example.final_project.adapters.SensorAdapter
+import com.example.final_project.api.helpers.SensorHubHelper
 import com.example.final_project.api.helpers.SensorsListHelper
 import com.example.final_project.api.interfaces.SensorsListInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.SensorModel
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_sensor.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
-
+import com.google.android.material.snackbar.Snackbar
+import com.orhanobut.hawk.Hawk
+import kotlinx.android.synthetic.main.fragment_sensor.*
+import java.lang.Exception
 
 class SensorsFragment :
     Fragment(),
     SensorsListInterface.SensorsListListener {
+
+    private lateinit var sensorHubHelper: SensorHubHelper
 
     companion object {
         private const val ID =
@@ -68,6 +72,36 @@ class SensorsFragment :
                 context,
                 controlledId = controllerId
             )
+        sensorsList.addAll(
+            list
+        )
+        sensorHubHelper =
+            SensorHubHelper(
+                Hawk.get(
+                    "token"
+                )
+            )
+        sensorHubHelper.updateSensor(
+            listOfSensors
+        ) { sensorModel: SensorModel, view: RecyclerView ->
+            activity?.runOnUiThread {
+                val sensorAdapter =
+                    view.adapter as SensorAdapter
+                try {
+                    val item =
+                        sensorAdapter.getItems()
+                            .first {
+                                it.id == sensorModel.id
+                            }
+                    item.value =
+                        sensorModel.value
+                    sensorAdapter.notifyDataSetChanged()
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+        sensorHubHelper.hubInit()
         if (list.isEmpty()) {
             Snackbar.make(
                 root_layout,
@@ -105,12 +139,23 @@ class SensorsFragment :
             .show()
     }
 
+
+    private val sensorsList: ArrayList<SensorModel> =
+        ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val view: View =
+            inflater.inflate(
+                R.layout.fragment_sensor,
+                container,
+                false
+            )
+
         val bundle =
             this.arguments
         val controllerId =
@@ -120,6 +165,11 @@ class SensorsFragment :
             )
         val app =
             context?.applicationContext as MainApplication
+
+        val progressBar =
+            view.findViewById<ProgressBar>(
+                R.id.progressBar
+            )
 
         progressBar?.visibility =
             View.VISIBLE
@@ -135,48 +185,31 @@ class SensorsFragment :
             )
         }
 
-        val button = view?.findViewById(R.id.addSensorButton) as FloatingActionButton
-        button.setOnClickListener {
-            val newIntent = Intent(this.activity, SensorSettingsActivity::class.java)
-            startActivity(newIntent)
+        val addButton =
+            view.findViewById<FloatingActionButton>(
+                R.id.addSensorButton
+            )
+
+        addButton?.setOnClickListener {
+            val newIntent =
+                Intent(
+                    this.activity,
+                    SensorSettingsActivity::class.java
+                )
+            newIntent.putExtra(
+                "controllerId",
+                controllerId
+            )
+            newIntent.putExtra(
+                "sensorId",
+                0
+            )
+            startActivity(
+                newIntent
+            )
         }
 
-
-//        val b = root_layout.frameLayout.findViewById<FloatingActionButton>(R.id.addSensorButton).setOnClickListener{
-//            val intent = Intent(activity, SensorSettingsActivity::class.java)
-//            intent.putExtra("controllerId", controllerId)
-//            intent.putExtra("sensorId", 0)
-//            startActivity(intent)
-//        }
-
-//        val b1 = this.addSensorButton
-//
-//        b1.setOnClickListener{
-//            val intent = Intent(activity, SensorSettingsActivity::class.java)
-//            intent.putExtra("controllerId", controllerId)
-//            intent.putExtra("sensorId", 0)
-//            startActivity(intent)
-//        }
-//
-//        button?.setOnClickListener {
-//            val addSensorIntent = Intent(activity, SensorSettingsActivity::class.java)
-//            addSensorIntent.putExtra("controllerId", controllerId)
-//            addSensorIntent.putExtra("id", 0)
-//            context?.startActivity(addSensorIntent)
-//        }
-//
-//        addButton?.setOnClickListener {
-//            val intent = Intent(activity, SensorSettingsActivity::class.java)
-//            intent.putExtra("controllerId", controllerId)
-//            intent.putExtra("sensorId", 0)
-//            startActivity(intent)
-//        }
-
-        return inflater.inflate(
-            R.layout.fragment_sensor,
-            container,
-            false
-        )
+        return view
     }
 
     override fun onResume() {
@@ -204,5 +237,10 @@ class SensorsFragment :
                 this
             )
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorHubHelper.hubStop()
     }
 }

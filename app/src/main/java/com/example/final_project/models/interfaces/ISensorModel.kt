@@ -7,8 +7,8 @@ interface ISensorModel {
     val name: String
     val pin: Int
     val status: Boolean
-    val value: Int
+    var value: Int
     val sensorTypeId: Int
     val controllerId: Int
-    val sensorType: SensorTypeModel
+    val sensorType: SensorTypeModel?
 }

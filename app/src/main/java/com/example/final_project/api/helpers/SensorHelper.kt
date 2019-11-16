@@ -2,7 +2,9 @@ package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.SensorInterface
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
@@ -41,7 +43,18 @@ class SensorHelper(
                 ) {
                     when {
                         response.isSuccessful -> sensorSaveListener.onSensorSaveResponseSuccess()
-                        else -> sensorSaveListener.onSensorSaveResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody()?.string(),
+                                    ErrorModel::class.java
+                                )
+                            sensorSaveListener.onSensorSaveResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 
@@ -78,7 +91,18 @@ class SensorHelper(
 
                     when {
                         response.isSuccessful -> sensorSaveListener.onSensorSaveResponseSuccess()
-                        else -> sensorSaveListener.onSensorSaveResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            sensorSaveListener.onSensorSaveResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

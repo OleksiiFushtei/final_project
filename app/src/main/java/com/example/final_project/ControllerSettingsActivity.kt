@@ -20,26 +20,27 @@ class ControllerSettingsActivity :
         finish()
     }
 
-    override fun onControllerSaveResponseFailure() { }
+    override fun onControllerSaveResponseFailure() {}
 
-    override fun onControllerSaveCancelled() { }
+    override fun onControllerSaveCancelled() {}
 
-    override fun onControllerSaveFailure() { }
+    override fun onControllerSaveFailure() {}
 
     override fun onDeleteControllerResponseSuccess() {
         finish()
     }
 
-    override fun onDeleteControllerResponseFailure() { }
+    override fun onDeleteControllerResponseFailure() {}
 
-    override fun onDeleteControllerCancelled() { }
+    override fun onDeleteControllerCancelled() {}
 
-    override fun onDeleteControllerFailure() { }
+    override fun onDeleteControllerFailure() {}
 
     override fun onGetControllerResponseSuccess(
         controller: ControllerModel
     ) {
-        progressBar.visibility = View.GONE
+        progressBar.visibility =
+            View.GONE
         controllerNameEditText.setText(
             controller.name
         )
@@ -50,11 +51,11 @@ class ControllerSettingsActivity :
             controller.status
     }
 
-    override fun onGetControllerResponseFailure() { }
+    override fun onGetControllerResponseFailure() {}
 
-    override fun onGetControllerCancelled() { }
+    override fun onGetControllerCancelled() {}
 
-    override fun onGetControllerFailure() { }
+    override fun onGetControllerFailure() {}
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -83,7 +84,8 @@ class ControllerSettingsActivity :
         if (id == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
-            progressBar.visibility = View.GONE
+            progressBar.visibility =
+                View.GONE
         } else {
             controllerHelper.getController(
                 id,
@@ -128,7 +130,10 @@ class ControllerSettingsActivity :
         }
 
         buttonDelete.setOnClickListener {
-            controllerHelper.deleteController(id, this)
+            controllerHelper.deleteController(
+                id,
+                this
+            )
         }
     }
 

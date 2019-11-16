@@ -4,15 +4,14 @@ import com.example.final_project.models.SensorTypeModel
 
 interface SensorTypeInterface {
 
-    fun getSensorType(
-        id: Int,
-        sensorTypeListener: SensorTypeListener
+    fun getSensorTypes(
+        sensorTypeListener: SensorTypesListener
     )
 
-    interface SensorTypeListener {
-        fun onSensorTypeGetResponseSuccess(sensorTypeModel: SensorTypeModel)
-        fun onSensorTypeGetResponseFailure()
-        fun onSensorTypeGetCancelled()
-        fun onSensorTypeGetFailure()
+    interface SensorTypesListener {
+        fun onSensorTypesGetResponseSuccess(list: ArrayList<SensorTypeModel>)
+        fun onSensorTypesGetResponseFailure()
+        fun onSensorTypesGetCancelled()
+        fun onSensorTypesGetFailure()
     }
 }

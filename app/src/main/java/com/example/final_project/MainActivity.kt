@@ -19,10 +19,18 @@ class MainActivity :
             R.layout.activity_main
         )
 
-        toolbar.title =
+        val title =
             intent.getStringExtra(
                 "name"
             )
+
+        if (title != null) {
+            toolbar.title =
+                title
+        } else {
+            intent.getStringExtra("name")
+        }
+
         setSupportActionBar(
             toolbar
         )
@@ -30,7 +38,10 @@ class MainActivity :
         val fragmentAdapter =
             FragmentsAdapter(
                 supportFragmentManager,
-                intent.getIntExtra("id", 0)
+                intent.getIntExtra(
+                    "id",
+                    0
+                )
             )
         viewPager.adapter =
             fragmentAdapter
@@ -39,5 +50,4 @@ class MainActivity :
             viewPager
         )
     }
-
 }

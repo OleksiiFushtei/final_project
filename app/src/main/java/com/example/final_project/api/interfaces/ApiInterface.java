@@ -69,8 +69,8 @@ public interface ApiInterface {
     @POST("/api/Sensor")
     Call<SensorModel> editSensor(@Body SensorModel sensorModel);
 
-    //get type of sensor
+    //get types of sensors
     @GET("/api/SensorType")
-    Call<SensorTypeModel> getSensorType(@Path("id") int id);
+    Call<List<SensorTypeModel>> getSensorTypes();
 
 }

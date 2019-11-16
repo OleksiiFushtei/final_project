@@ -43,6 +43,8 @@ class SensorAdapter(
     ) {
         holder.sensorRow.sensorName.text =
             items[position].name
+        holder.sensorRow.sensorValue.text =
+            "Value: " + items[position].value
         holder.sensorRow.imageSettings.setOnClickListener {
             val sensorSettingsIntent =
                 Intent(
@@ -61,7 +63,10 @@ class SensorAdapter(
                 sensorSettingsIntent
             )
         }
+    }
 
+    fun getItems(): ArrayList<SensorModel> {
+        return items
     }
 }
 

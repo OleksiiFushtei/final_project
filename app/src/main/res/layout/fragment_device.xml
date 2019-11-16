@@ -2,28 +2,46 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".fragments.DevicesFragment">
+        tools:context=".fragments.SensorsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listOfDevices"
+    <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:scrollbars="vertical">
+            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listOfDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:scrollbars="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addDeviceButton"
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addDeviceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:src="@drawable/ic_add_white_36dp"
+                app:rippleColor="@color/colorPrimaryDark"
+                app:tint="#fff" />
+
+    </FrameLayout>
+
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:src="@drawable/ic_add_white_36dp"
-            app:tint="#fff" />
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:progressTint="@color/colorPrimaryDark" />
 
 </FrameLayout>

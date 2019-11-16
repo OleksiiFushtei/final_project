@@ -10,34 +10,33 @@ class SensorTypeHelper(
     private val apiInterface: ApiInterface
 ) : SensorTypeInterface {
 
-    override fun getSensorType(
-        id: Int,
-        sensorTypeListener: SensorTypeInterface.SensorTypeListener
+    override fun getSensorTypes(
+        sensorTypeListener: SensorTypeInterface.SensorTypesListener
     ) {
         val call =
-            apiInterface.getSensorType(
-                id
-            )
+            apiInterface.sensorTypes
         call.enqueue(
             object :
-                retrofit2.Callback<SensorTypeModel> {
+                retrofit2.Callback<List<SensorTypeModel>> {
                 override fun onFailure(
-                    call: Call<SensorTypeModel>,
+                    call: Call<List<SensorTypeModel>>,
                     t: Throwable
                 ) {
                     when {
-                        call.isCanceled -> sensorTypeListener.onSensorTypeGetCancelled()
-                        else -> sensorTypeListener.onSensorTypeGetFailure()
+                        call.isCanceled -> sensorTypeListener.onSensorTypesGetCancelled()
+                        else -> sensorTypeListener.onSensorTypesGetFailure()
                     }
                 }
 
                 override fun onResponse(
-                    call: Call<SensorTypeModel>,
-                    response: Response<SensorTypeModel>
+                    call: Call<List<SensorTypeModel>>,
+                    response: Response<List<SensorTypeModel>>
                 ) {
                     when {
-                        response.isSuccessful -> sensorTypeListener.onSensorTypeGetResponseSuccess(response.body()!!)
-                        else -> sensorTypeListener.onSensorTypeGetResponseFailure()
+                        response.isSuccessful -> sensorTypeListener.onSensorTypesGetResponseSuccess(
+                            ArrayList(response.body()!!)
+                        )
+                        else -> sensorTypeListener.onSensorTypesGetResponseFailure()
                     }
                 }
 

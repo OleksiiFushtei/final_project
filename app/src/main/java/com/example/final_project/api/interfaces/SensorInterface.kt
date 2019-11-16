@@ -1,5 +1,6 @@
 package com.example.final_project.api.interfaces
 
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
 
 interface SensorInterface {
@@ -34,7 +35,9 @@ interface SensorInterface {
 
     interface SensorSaveListener {
         fun onSensorSaveResponseSuccess()
-        fun onSensorSaveResponseFailure()
+        fun onSensorSaveResponseFailure(
+            errorModel: ErrorModel
+        )
         fun onSensorSaveCancelled()
         fun onSensorSaveFailure()
     }

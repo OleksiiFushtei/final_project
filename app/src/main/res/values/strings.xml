@@ -17,8 +17,9 @@
     <string name="mac_address">MAC address</string>
     <string name="save">Save</string>
     <string name="sensor_name">Sensor name</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="delete_controller">Delete Controller</string>
     <string name="delete_sensor">Delete sensor</string>
+    <string name="type_of_sensor">Type of sensor</string>
+    <string name="device_name">Device name</string>
+    <string name="value">Value :</string>
 </resources>
