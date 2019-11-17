@@ -1,6 +1,5 @@
 package com.example.final_project
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,13 +9,12 @@ import com.example.final_project.api.helpers.SensorTypeHelper
 import com.example.final_project.api.interfaces.SensorInterface
 import com.example.final_project.api.interfaces.SensorTypeInterface
 import com.example.final_project.core.MainApplication
-import com.example.final_project.fragments.SensorsFragment
 import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
 import com.example.final_project.models.SensorTypeModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_sensor_settings.*
-import kotlinx.android.synthetic.main.sensor_row.*
+
 
 class SensorSettingsActivity :
     AppCompatActivity(),
@@ -31,18 +29,47 @@ class SensorSettingsActivity :
         sensorTypes.addAll(
             list
         )
-        for (line in list) {
+        for (item in sensorTypes) {
             sensorTypesList.add(
-                line.typeName.capitalize()
+                item.typeName.capitalize()
             )
         }
     }
 
-    override fun onSensorTypesGetResponseFailure() {}
+    override fun onSensorTypesGetResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorTypesGetCancelled() {}
+    override fun onSensorTypesGetCancelled() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorTypesGetFailure() {}
+    override fun onSensorTypesGetFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
     override fun onSensorSaveResponseSuccess() {
         finish()
@@ -51,29 +78,28 @@ class SensorSettingsActivity :
     override fun onSensorSaveResponseFailure(
         errorModel: ErrorModel
     ) {
-        Toast.makeText(
-            this,
+        Snackbar.make(
+            root_layout,
             errorModel.message,
-            Toast.LENGTH_SHORT
+            Snackbar.LENGTH_SHORT
         )
             .show()
-
     }
 
     override fun onSensorSaveCancelled() {
-        Toast.makeText(
-            this,
-            "3",
-            Toast.LENGTH_SHORT
+        Snackbar.make(
+            root_layout,
+            "Saving cancelled. Try again",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onSensorSaveFailure() {
-        Toast.makeText(
-            this,
-            "4",
-            Toast.LENGTH_SHORT
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
@@ -82,11 +108,40 @@ class SensorSettingsActivity :
         finish()
     }
 
-    override fun onSensorDeleteResponseFailure() {}
+    override fun onSensorDeleteResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorDeleteCancelled() {}
+    override fun onSensorDeleteCancelled() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Deleting cancelled. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorDeleteFailure() {}
+    override fun onSensorDeleteFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
     override fun onSensorGetResponseSuccess(
         sensor: SensorModel
@@ -99,18 +154,60 @@ class SensorSettingsActivity :
         sensorPinEditText.setText(
             sensor.pin.toString()
         )
-        sensorTypeSpinner.setSelection(
+        sensorTypeId =
             sensor.sensorTypeId
-        )
+        when (sensorTypeId) {
+            1 -> rgTypes.check(
+                R.id.rbLight
+            )
+            2 -> rgTypes.check(
+                R.id.rbTemperature
+            )
+            else -> rgTypes.check(
+                R.id.rbSubmersion
+            )
+        }
         sensorSwitch.isChecked =
             sensor.status
     }
 
-    override fun onSensorGetResponseFailure() {}
+    override fun onSensorGetResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorGetCancelled() {}
+    override fun onSensorGetCancelled() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onSensorGetFailure() {}
+    override fun onSensorGetFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
+
+    private var sensorTypeId: Int =
+        1
 
     private var sensorTypesList: ArrayList<String> =
         ArrayList()
@@ -156,60 +253,6 @@ class SensorSettingsActivity :
                 0
             )
 
-        var sensorTypeId: Int =
-            1
-
-        val typeSpinner =
-            this.findViewById<Spinner>(
-                R.id.sensorTypeSpinner
-            )
-
-        val typesAdapter =
-            ArrayAdapter(
-                this.applicationContext,
-                R.layout.sensor_type_row,
-                sensorTypesList
-            )
-
-        typesAdapter.setDropDownViewResource(
-            R.layout.sensor_type_row
-        )
-
-        sensorTypeSpinner.adapter =
-            typesAdapter
-
-        sensorTypeSpinner.onItemSelectedListener =
-            object :
-                AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(
-                    p0: AdapterView<*>?
-                ) {
-                    Toast.makeText(
-                        this@SensorSettingsActivity,
-                        "xd",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-
-                override fun onItemSelected(
-                    p0: AdapterView<*>?,
-                    p1: View?,
-                    p2: Int,
-                    p3: Long
-                ) {
-                    sensorTypeId =
-                        p2
-                    Toast.makeText(
-                        this@SensorSettingsActivity,
-                        p2,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-
-            }
-
         if (sensorId == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
@@ -222,8 +265,24 @@ class SensorSettingsActivity :
             )
         }
 
+        rgTypes.setOnCheckedChangeListener { group, checkedId ->
+            val rButton: RadioButton =
+                findViewById(
+                    checkedId
+                )
+            sensorTypeId =
+                when (rButton) {
+                    rbLight -> 1
+                    rbTemperature -> 2
+                    else -> 3
+                }
+
+        }
+
         buttonSave.setOnClickListener {
             if (validateAll()) {
+                progressBar.visibility =
+                    View.VISIBLE
                 val sensorData =
                     SensorModel(
                         sensorId,
@@ -250,16 +309,7 @@ class SensorSettingsActivity :
         }
 
         buttonBack.setOnClickListener {
-            val backIntent =
-                Intent(
-                    this@SensorSettingsActivity,
-                    MainActivity::class.java
-                )
-            backIntent.putExtra("id", controllerId)
-            startActivity(
-                backIntent
-            )
-            onBackPressed()
+            finish()
         }
 
         buttonDelete.setOnClickListener {

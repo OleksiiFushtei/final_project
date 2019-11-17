@@ -1,6 +1,7 @@
 package com.example.final_project.api.interfaces
 
 import com.example.final_project.models.ControllerModel
+import com.example.final_project.models.ErrorModel
 
 interface ControllerInterface {
 
@@ -34,7 +35,10 @@ interface ControllerInterface {
 
     interface ControllerSaveListener {
         fun onControllerSaveResponseSuccess()
-        fun onControllerSaveResponseFailure()
+        fun onControllerSaveResponseFailure(
+            errorModel: ErrorModel
+        )
+
         fun onControllerSaveCancelled()
         fun onControllerSaveFailure()
     }
@@ -44,14 +48,20 @@ interface ControllerInterface {
             controller: ControllerModel
         )
 
-        fun onGetControllerResponseFailure()
+        fun onGetControllerResponseFailure(
+            errorModel: ErrorModel
+        )
+
         fun onGetControllerCancelled()
         fun onGetControllerFailure()
     }
 
     interface ControllerDeleteListener {
         fun onDeleteControllerResponseSuccess()
-        fun onDeleteControllerResponseFailure()
+        fun onDeleteControllerResponseFailure(
+            errorModel: ErrorModel
+        )
+
         fun onDeleteControllerCancelled()
         fun onDeleteControllerFailure()
     }

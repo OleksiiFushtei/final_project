@@ -16,6 +16,7 @@ import com.example.final_project.api.helpers.SensorHubHelper
 import com.example.final_project.api.helpers.SensorsListHelper
 import com.example.final_project.api.interfaces.SensorsListInterface
 import com.example.final_project.core.MainApplication
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -112,7 +113,7 @@ class SensorsFragment :
         }
     }
 
-    override fun onGetSensorsListResponseFailure() {
+    override fun onGetSensorsListResponseFailure(errorModel: ErrorModel) {
         Snackbar.make(
             root_layout,
             "1",

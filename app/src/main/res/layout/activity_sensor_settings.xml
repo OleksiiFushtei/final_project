@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -10,7 +11,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_dodgeInsetEdges="bottom">
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sensorNameTextInput"
@@ -54,13 +56,42 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/sensorTypeSpinner"
-                android:spinnerMode="dialog"
-                android:foregroundTint="#000"
-                android:backgroundTint="@color/colorPrimaryDark"
+        <!--        <Spinner-->
+        <!--                android:id="@+id/typesSpinner"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content" />-->
+
+        <RadioGroup
+                android:id="@+id/rgTypes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:checkedButton="@id/rbLight"
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:id="@+id/rbLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Light" />
+
+            <RadioButton
+                    android:id="@+id/rbTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Temperature" />
+
+            <RadioButton
+                    android:id="@+id/rbSubmersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Submersion" />
+
+        </RadioGroup>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/sensorSwitch"
@@ -127,4 +158,4 @@
             android:indeterminate="true"
             android:progressTint="@color/colorPrimaryDark" />
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

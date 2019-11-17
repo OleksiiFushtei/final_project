@@ -8,6 +8,8 @@ import com.example.final_project.api.helpers.ControllerHelper
 import com.example.final_project.api.interfaces.ControllerInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerModel
+import com.example.final_project.models.ErrorModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_controller_settings.*
 
 class ControllerSettingsActivity :
@@ -20,21 +22,74 @@ class ControllerSettingsActivity :
         finish()
     }
 
-    override fun onControllerSaveResponseFailure() {}
+    override fun onControllerSaveResponseFailure(errorModel: ErrorModel) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onControllerSaveCancelled() {}
+    override fun onControllerSaveCancelled() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Saving cancelled. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onControllerSaveFailure() {}
+    override fun onControllerSaveFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
     override fun onDeleteControllerResponseSuccess() {
         finish()
     }
 
-    override fun onDeleteControllerResponseFailure() {}
+    override fun onDeleteControllerResponseFailure(errorModel: ErrorModel) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onDeleteControllerCancelled() {}
+    override fun onDeleteControllerCancelled() {
+        progressBar.visibility =
+        View.GONE
+        Snackbar.make(
+            root_layout,
+            "Deleting cancelled. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()}
 
-    override fun onDeleteControllerFailure() {}
+    override fun onDeleteControllerFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
     override fun onGetControllerResponseSuccess(
         controller: ControllerModel
@@ -51,11 +106,38 @@ class ControllerSettingsActivity :
             controller.status
     }
 
-    override fun onGetControllerResponseFailure() {}
+    override fun onGetControllerResponseFailure(errorModel: ErrorModel) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onGetControllerCancelled() {}
+    override fun onGetControllerCancelled() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
-    override fun onGetControllerFailure() {}
+    override fun onGetControllerFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -118,14 +200,6 @@ class ControllerSettingsActivity :
         }
 
         buttonBack.setOnClickListener {
-            val signInIntent =
-                Intent(
-                    this@ControllerSettingsActivity,
-                    SignInActivity::class.java
-                )
-            startActivity(
-                signInIntent
-            )
             finish()
         }
 

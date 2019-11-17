@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/root_layout"
@@ -11,7 +11,8 @@
     <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_dodgeInsetEdges="bottom">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listOfSensors"
@@ -30,7 +31,7 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:src="@drawable/ic_add_white_36dp"
-                app:rippleColor="@color/colorPrimaryDark"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:tint="#fff" />
 
     </FrameLayout>
@@ -44,4 +45,4 @@
             android:indeterminate="true"
             android:progressTint="@color/colorPrimaryDark" />
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

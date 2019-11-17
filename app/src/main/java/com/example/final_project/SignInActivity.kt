@@ -8,8 +8,10 @@ import android.widget.Toast
 import com.example.final_project.api.helpers.SignInHelper
 import com.example.final_project.api.interfaces.SignInInterface
 import com.example.final_project.core.MainApplication
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
+import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_sign_in.buttonFP
@@ -40,29 +42,37 @@ class SignInActivity :
         finish()
     }
 
-    override fun onSignInResponseFailure() {
-        Toast.makeText(
-            this@SignInActivity,
-            "Username or password is not correct",
-            Toast.LENGTH_SHORT
+    override fun onSignInResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onSignInCancelled() {
-        Toast.makeText(
-            this@SignInActivity,
-            "Login Cancelled",
-            Toast.LENGTH_SHORT
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Sign in cancelled. Try again",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onSignInFailure() {
-        Toast.makeText(
-            this@SignInActivity,
-            "Check your confection to the Internet",
-            Toast.LENGTH_SHORT
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
@@ -86,12 +96,14 @@ class SignInActivity :
                 app.getApi()
             )
 
-        progressBar.visibility = View.GONE
+        progressBar.visibility =
+            View.GONE
 
         buttonSI.setOnClickListener {
             if (validateAll()) {
                 //send data to server
-                progressBar.visibility = View.VISIBLE
+                progressBar.visibility =
+                    View.VISIBLE
                 val checkData =
                     SignInDataModel(
                         usernameEditText.text.toString(),

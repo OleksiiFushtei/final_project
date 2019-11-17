@@ -10,6 +10,7 @@ import com.example.final_project.api.helpers.ControllersListHelper
 import com.example.final_project.api.interfaces.ControllersListInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerListItemModel
+import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list_of_controllers.*
 
@@ -41,14 +42,37 @@ class ListOfControllersActivity :
         }
     }
 
-    override fun onGetControllersListResponseFailure() {
+    override fun onGetControllersListResponseFailure(errorModel: ErrorModel) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetControllersListCancelled() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetControllerListFailure() {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onCreate(

@@ -1,5 +1,6 @@
 package com.example.final_project.api.interfaces
 
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignUpDataModel
 
 interface SignUpInterface {
@@ -10,7 +11,10 @@ interface SignUpInterface {
 
     interface SignUpListener {
         fun onSignUpResponseSuccess()
-        fun onSignUpResponseFailure()
+        fun onSignUpResponseFailure(
+            errorModel: ErrorModel
+        )
+
         fun onSignUpCancelled()
         fun onSignUpFailure()
     }

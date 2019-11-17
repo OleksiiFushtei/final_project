@@ -2,7 +2,9 @@ package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.SignUpInterface
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignUpDataModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
@@ -37,7 +39,18 @@ class SignUpHelper(
                 ) {
                     when {
                         response.isSuccessful -> signUpListener.onSignUpResponseSuccess()
-                        else -> signUpListener.onSignUpResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            signUpListener.onSignUpResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

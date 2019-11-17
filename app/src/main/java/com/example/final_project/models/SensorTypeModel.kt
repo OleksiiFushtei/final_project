@@ -3,7 +3,7 @@ package com.example.final_project.models
 import com.example.final_project.models.interfaces.ISensorTypeModel
 import com.google.gson.annotations.SerializedName
 
-class SensorTypeModel(
+data class SensorTypeModel(
     @SerializedName(
         "id"
     )

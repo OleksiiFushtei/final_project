@@ -3,6 +3,8 @@ package com.example.final_project.api.helpers
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.ControllersListInterface
 import com.example.final_project.models.ControllerListItemModel
+import com.example.final_project.models.ErrorModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
@@ -38,7 +40,18 @@ class ControllersListHelper(
                                 response.body()!!
                             )
                         )
-                        else -> controllerListListener.onGetControllersListResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            controllerListListener.onGetControllersListResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

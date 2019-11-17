@@ -2,20 +2,23 @@ package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.ControllerInterface
+import com.example.final_project.api.interfaces.ControllerInterface.*
 import com.example.final_project.models.ControllerModel
+import com.example.final_project.models.ErrorModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
 class ControllerHelper(
     private val apiInterface: ApiInterface
-) : ControllerInterface.ControllerGetInterface,
-    ControllerInterface.ControllerAddInterface,
-    ControllerInterface.ControllerEditInterface,
-    ControllerInterface.ControllerDeleteInterface {
+) : ControllerGetInterface,
+    ControllerAddInterface,
+    ControllerEditInterface,
+    ControllerDeleteInterface {
 
     override fun addController(
         controllerModel: ControllerModel,
-        controllerSaveListener: ControllerInterface.ControllerSaveListener
+        controllerSaveListener: ControllerSaveListener
     ) {
         val call =
             apiInterface.addController(
@@ -41,7 +44,18 @@ class ControllerHelper(
                 ) {
                     when {
                         response.isSuccessful -> controllerSaveListener.onControllerSaveResponseSuccess()
-                        else -> controllerSaveListener.onControllerSaveResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            controllerSaveListener.onControllerSaveResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
             }
@@ -50,7 +64,7 @@ class ControllerHelper(
 
     override fun editController(
         controllerModel: ControllerModel,
-        controllerSaveListener: ControllerInterface.ControllerSaveListener
+        controllerSaveListener: ControllerSaveListener
     ) {
         val call =
             apiInterface.editController(
@@ -76,7 +90,18 @@ class ControllerHelper(
                 ) {
                     when {
                         response.isSuccessful -> controllerSaveListener.onControllerSaveResponseSuccess()
-                        else -> controllerSaveListener.onControllerSaveResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            controllerSaveListener.onControllerSaveResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
             }
@@ -85,7 +110,7 @@ class ControllerHelper(
 
     override fun getController(
         id: Int,
-        controllerGetListener: ControllerInterface.ControllerGetListener
+        controllerGetListener: ControllerGetListener
     ) {
         val call =
             apiInterface.getController(
@@ -113,7 +138,18 @@ class ControllerHelper(
                         response.isSuccessful -> controllerGetListener.onGetControllerResponseSuccess(
                             response.body()!!
                         )
-                        else -> controllerGetListener.onGetControllerResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            controllerGetListener.onGetControllerResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
             }
@@ -122,7 +158,7 @@ class ControllerHelper(
 
     override fun deleteController(
         id: Int,
-        controllerDeleteListener: ControllerInterface.ControllerDeleteListener
+        controllerDeleteListener: ControllerDeleteListener
     ) {
         val call =
             apiInterface.deleteController(
@@ -148,7 +184,18 @@ class ControllerHelper(
                 ) {
                     when {
                         response.isSuccessful -> controllerDeleteListener.onDeleteControllerResponseSuccess()
-                        else -> controllerDeleteListener.onDeleteControllerResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            controllerDeleteListener.onDeleteControllerResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
             }

@@ -140,7 +140,18 @@ class SensorHelper(
                         response.isSuccessful -> sensorGetListener.onSensorGetResponseSuccess(
                             response.body()!!
                         )
-                        else -> sensorGetListener.onSensorGetResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            sensorGetListener.onSensorGetResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 
@@ -176,7 +187,18 @@ class SensorHelper(
                 ) {
                     when {
                         response.isSuccessful -> sensorDeleteListener.onSensorDeleteResponseSuccess()
-                        else -> sensorDeleteListener.onSensorDeleteResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            sensorDeleteListener.onSensorDeleteResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

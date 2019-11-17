@@ -2,7 +2,9 @@ package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.SensorTypeInterface
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorTypeModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
@@ -34,9 +36,22 @@ class SensorTypeHelper(
                 ) {
                     when {
                         response.isSuccessful -> sensorTypeListener.onSensorTypesGetResponseSuccess(
-                            ArrayList(response.body()!!)
+                            ArrayList(
+                                response.body()!!
+                            )
                         )
-                        else -> sensorTypeListener.onSensorTypesGetResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            sensorTypeListener.onSensorTypesGetResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

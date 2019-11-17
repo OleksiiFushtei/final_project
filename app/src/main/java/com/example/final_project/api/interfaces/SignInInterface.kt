@@ -1,5 +1,6 @@
 package com.example.final_project.api.interfaces
 
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 
@@ -13,7 +14,11 @@ interface SignInInterface {
         fun onSignInResponseSuccess(
             token: TokenModel
         )
-        fun onSignInResponseFailure()
+
+        fun onSignInResponseFailure(
+            errorModel: ErrorModel
+        )
+
         fun onSignInCancelled()
         fun onSignInFailure()
     }

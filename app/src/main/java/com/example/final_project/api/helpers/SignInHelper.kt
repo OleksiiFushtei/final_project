@@ -2,8 +2,10 @@ package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
 import com.example.final_project.api.interfaces.SignInInterface
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
@@ -40,7 +42,18 @@ class SignInHelper(
                         response.isSuccessful -> signInListener.onSignInResponseSuccess(
                             response.body()!!
                         )
-                        else -> signInListener.onSignInResponseFailure()
+                        else -> {
+                            val gson =
+                                Gson()
+                            val errorModel: ErrorModel =
+                                gson.fromJson(
+                                    response.errorBody().toString(),
+                                    ErrorModel::class.java
+                                )
+                            signInListener.onSignInResponseFailure(
+                                errorModel = errorModel
+                            )
+                        }
                     }
                 }
 

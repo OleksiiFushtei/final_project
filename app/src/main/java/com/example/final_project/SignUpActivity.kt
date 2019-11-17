@@ -9,7 +9,9 @@ import android.widget.Toast
 import com.example.final_project.api.helpers.SignUpHelper
 import com.example.final_project.api.interfaces.SignUpInterface
 import com.example.final_project.core.MainApplication
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignUpDataModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity :
@@ -27,32 +29,37 @@ class SignUpActivity :
         finish()
     }
 
-    override fun onSignUpResponseFailure() {
-        progressBar.visibility = View.GONE
-        Toast.makeText(
-            this@SignUpActivity,
-            "Sign Up Response Failure",
-            Toast.LENGTH_SHORT
+    override fun onSignUpResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            errorModel.message,
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onSignUpCancelled() {
-        progressBar.visibility = View.GONE
-        Toast.makeText(
-            this@SignUpActivity,
-            "Sign Up Cancelled",
-            Toast.LENGTH_SHORT
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Sign up cancelled. Try again",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onSignUpFailure() {
-        progressBar.visibility = View.GONE
-        Toast.makeText(
-            this@SignUpActivity,
-            "Check your confection to the Internet",
-            Toast.LENGTH_SHORT
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
         )
             .show()
     }
