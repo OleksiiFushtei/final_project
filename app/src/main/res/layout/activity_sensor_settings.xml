@@ -72,21 +72,21 @@
 
             <RadioButton
                     android:id="@+id/rbLight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Light" />
 
             <RadioButton
                     android:id="@+id/rbTemperature"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Temperature" />
 
             <RadioButton
                     android:id="@+id/rbSubmersion"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Submersion" />
@@ -148,14 +148,14 @@
 
     </LinearLayout>
 
-    <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#F5F5F5"
-            android:indeterminate="true"
-            android:progressTint="@color/colorPrimaryDark" />
+<!--    <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="?android:attr/progressBarStyleLarge"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="#F5F5F5"-->
+<!--            android:indeterminate="true"-->
+<!--            android:progressTint="@color/colorPrimaryDark" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
