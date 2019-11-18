@@ -148,14 +148,14 @@
 
     </LinearLayout>
 
-<!--    <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            style="?android:attr/progressBarStyleLarge"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:background="#F5F5F5"-->
-<!--            android:indeterminate="true"-->
-<!--            android:progressTint="@color/colorPrimaryDark" />-->
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#F5F5F5"
+            android:indeterminate="true"
+            android:progressTint="@color/colorPrimaryDark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
