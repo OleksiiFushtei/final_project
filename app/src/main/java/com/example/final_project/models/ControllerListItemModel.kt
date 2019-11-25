@@ -3,7 +3,11 @@ package com.example.final_project.models
 import com.example.final_project.models.interfaces.IControllerListItemModel
 import com.google.gson.annotations.SerializedName
 
-class ControllerListItemModel(
+data class ControllerListItemModel(
+    @SerializedName(
+        "id"
+    )
+    override val id: Int,
     @SerializedName(
         "isAdmin"
     )
@@ -11,5 +15,10 @@ class ControllerListItemModel(
     @SerializedName(
         "controller"
     )
-    override val controller: ControllerModel
+    override val controller: ControllerModel,
+    @SerializedName(
+        "user"
+    )
+    override val user: UserModel
+
 ) : IControllerListItemModel

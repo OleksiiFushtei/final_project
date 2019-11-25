@@ -23,6 +23,14 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <TextView
+                android:id="@+id/emptyList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_available_sensors"
+                android:visibility="gone" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addSensorButton"
                 android:layout_width="wrap_content"
@@ -43,6 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:progressTint="@color/colorPrimaryDark" />
+            android:indeterminateTint="@color/colorPrimaryDark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

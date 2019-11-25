@@ -15,10 +15,7 @@ interface SignInInterface {
             token: TokenModel
         )
 
-        fun onSignInResponseFailure(
-            errorModel: ErrorModel
-        )
-
+        fun onSignInResponseFailure()
         fun onSignInCancelled()
         fun onSignInFailure()
     }

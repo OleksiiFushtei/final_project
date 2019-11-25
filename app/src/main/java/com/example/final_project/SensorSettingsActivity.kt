@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.example.final_project.api.helpers.SensorHelper
-import com.example.final_project.api.helpers.SensorTypeHelper
 import com.example.final_project.api.interfaces.SensorInterface
-import com.example.final_project.api.interfaces.SensorTypeInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
-import com.example.final_project.models.SensorTypeModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_sensor_settings.*
 
@@ -20,56 +17,7 @@ class SensorSettingsActivity :
     AppCompatActivity(),
     SensorInterface.SensorGetListener,
     SensorInterface.SensorSaveListener,
-    SensorInterface.SensorDeleteListener,
-    SensorTypeInterface.SensorTypesListener {
-
-    override fun onSensorTypesGetResponseSuccess(
-        list: ArrayList<SensorTypeModel>
-    ) {
-        sensorTypes.addAll(
-            list
-        )
-        for (item in sensorTypes) {
-            sensorTypesList.add(
-                item.typeName.capitalize()
-            )
-        }
-    }
-
-    override fun onSensorTypesGetResponseFailure(
-        errorModel: ErrorModel
-    ) {
-        progressBar.visibility =
-            View.GONE
-        Snackbar.make(
-            root_layout,
-            errorModel.message,
-            Snackbar.LENGTH_SHORT
-        )
-            .show()
-    }
-
-    override fun onSensorTypesGetCancelled() {
-        progressBar.visibility =
-            View.GONE
-        Snackbar.make(
-            root_layout,
-            "Something went wrong. Try again",
-            Snackbar.LENGTH_SHORT
-        )
-            .show()
-    }
-
-    override fun onSensorTypesGetFailure() {
-        progressBar.visibility =
-            View.GONE
-        Snackbar.make(
-            root_layout,
-            "Check your connection to the internet",
-            Snackbar.LENGTH_SHORT
-        )
-            .show()
-    }
+    SensorInterface.SensorDeleteListener {
 
     override fun onSensorSaveResponseSuccess() {
         finish()
@@ -78,6 +26,8 @@ class SensorSettingsActivity :
     override fun onSensorSaveResponseFailure(
         errorModel: ErrorModel
     ) {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
             errorModel.message,
@@ -87,6 +37,8 @@ class SensorSettingsActivity :
     }
 
     override fun onSensorSaveCancelled() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
             "Saving cancelled. Try again",
@@ -96,6 +48,8 @@ class SensorSettingsActivity :
     }
 
     override fun onSensorSaveFailure() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
             "Check your connection to the Internet",
@@ -209,12 +163,6 @@ class SensorSettingsActivity :
     private var sensorTypeId: Int =
         1
 
-    private var sensorTypesList: ArrayList<String> =
-        ArrayList()
-
-    private var sensorTypes: ArrayList<SensorTypeModel> =
-        ArrayList()
-
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
@@ -232,15 +180,6 @@ class SensorSettingsActivity :
             SensorHelper(
                 app.getApi()
             )
-
-        val sensorTypeHelper =
-            SensorTypeHelper(
-                app.getApi()
-            )
-
-        sensorTypeHelper.getSensorTypes(
-            this
-        )
 
         val controllerId =
             intent.getIntExtra(
@@ -265,7 +204,7 @@ class SensorSettingsActivity :
             )
         }
 
-        rgTypes.setOnCheckedChangeListener { group, checkedId ->
+        rgTypes.setOnCheckedChangeListener { _, checkedId ->
             val rButton: RadioButton =
                 findViewById(
                     checkedId
@@ -289,10 +228,9 @@ class SensorSettingsActivity :
                         sensorNameEditText.text.toString(),
                         sensorPinEditText.text.toString().toInt(),
                         sensorSwitch.isChecked,
-                        0,
+                        0.0,
                         sensorTypeId,
-                        controllerId,
-                        null
+                        controllerId
                     )
                 if (sensorId == 0) {
                     sensorHelper.addSensor(

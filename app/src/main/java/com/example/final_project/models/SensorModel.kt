@@ -3,7 +3,7 @@ package com.example.final_project.models
 import com.example.final_project.models.interfaces.ISensorModel
 import com.google.gson.annotations.SerializedName
 
-class SensorModel(
+data class SensorModel(
     @SerializedName(
         "id"
     )
@@ -23,7 +23,7 @@ class SensorModel(
     @SerializedName(
         "value"
     )
-    override var value: Int,
+    override var value: Double,
     @SerializedName(
         "sensorTypeId"
     )
@@ -31,9 +31,5 @@ class SensorModel(
     @SerializedName(
         "controllerId"
     )
-    override val controllerId: Int,
-    @SerializedName(
-        "sensorType"
-    )
-    override val sensorType: SensorTypeModel?
+    override val controllerId: Int
 ) : ISensorModel

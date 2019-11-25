@@ -1,9 +1,9 @@
 package com.example.final_project.models
 
-import com.example.final_project.models.interfaces.ISensorTypeModel
+import com.example.final_project.models.interfaces.IDeviceTypeModel
 import com.google.gson.annotations.SerializedName
 
-data class SensorTypeModel(
+data class DeviceTypeModel(
     @SerializedName(
         "id"
     )
@@ -12,4 +12,5 @@ data class SensorTypeModel(
         "typeName"
     )
     override val typeName: String
-) : ISensorTypeModel
+) : IDeviceTypeModel {
+}

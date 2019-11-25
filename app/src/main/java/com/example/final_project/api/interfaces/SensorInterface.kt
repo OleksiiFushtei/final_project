@@ -61,6 +61,7 @@ interface SensorInterface {
         fun onSensorDeleteResponseFailure(
             errorModel: ErrorModel
         )
+
         fun onSensorDeleteCancelled()
         fun onSensorDeleteFailure()
     }

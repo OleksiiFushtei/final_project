@@ -1,9 +1,11 @@
 package com.example.final_project.api.interfaces;
 
+import com.example.final_project.models.ControllerAccessModel;
 import com.example.final_project.models.ControllerListItemModel;
 import com.example.final_project.models.ControllerModel;
+import com.example.final_project.models.DeviceModel;
+import com.example.final_project.models.DeviceTypeModel;
 import com.example.final_project.models.SensorModel;
-import com.example.final_project.models.SensorTypeModel;
 import com.example.final_project.models.SignInDataModel;
 import com.example.final_project.models.SignUpDataModel;
 import com.example.final_project.models.TokenModel;
@@ -48,16 +50,17 @@ public interface ApiInterface {
     @DELETE("api/Controller/{id}")
     Call<ControllerModel> deleteController(@Path("id") int id);
 
+
     //sensors
     //get list of available sensors
     @GET("/api/Sensor/All/{controllerId}")
     Call<List<SensorModel>> listSensors(@Path("controllerId") int id);
 
-    //get selected controller
+    //get selected sensor
     @GET("/api/Sensor/{id}")
     Call<SensorModel> getSensor(@Path("id") int id);
 
-    //delete controller
+    //delete sensor
     @DELETE("/api/Sensor/{id}")
     Call<SensorModel> deleteSensor(@Path("id") int id);
 
@@ -69,8 +72,49 @@ public interface ApiInterface {
     @POST("/api/Sensor")
     Call<SensorModel> editSensor(@Body SensorModel sensorModel);
 
-    //get types of sensors
-    @GET("/api/SensorType")
-    Call<List<SensorTypeModel>> getSensorTypes();
 
+    //devices
+    //get list of available devices
+    @GET("/api/Device/All/{controllerId}")
+    Call<List<DeviceModel>> listDevices(@Path("controllerId") int id);
+
+    //get selected device
+    @GET("/api/Device/{id}")
+    Call<DeviceModel> getDevice(@Path("id") int id);
+
+    //delete device
+    @DELETE("/api/Device/{id}")
+    Call<DeviceModel> deleteDevice(@Path("id") int id);
+
+    //add new device
+    @PUT("/api/Device")
+    Call<DeviceModel> addDevice(@Body DeviceModel deviceModel);
+
+    //edit device
+    @POST("/api/Device")
+    Call<DeviceModel> editDevice(@Body DeviceModel deviceModel);
+
+
+    //access
+    //controllers
+    //get list of users for controller
+    @GET("/api/Access/Controller/{id}")
+    Call<List<ControllerListItemModel>> listUsersForControllers(@Path("id") int id);
+
+    //delete user
+    @DELETE("/api/Access/Controller/{id}")
+    Call<ControllerAccessModel> revokeAccessFromController(@Path("id") int id);
+
+    //add user
+    @PUT("/api/Access/Controller")
+    Call<ControllerListItemModel> addAccessToController(@Body ControllerAccessModel controllerAccessModel);
+
+    //devices
+    //
+//    @GET("/api/Access/Device/{id}")
+//    Call<List<DeviceAccessModel>> listUsersForDevices(@Path("id") int id);
+
+    //
+//    @PUT("/api/Access/Device")
+//    Call<DeviceAccessModel> putSth(@Body DeviceAccessModel deviceAccessModel);
 }

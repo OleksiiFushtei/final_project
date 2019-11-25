@@ -1,3 +1,24 @@
 package com.example.final_project.api.interfaces
 
-interface DevicesListInterface
+import com.example.final_project.models.DeviceModel
+import com.example.final_project.models.ErrorModel
+
+interface DevicesListInterface {
+    fun getListOfDevices(
+        id: Int,
+        devicesListListener: DevicesListListener
+    )
+
+    interface DevicesListListener {
+        fun onGetDevicesListResponseSuccess(
+            list: ArrayList<DeviceModel>
+        )
+
+        fun onGetDevicesListResponseFailure(
+            errorModel: ErrorModel
+        )
+
+        fun onGetDevicesListCancelled()
+        fun onGetDevicesListFailure()
+    }
+}

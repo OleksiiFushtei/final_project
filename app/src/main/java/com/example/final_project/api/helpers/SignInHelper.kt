@@ -42,18 +42,7 @@ class SignInHelper(
                         response.isSuccessful -> signInListener.onSignInResponseSuccess(
                             response.body()!!
                         )
-                        else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
-                            signInListener.onSignInResponseFailure(
-                                errorModel = errorModel
-                            )
-                        }
+                        else -> signInListener.onSignInResponseFailure()
                     }
                 }
 

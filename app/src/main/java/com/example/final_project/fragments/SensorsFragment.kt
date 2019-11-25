@@ -82,6 +82,9 @@ class SensorsFragment :
                     "token"
                 )
             )
+        if (!sensorHubHelper.hubCheck()) {
+            sensorHubHelper.hubInit()
+        }
         sensorHubHelper.updateSensor(
             listOfSensors
         ) { sensorModel: SensorModel, view: RecyclerView ->
@@ -111,30 +114,48 @@ class SensorsFragment :
             )
                 .show()
         }
+        when {
+            list.isEmpty() -> {
+                listOfSensors.visibility = View.GONE
+                emptyList.visibility = View.VISIBLE
+            }
+            else -> {
+                listOfSensors.visibility = View.VISIBLE
+                emptyList.visibility = View.GONE
+            }
+        }
     }
 
-    override fun onGetSensorsListResponseFailure(errorModel: ErrorModel) {
+    override fun onGetSensorsListResponseFailure(
+        errorModel: ErrorModel
+    ) {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
-            "1",
+            errorModel.message,
             Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onGetSensorsListCancelled() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
-            "2",
+            "Something went wrong. Try again",
             Snackbar.LENGTH_SHORT
         )
             .show()
     }
 
     override fun onGetSensorsListFailure() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
-            "3",
+            "Check your connection to the internet",
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -156,7 +177,6 @@ class SensorsFragment :
                 container,
                 false
             )
-
         val bundle =
             this.arguments
         val controllerId =
@@ -166,15 +186,12 @@ class SensorsFragment :
             )
         val app =
             context?.applicationContext as MainApplication
-
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
             )
-
         progressBar?.visibility =
             View.VISIBLE
-
         val sensorsListHelper =
             SensorsListHelper(
                 app.getApi()
@@ -185,28 +202,26 @@ class SensorsFragment :
                 this
             )
         }
-
         val addButton =
             view.findViewById<FloatingActionButton>(
                 R.id.addSensorButton
             )
-
         addButton?.setOnClickListener {
-            val newIntent =
+            val addSensor =
                 Intent(
                     this.activity,
                     SensorSettingsActivity::class.java
                 )
-            newIntent.putExtra(
+            addSensor.putExtra(
                 "controllerId",
                 controllerId
             )
-            newIntent.putExtra(
+            addSensor.putExtra(
                 "sensorId",
                 0
             )
             startActivity(
-                newIntent
+                addSensor
             )
         }
 
@@ -224,10 +239,8 @@ class SensorsFragment :
             )
         val app =
             context?.applicationContext as MainApplication
-
         progressBar?.visibility =
             View.VISIBLE
-
         val sensorsListHelper =
             SensorsListHelper(
                 app.getApi()
@@ -242,6 +255,14 @@ class SensorsFragment :
 
     override fun onPause() {
         super.onPause()
-        sensorHubHelper.hubStop()
+        sensorHubHelper =
+            SensorHubHelper(
+                Hawk.get(
+                    "token"
+                )
+            )
+        if (sensorHubHelper.hubCheck()) {
+            sensorHubHelper.hubStop()
+        }
     }
 }

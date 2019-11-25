@@ -30,22 +30,22 @@
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sensors" />
+                android:text="@string/sensors" />
 
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Devices" />
+                android:text="@string/devices" />
 
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Scripts" />
+                android:text="@string/scripts" />
 
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Users" />
+                android:text="@string/users" />
 
     </com.google.android.material.tabs.TabLayout>
 

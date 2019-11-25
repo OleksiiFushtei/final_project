@@ -3,14 +3,16 @@ package com.example.final_project.api.helpers
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.models.SensorModel
 import com.microsoft.signalr.HubConnectionBuilder
+import com.microsoft.signalr.HubConnectionState
 import io.reactivex.Single
+import okhttp3.WebSocket
 
 class SensorHubHelper(
     token: String
 ) {
     private var hubConnection =
         HubConnectionBuilder.create(
-            "https://fudokosmarthomeweb20191110084623.azurewebsites.net/real/sensors"
+            "https://fudokosmarthome.azurewebsites.net/real/sensors"
         )
             .withAccessTokenProvider(
                 Single.defer {
@@ -36,4 +38,7 @@ class SensorHubHelper(
     fun hubStop() {
         hubConnection.stop()
     }
+
+    fun hubCheck(): Boolean =
+        hubConnection.connectionState == HubConnectionState.CONNECTED
 }

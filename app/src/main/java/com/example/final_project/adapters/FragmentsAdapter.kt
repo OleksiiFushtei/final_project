@@ -8,15 +8,24 @@ import com.example.final_project.fragments.ScriptsFragment
 import com.example.final_project.fragments.SensorsFragment
 import com.example.final_project.fragments.UsersFragment
 
-class FragmentsAdapter (fm: FragmentManager, private val controllerId: Int) : FragmentPagerAdapter(fm) {
+class FragmentsAdapter(
+    fm: FragmentManager,
+    private val controllerId: Int
+) : FragmentPagerAdapter(
+    fm
+) {
     override fun getItem(
         position: Int
     ): Fragment {
         return when (position) {
-            0 -> SensorsFragment.newInstance(controllerId)
-            1 -> DevicesFragment.newInstance(controllerId)
+            0 -> SensorsFragment.newInstance(
+                controllerId
+            )
+            1 -> DevicesFragment.newInstance(
+                controllerId
+            )
             2 -> ScriptsFragment()
-            else -> UsersFragment()
+            else -> UsersFragment.newInstance(controllerId)
         }
     }
 

@@ -51,15 +51,10 @@
                     android:id="@+id/sensorPinEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="numberDecimal"
                     android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--        <Spinner-->
-        <!--                android:id="@+id/typesSpinner"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content" />-->
 
         <RadioGroup
                 android:id="@+id/rgTypes"
@@ -154,8 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#F5F5F5"
             android:indeterminate="true"
-            android:progressTint="@color/colorPrimaryDark" />
+            android:indeterminateTint="@color/colorPrimaryDark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

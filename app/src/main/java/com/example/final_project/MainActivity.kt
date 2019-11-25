@@ -18,23 +18,19 @@ class MainActivity :
         setContentView(
             R.layout.activity_main
         )
-
         val title =
             intent.getStringExtra(
                 "name"
             )
-
         if (title != null) {
             toolbar.title =
                 title
         } else {
             intent.getStringExtra("name")
         }
-
         setSupportActionBar(
             toolbar
         )
-
         val fragmentAdapter =
             FragmentsAdapter(
                 supportFragmentManager,
@@ -45,7 +41,6 @@ class MainActivity :
             )
         viewPager.adapter =
             fragmentAdapter
-
         tabLayout.setupWithViewPager(
             viewPager
         )

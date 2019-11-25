@@ -40,7 +40,7 @@ class MainApplication :
                     client
                 )
                 .baseUrl(
-                    "https://fudokosmarthomeweb20191110084623.azurewebsites.net/"
+                    "https://fudokosmarthome.azurewebsites.net/"
                 )
                 .addConverterFactory(
                     GsonConverterFactory.create()

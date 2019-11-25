@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/root_layout"
@@ -11,7 +11,8 @@
     <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_dodgeInsetEdges="bottom">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listOfDevices"
@@ -21,6 +22,14 @@
                 android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+                android:id="@+id/emptyList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_available_devices"
+                android:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addDeviceButton"
@@ -42,6 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:progressTint="@color/colorPrimaryDark" />
+            android:indeterminateTint="@color/colorPrimaryDark" />
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

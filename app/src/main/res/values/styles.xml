@@ -27,4 +27,18 @@
         </item>
     </style>
 
+    <style name="ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">#fff</item>
+        <item name="android:popupBackground">#fff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="errorEnabled">true</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ExposedDropdownMenu.DropdownItem">
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

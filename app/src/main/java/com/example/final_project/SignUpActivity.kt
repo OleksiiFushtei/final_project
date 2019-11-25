@@ -134,7 +134,7 @@ class SignUpActivity :
             }
             !usernameEditText.text.toString().matches(
                 Regex(
-                    "^[a-z0-9_-]{3,50}\$"
+                    "^[a-zA-Z0-9_-]{3,50}\$"
                 )
             ) -> {
                 usernameTextInput.error =

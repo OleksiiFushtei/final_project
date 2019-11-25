@@ -43,13 +43,12 @@ class SignInActivity :
     }
 
     override fun onSignInResponseFailure(
-        errorModel: ErrorModel
     ) {
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            "Username or password in not correct",
             Snackbar.LENGTH_SHORT
         )
             .show()

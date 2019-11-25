@@ -6,12 +6,12 @@ import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SensorModel
 import com.google.gson.Gson
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class SensorsListHelper(
     private val apiInterface: ApiInterface
 ) : SensorsListInterface {
+
     override fun getListOfSensors(
         id: Int,
         sensorsListListener: SensorsListInterface.SensorsListListener
@@ -22,7 +22,8 @@ class SensorsListHelper(
             )
         call.enqueue(
             object :
-                Callback<List<SensorModel>> {
+                retrofit2.Callback<List<SensorModel>> {
+
                 override fun onFailure(
                     call: Call<List<SensorModel>>,
                     t: Throwable
@@ -58,9 +59,7 @@ class SensorsListHelper(
                         }
                     }
                 }
-
             }
         )
     }
-
 }
