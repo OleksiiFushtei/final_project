@@ -104,6 +104,9 @@ class UserSettingsActivity :
                 this
             )
         }
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
     }
 }
