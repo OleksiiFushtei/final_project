@@ -1,5 +1,6 @@
 package com.example.final_project
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,8 +12,12 @@ import com.example.final_project.api.interfaces.ControllersListInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerListItemModel
 import com.example.final_project.models.ErrorModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list_of_controllers.*
+import kotlinx.android.synthetic.main.activity_list_of_controllers.root_layout
+import kotlinx.android.synthetic.main.activity_list_of_controllers.toolbar
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ListOfControllersActivity :
     AppCompatActivity(),
@@ -114,6 +119,36 @@ class ListOfControllersActivity :
         controllersListHelper.getListOfController(
             this
         )
+
+        toolbar.setOnMenuItemClickListener {
+            MaterialAlertDialogBuilder(
+                this.applicationContext
+            ).setTitle(
+                "Sign out"
+            )
+                .setMessage(
+//                    "Are you sure you want to sign out?"
+                    "ARE YOU SURE ABOUT THAT?"
+                )
+                .setPositiveButton(
+                    "Sign out"
+                ) { _: DialogInterface, _: Int ->
+                    val signInIntent =
+                        Intent(
+                            this@ListOfControllersActivity,
+                            SignInActivity::class.java
+                        )
+                    startActivity(
+                        signInIntent
+                    )
+                    finish()
+                }
+                .setNegativeButton(
+                    "Cancel",
+                    null
+                )
+            false
+        }
 
     }
 
