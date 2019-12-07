@@ -14,9 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
             app:layout_dodgeInsetEdges="bottom">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -68,75 +68,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_weight="10"
                     android:buttonTint="@color/colorPrimary" />
-
-            <!--            <LinearLayout-->
-            <!--                    android:id="@+id/ll_pin"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginStart="16dp"-->
-            <!--                    android:orientation="horizontal">-->
-
-            <!--                <RadioButton-->
-            <!--                        android:id="@+id/rbPin"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content" />-->
-
-            <!--                <com.google.android.material.textfield.TextInputLayout-->
-            <!--                        android:id="@+id/devicePinTextInput"-->
-            <!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-            <!--                        android:layout_width="match_parent"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_marginEnd="16dp"-->
-            <!--                        android:hint="PIN"-->
-            <!--                        app:boxStrokeColor="@color/colorPrimary"-->
-            <!--                        app:boxStrokeWidth="2dp"-->
-            <!--                        app:errorEnabled="true">-->
-
-            <!--                    <com.google.android.material.textfield.TextInputEditText-->
-            <!--                            android:id="@+id/devicePinEditText"-->
-            <!--                            android:layout_width="match_parent"-->
-            <!--                            android:layout_height="wrap_content"-->
-            <!--                            android:inputType="text"-->
-            <!--                            android:maxLines="1" />-->
-
-            <!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-            <!--            </LinearLayout>-->
-
-            <!--            <LinearLayout-->
-            <!--                    android:id="@+id/ll_mac"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginStart="16dp"-->
-            <!--                    android:orientation="horizontal">-->
-
-            <!--                <RadioButton-->
-            <!--                        android:id="@+id/rbMAC"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content" />-->
-
-            <!--                <com.google.android.material.textfield.TextInputLayout-->
-            <!--                        android:id="@+id/deviceMACTextInput"-->
-            <!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-            <!--                        android:layout_width="match_parent"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_marginEnd="16dp"-->
-            <!--                        android:hint="MAC Address"-->
-            <!--                        app:boxStrokeColor="@color/colorPrimary"-->
-            <!--                        app:boxStrokeWidth="2dp"-->
-            <!--                        app:errorEnabled="true">-->
-
-            <!--                    <com.google.android.material.textfield.TextInputEditText-->
-            <!--                            android:id="@+id/deviceMACEditText"-->
-            <!--                            android:layout_width="match_parent"-->
-            <!--                            android:layout_height="wrap_content"-->
-            <!--                            android:enabled="false"-->
-            <!--                            android:inputType="text"-->
-            <!--                            android:maxLines="1" />-->
-
-            <!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-            <!--            </LinearLayout>-->
 
         </RadioGroup>
 

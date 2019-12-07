@@ -40,8 +40,8 @@ class DeviceSettingsActivity :
                     0
                 )
             )
-//        viewPager.offscreenPageLimit =
-//            2
+        viewPager.offscreenPageLimit =
+            2
         viewPager.adapter =
             fragmentAdapter
         tabLayout.setupWithViewPager(

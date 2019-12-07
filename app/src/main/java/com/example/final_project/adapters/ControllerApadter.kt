@@ -57,6 +57,10 @@ class ControllerAdapter(
                 "name",
                 items[position].controller.name
             )
+            controllerIntent.putExtra(
+                "isAdmin",
+                items[position].isAdmin
+            )
             context.startActivity(
                 controllerIntent
             )

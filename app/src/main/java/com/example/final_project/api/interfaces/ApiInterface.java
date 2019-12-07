@@ -1,10 +1,13 @@
 package com.example.final_project.api.interfaces;
 
+import com.example.final_project.models.CommandModel;
 import com.example.final_project.models.ControllerAccessModel;
 import com.example.final_project.models.ControllerListItemModel;
 import com.example.final_project.models.ControllerModel;
+import com.example.final_project.models.DeviceConfigurationModel;
 import com.example.final_project.models.DeviceModel;
-import com.example.final_project.models.DeviceTypeModel;
+import com.example.final_project.models.MeasureModel;
+import com.example.final_project.models.ScriptModel;
 import com.example.final_project.models.SensorModel;
 import com.example.final_project.models.SignInDataModel;
 import com.example.final_project.models.SignUpDataModel;
@@ -93,6 +96,72 @@ public interface ApiInterface {
     //edit device
     @POST("/api/Device")
     Call<DeviceModel> editDevice(@Body DeviceModel deviceModel);
+
+
+    //scripts
+    //get list of available scripts
+    @GET("/api/Script/All/{controllerId}")
+    Call<List<ScriptModel>> listScripts(@Path("controllerId") int id);
+
+    //get selected script
+    @GET("/api/Script/{id}")
+    Call<ScriptModel> getScript(@Path("id") int id);
+
+    //delete script
+    @DELETE("/api/Script/{id}")
+    Call<ScriptModel> deleteScript(@Path("id") int id);
+
+    //add script
+    @PUT("/api/Script")
+    Call<ScriptModel> addScript(@Body ScriptModel scriptModel);
+
+    //edit script
+    @POST("/api/Script")
+    Call<ScriptModel> editScript(@Body ScriptModel scriptModel);
+
+    //measures
+    @GET("/api/Measure/{deviceTypeId}")
+    Call<MeasureModel> getMeasure(@Path("deviceTypeId") int id);
+
+
+    //commands
+    //get list of commands
+    @GET("/api/Command/All/{scriptId}")
+    Call<List<CommandModel>> listCommands(@Path("scriptId") int id);
+
+    //get selected command
+    @GET("/api/Command/{id}")
+    Call<CommandModel> getCommand(@Path("id") int id);
+
+    //delete command
+    @DELETE("/api/Command/{id}")
+    Call<CommandModel> deleteCommand(@Path("id") int id);
+
+    //add command
+    @PUT("/api/Command")
+    Call<CommandModel> addCommand(@Body CommandModel commandModel);
+
+    //edit command
+    @POST("/api/Command")
+    Call<CommandModel> editCommand(@Body CommandModel commandModel);
+
+
+    //device configurations
+    //get config
+    @GET("/api/DeviceConfiguration/{id}")
+    Call<DeviceConfigurationModel> getConfig(@Path("id") int id);
+
+    //delete config
+    @DELETE("/api/DeviceConfiguration/{id}")
+    Call<DeviceConfigurationModel> deleteConfig(@Path("id") int id);
+
+    //add config
+    @PUT("/api/DeviceConfiguration")
+    Call<DeviceConfigurationModel> addConfig(@Body DeviceConfigurationModel deviceConfigurationModel);
+
+    //edit config
+    @POST("/api/DeviceConfiguration")
+    Call<DeviceConfigurationModel> editConfig(@Body DeviceConfigurationModel deviceConfigurationModel);
 
 
     //access

@@ -18,10 +18,12 @@ class DeviceSettingsFragmentsAdapter(
     ): Fragment {
         return when (position) {
             0 -> DeviceSettingsFragment.newInstance(
-                controllerId, deviceId
+                controllerId,
+                deviceId
             )
             else -> DeviceUsersFragment.newInstance(
-                controllerId, deviceId
+                controllerId,
+                deviceId
             )
         }
     }

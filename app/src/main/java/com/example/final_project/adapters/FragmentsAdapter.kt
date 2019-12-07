@@ -10,7 +10,8 @@ import com.example.final_project.fragments.UsersFragment
 
 class FragmentsAdapter(
     fm: FragmentManager,
-    private val controllerId: Int
+    private val controllerId: Int,
+    private val isAdmin: Boolean
 ) : FragmentPagerAdapter(
     fm
 ) {
@@ -19,13 +20,21 @@ class FragmentsAdapter(
     ): Fragment {
         return when (position) {
             0 -> SensorsFragment.newInstance(
-                controllerId
+                controllerId,
+                isAdmin
             )
             1 -> DevicesFragment.newInstance(
-                controllerId
+                controllerId,
+                isAdmin
             )
-            2 -> ScriptsFragment()
-            else -> UsersFragment.newInstance(controllerId)
+            2 -> ScriptsFragment.newInstance(
+                controllerId,
+                isAdmin
+            )
+            else -> UsersFragment.newInstance(
+                controllerId,
+                isAdmin
+            )
         }
     }
 

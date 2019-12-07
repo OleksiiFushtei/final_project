@@ -28,15 +28,22 @@ class DevicesFragment :
     companion object {
         private const val ID =
             "id"
+        private const val ISADMIN =
+            "isAdmin"
 
         fun newInstance(
-            caught: Int
+            caughtId: Int,
+            caughtIsAdmin: Boolean
         ): DevicesFragment {
             val args =
                 Bundle()
             args.putSerializable(
                 ID,
-                caught
+                caughtId
+            )
+            args.putSerializable(
+                ISADMIN,
+                caughtIsAdmin
             )
             val fragment =
                 DevicesFragment()
@@ -56,6 +63,11 @@ class DevicesFragment :
                 "id",
                 0
             )
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin",
+                false
+            )
         progressBar.visibility =
             View.GONE
         listOfDevices.layoutManager =
@@ -66,7 +78,8 @@ class DevicesFragment :
             DeviceAdapter(
                 list,
                 context,
-                controllerId = controllerId
+                controllerId = controllerId,
+                isAdmin = isAdmin
             )
         devicesList.addAll(
             list

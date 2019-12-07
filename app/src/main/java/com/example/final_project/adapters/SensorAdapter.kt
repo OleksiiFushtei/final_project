@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.sensor_row.view.*
 class SensorAdapter(
     private val items: ArrayList<SensorModel>,
     private val context: Context?,
-    private val controlledId: Int?
+    private val controlledId: Int?,
+    private val isAdmin: Boolean?
 ) : RecyclerView.Adapter<ViewHolderSensor>() {
 
     override fun onCreateViewHolder(
@@ -58,6 +59,10 @@ class SensorAdapter(
             sensorSettingsIntent.putExtra(
                 "sensorId",
                 items[position].id
+            )
+            sensorSettingsIntent.putExtra(
+                "isAdmin",
+                isAdmin
             )
             context?.startActivity(
                 sensorSettingsIntent

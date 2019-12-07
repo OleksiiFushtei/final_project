@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.device_row.view.*
 class DeviceAdapter(
     private val items: ArrayList<DeviceModel>,
     private val context: Context?,
-    private val controllerId: Int?
+    private val controllerId: Int?,
+    private val isAdmin: Boolean?
 ) : RecyclerView.Adapter<ViewHolderDevice>() {
 
     override fun onCreateViewHolder(
@@ -60,6 +61,10 @@ class DeviceAdapter(
             deviceSettingsActivity.putExtra(
                 "deviceName",
                 items[position].name
+            )
+            deviceSettingsActivity.putExtra(
+                "isAdmin",
+                isAdmin
             )
             context?.startActivity(
                 deviceSettingsActivity

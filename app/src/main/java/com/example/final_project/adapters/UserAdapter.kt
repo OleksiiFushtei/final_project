@@ -18,7 +18,8 @@ import kotlinx.android.synthetic.main.user_row.view.*
 class UserAdapter(
     private val items: ArrayList<ControllerListItemModel>,
     private val context: Context?,
-    private val controllerId: Int?
+    private val controllerId: Int?,
+    private val isAdmin: Boolean?
 ) : RecyclerView.Adapter<ViewHolderUser>() {
 
     override fun onCreateViewHolder(
@@ -71,6 +72,10 @@ class UserAdapter(
             userSettingsIntent.putExtra(
                 "id",
                 items[position].id
+            )
+            userSettingsIntent.putExtra(
+                "isAdmin",
+                isAdmin
             )
             context?.startActivity(
                 userSettingsIntent

@@ -29,15 +29,22 @@ class UsersFragment :
     companion object {
         private const val ID =
             "id"
+        private const val ISADMIN =
+            "isAdmin"
 
         fun newInstance(
-            caught: Int
+            caughtId: Int,
+            caughtIsAdmin: Boolean
         ): UsersFragment {
             val args =
                 Bundle()
             args.putSerializable(
                 ID,
-                caught
+                caughtId
+            )
+            args.putSerializable(
+                ISADMIN,
+                caughtIsAdmin
             )
             val fragment =
                 UsersFragment()
@@ -57,15 +64,15 @@ class UsersFragment :
                 "id",
                 0
             )
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin"
+            )
         userList.addAll(
             list
         )
         val app =
             context?.applicationContext as MainApplication
-        val controllerAccessHelper =
-            ControllerAccessHelper(
-                app.getApi()
-            )
         listOfUsers.layoutManager =
             LinearLayoutManager(
                 context
@@ -74,7 +81,8 @@ class UsersFragment :
             UserAdapter(
                 list,
                 context,
-                controllerId = controllerId
+                controllerId = controllerId,
+                isAdmin = isAdmin
             )
         when {
             list.isEmpty() -> {
@@ -138,6 +146,10 @@ class UsersFragment :
                 "id",
                 0
             )
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin"
+            )
         val app =
             context?.applicationContext as MainApplication
         val controllerAccessHelper =
@@ -155,6 +167,10 @@ class UsersFragment :
             view.findViewById<FloatingActionButton>(
                 R.id.addUserButton
             )
+        if (!isAdmin!!) {
+            buttonAdd.visibility =
+                View.GONE
+        }
         buttonAdd.setOnClickListener {
             val addUser =
                 Intent(

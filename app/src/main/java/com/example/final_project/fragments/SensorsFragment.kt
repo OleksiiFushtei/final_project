@@ -33,15 +33,22 @@ class SensorsFragment :
     companion object {
         private const val ID =
             "id"
+        private const val ISADMIN =
+            "isAdmin"
 
         fun newInstance(
-            caught: Int
+            caughtId: Int,
+            caughtIsAdmin: Boolean
         ): SensorsFragment {
             val args =
                 Bundle()
             args.putSerializable(
                 ID,
-                caught
+                caughtId
+            )
+            args.putSerializable(
+                ISADMIN,
+                caughtIsAdmin
             )
             val fragment =
                 SensorsFragment()
@@ -61,7 +68,12 @@ class SensorsFragment :
                 "id",
                 0
             )
-        progressBar.visibility =
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin",
+                false
+            )
+        progressBar?.visibility =
             View.GONE
         listOfSensors.layoutManager =
             LinearLayoutManager(
@@ -71,7 +83,8 @@ class SensorsFragment :
             SensorAdapter(
                 list,
                 context,
-                controlledId = controllerId
+                controlledId = controllerId,
+                isAdmin = isAdmin
             )
         sensorsList.addAll(
             list
@@ -106,22 +119,18 @@ class SensorsFragment :
             }
         }
         sensorHubHelper.hubInit()
-        if (list.isEmpty()) {
-            Snackbar.make(
-                root_layout,
-                "You don't have any available sensors",
-                Snackbar.LENGTH_SHORT
-            )
-                .show()
-        }
         when {
             list.isEmpty() -> {
-                listOfSensors.visibility = View.GONE
-                emptyList.visibility = View.VISIBLE
+                listOfSensors.visibility =
+                    View.GONE
+                emptyList.visibility =
+                    View.VISIBLE
             }
             else -> {
-                listOfSensors.visibility = View.VISIBLE
-                emptyList.visibility = View.GONE
+                listOfSensors.visibility =
+                    View.VISIBLE
+                emptyList.visibility =
+                    View.GONE
             }
         }
     }
@@ -170,7 +179,6 @@ class SensorsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view: View =
             inflater.inflate(
                 R.layout.fragment_sensor,

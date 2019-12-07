@@ -21,7 +21,8 @@ class UserSettingsActivity :
     override fun onDeleteUserFromListResponseFailue(
         errorModel: ErrorModel
     ) {
-        progressBar.visibility = View.GONE
+        progressBar.visibility =
+            View.GONE
         var errorMessage =
             errorModel.message
         when {
@@ -37,11 +38,13 @@ class UserSettingsActivity :
     }
 
     override fun onDeleteUserFromListCancelled() {
-        progressBar.visibility = View.GONE
+        progressBar.visibility =
+            View.GONE
     }
 
     override fun onDeleteUserFromListFailure() {
-        progressBar.visibility = View.GONE
+        progressBar.visibility =
+            View.GONE
     }
 
     override fun onCreate(
@@ -77,20 +80,32 @@ class UserSettingsActivity :
             intent.getStringExtra(
                 "userEmail"
             )
+        val isAdmin =
+            intent.getBooleanExtra(
+                "isAdmin",
+                false
+            )
         userUserNameTextView.text =
             username
         nameEditText.setText(
             name
         )
-        nameEditText.keyListener = null
+        nameEditText.keyListener =
+            null
         surnameEditText.setText(
             surname
         )
-        surnameEditText.keyListener = null
+        surnameEditText.keyListener =
+            null
         emailEditText.setText(
             email
         )
-        emailEditText.keyListener = null
+        emailEditText.keyListener =
+            null
+        if (!isAdmin) {
+            buttonDelete.visibility =
+                View.GONE
+        }
         val app =
             application as MainApplication
         val controllerAccessHelper =
@@ -98,7 +113,8 @@ class UserSettingsActivity :
                 app.getApi()
             )
         buttonDelete.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
+            progressBar.visibility =
+                View.VISIBLE
             controllerAccessHelper.deleteUser(
                 id,
                 this
