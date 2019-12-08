@@ -11,9 +11,5 @@ data class ConditionTypeModel(
     @SerializedName(
         "type"
     )
-    override val type: String,
-    @SerializedName(
-        "scripts"
-    )
-    override val scripts: ArrayList<ScriptModel>
+    override val type: String
 ) : IConditionTypeModel

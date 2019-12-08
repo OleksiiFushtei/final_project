@@ -1,6 +1,7 @@
 package com.example.final_project.api.interfaces;
 
 import com.example.final_project.models.CommandModel;
+import com.example.final_project.models.ConditionTypeModel;
 import com.example.final_project.models.ControllerAccessModel;
 import com.example.final_project.models.ControllerListItemModel;
 import com.example.final_project.models.ControllerModel;
@@ -163,6 +164,9 @@ public interface ApiInterface {
     @POST("/api/DeviceConfiguration")
     Call<DeviceConfigurationModel> editConfig(@Body DeviceConfigurationModel deviceConfigurationModel);
 
+    //idk
+    @GET("/api/ConditionType")
+    Call<List<ConditionTypeModel>> listTypes();
 
     //access
     //controllers

@@ -68,7 +68,7 @@ class ScriptsFragment :
                 "isAdmin",
                 false
             )
-        progressBar.visibility =
+        progressBar?.visibility =
             View.GONE
         listOfScripts.layoutManager =
             LinearLayoutManager(
@@ -201,5 +201,30 @@ class ScriptsFragment :
 
     override fun onResume() {
         super.onResume()
+        val bundle =
+            this.arguments
+        val controllerId =
+            bundle?.getInt(
+                "id",
+                0
+            )
+        val app =
+            context?.applicationContext as MainApplication
+        val progressBar =
+            view?.findViewById<ProgressBar>(
+                R.id.progressBar
+            )
+        progressBar?.visibility =
+            View.VISIBLE
+        val scriptsListHelper =
+            ScriptsListHelper(
+                app.getApi()
+            )
+        if (controllerId != null) {
+            scriptsListHelper.getListOfScripts(
+                controllerId,
+                this
+            )
+        }
     }
 }

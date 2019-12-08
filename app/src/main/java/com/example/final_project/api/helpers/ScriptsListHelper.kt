@@ -39,15 +39,16 @@ class ScriptsListHelper(
                     response: Response<List<ScriptModel>>
                 ) {
                     when {
-                        response.isSuccessful -> scriptsListListener.onGetScriptsListResponseSuccess(
-                            list = ArrayList(
-                                response.body()!!
+                        response.isSuccessful ->
+                            scriptsListListener.onGetScriptsListResponseSuccess(
+                                list = ArrayList(
+                                    response.body()!!
+                                )
                             )
-                        )
                         else -> {
                             val gson =
                                 Gson()
-                            var errorModel =
+                            val errorModel: ErrorModel =
                                 gson.fromJson(
                                     response.errorBody().toString(),
                                     ErrorModel::class.java
@@ -58,9 +59,7 @@ class ScriptsListHelper(
                         }
                     }
                 }
-
             }
         )
     }
-
 }

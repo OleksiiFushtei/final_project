@@ -14,8 +14,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CommandSettingsActivity"></activity>
-        <activity android:name=".ScriptSettingsActivity" />
+        <activity android:name=".CommandSettingsActivity" />
+        <activity
+                android:name=".ScriptSettingsActivity"
+                android:windowSoftInputMode="adjustPan" />
         <activity android:name=".UserSettingsActivity" />
         <activity android:name=".UserGiveAccessActivity" />
         <activity android:name=".DeviceSettingsActivity" />

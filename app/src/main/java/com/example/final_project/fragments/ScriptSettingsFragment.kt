@@ -2,21 +2,24 @@ package com.example.final_project.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TimePicker
+import android.widget.*
 import com.example.final_project.R
+import com.example.final_project.api.helpers.ConditionTypeListHelper
 import com.example.final_project.api.helpers.ScriptHelper
+import com.example.final_project.api.helpers.SensorsListHelper
+import com.example.final_project.api.interfaces.ConditionTypeListInterface
 import com.example.final_project.api.interfaces.ScriptInterface
+import com.example.final_project.api.interfaces.SensorsListInterface
 import com.example.final_project.core.MainApplication
+import com.example.final_project.models.ConditionTypeModel
 import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.ScriptModel
+import com.example.final_project.models.SensorModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.slider.Slider
@@ -24,13 +27,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_script_settings.*
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ScriptSettingsFragment :
     Fragment(),
     ScriptInterface.ScriptSaveListener,
     ScriptInterface.ScriptGetListener,
-    ScriptInterface.ScriptDeleteListener {
+    ScriptInterface.ScriptDeleteListener,
+    SensorsListInterface.SensorsListListener,
+    ConditionTypeListInterface.ConditionTypeListListener {
 
     companion object {
         private const val CONTROLLERID =
@@ -58,6 +65,137 @@ class ScriptSettingsFragment :
                 args
             return fragment
         }
+    }
+
+    override fun onResponseSuccess(
+        list: ArrayList<ConditionTypeModel>
+    ) {
+        for (item in list) {
+            condTypesList.add(
+                item.type
+            )
+        }
+        val adapter =
+            ArrayAdapter<String>(
+                this.context!!,
+                android.R.layout.simple_list_item_1,
+                condTypesList
+            )
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        conditionType.adapter =
+            adapter
+        conditionType.onItemSelectedListener =
+            object :
+                AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(
+                    parent: AdapterView<*>?
+                ) {
+
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selected =
+                        parent?.getItemAtPosition(
+                            position
+                        )
+                            .toString()
+                    Toast.makeText(
+                        context,
+                        selected,
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    selectedCondType =
+                        list[position].id
+                }
+
+            }
+    }
+
+    override fun onResponseFailure() {
+
+    }
+
+    override fun onCancelled() {
+
+    }
+
+    override fun onFailure() {
+
+    }
+
+    override fun onGetSensorsListResponseSuccess(
+        list: ArrayList<SensorModel>
+    ) {
+        for (item in list) {
+            sensorsList.add(
+                item.name
+            )
+        }
+        val adapter =
+            ArrayAdapter<String>(
+                this.context!!,
+                android.R.layout.simple_list_item_1,
+                sensorsList
+            )
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        sensorId.adapter =
+            adapter
+        sensorId.onItemSelectedListener =
+            object :
+                AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(
+                    parent: AdapterView<*>?
+                ) {
+
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selected =
+                        parent?.getItemAtPosition(
+                            position
+                        )
+                            .toString()
+                    Toast.makeText(
+                        context,
+                        selected,
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    selectedSensorId =
+                        list[position].id
+                }
+
+            }
+
+    }
+
+    override fun onGetSensorsListResponseFailure(
+        errorModel: ErrorModel
+    ) {
+
+    }
+
+    override fun onGetSensorsListCancelled() {
+
+    }
+
+    override fun onGetSensorsListFailure() {
+
     }
 
     override fun onScriptSaveResponseSuccess() {
@@ -95,7 +233,79 @@ class ScriptSettingsFragment :
     override fun onScriptGetResponseSuccess(
         scriptModel: ScriptModel
     ) {
-
+        script =
+            scriptModel
+        scriptNameEditText.setText(
+            scriptModel.name
+        )
+        if (scriptModel.conditionValue != null) {
+            cbSensor.isChecked =
+                true
+            scriptConditionValueEditText.setText(
+                scriptModel.conditionValue.toDouble()
+                    .toString()
+            )
+        }
+        if (scriptModel.timeTo != null) {
+            cbTimeTo.isChecked =
+                true
+            scriptDateToInput.isEnabled =
+                true
+            scriptDateToEditText.isEnabled =
+                true
+            val format =
+                SimpleDateFormat(
+                    "yyyy-MM-dd'T'HH:mm:ss",
+                    Locale.UK
+                )
+            val dateTo: Date? =
+                format.parse(
+                    scriptModel.timeTo
+                )
+            val formatD =
+                SimpleDateFormat(
+                    "yyyy/MM/dd",
+                    Locale.UK
+                )
+            val dateD =
+                formatD.format(
+                    dateTo!!
+                )
+            val formatT =
+                SimpleDateFormat(
+                    "HH:mm",
+                    Locale.UK
+                )
+            val dateT =
+                formatT.format(
+                    dateTo
+                )
+            scriptDateToEditText.setText(
+                dateD
+            )
+            scriptTimeToInput.isEnabled =
+                true
+            scriptTimeToEditText.isEnabled =
+                true
+            scriptTimeToEditText.setText(
+                dateT
+            )
+        }
+        if (scriptModel.repeatTimes != -1) {
+            cbRepeat.isChecked =
+                true
+            scriptRepeatInput.isEnabled =
+                true
+            scriptRepeatEditText.isEnabled =
+                true
+            scriptRepeatEditText.setText(
+                scriptModel.repeatTimes.toString()
+            )
+        }
+        scriptPrioritySlider.value =
+            scriptModel.priority.toFloat()
+        scriptSwitch.isChecked =
+            scriptModel.status
     }
 
     override fun onScriptGetResponseFailure(
@@ -158,6 +368,16 @@ class ScriptSettingsFragment :
             .show()
     }
 
+    private lateinit var script: ScriptModel
+    private var sensorsList: ArrayList<String> =
+        ArrayList()
+    private var condTypesList: ArrayList<String> =
+        ArrayList()
+    var selectedSensorId =
+        0
+    var selectedCondType =
+        0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -203,6 +423,18 @@ class ScriptSettingsFragment :
             value.toInt()
                 .toString()
         }
+        val cbSensor =
+            view.findViewById<MaterialCheckBox>(
+                R.id.cbSensor
+            )
+        val condValueInput =
+            view.findViewById<TextInputLayout>(
+                R.id.scriptConditionValueInput
+            )
+        val condValueEditText =
+            view.findViewById<TextInputEditText>(
+                R.id.scriptConditionValueEditText
+            )
         val cbTo =
             view.findViewById<MaterialCheckBox>(
                 R.id.cbTimeTo
@@ -235,19 +467,31 @@ class ScriptSettingsFragment :
             view.findViewById<TextInputEditText>(
                 R.id.scriptRepeatEditText
             )
+        val calendar: Calendar =
+            Calendar.getInstance()
         val dateSetListener: DatePickerDialog.OnDateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val m =
                     month + 1
                 val date =
-                    "$dayOfMonth/$m/$year"
+                    "$year/$m/$dayOfMonth"
                 dateToEditText.setText(
                     date
                 )
+                calendar.set(
+                    Calendar.YEAR,
+                    year
+                )
+                calendar.set(
+                    Calendar.MONTH,
+                    month
+                )
+                calendar.set(
+                    Calendar.DAY_OF_MONTH,
+                    dayOfMonth
+                )
             }
         dateToEditText.setOnClickListener {
-            val calendar: Calendar =
-                Calendar.getInstance()
             val year =
                 calendar.get(
                     Calendar.YEAR
@@ -278,10 +522,16 @@ class ScriptSettingsFragment :
                 timeToEditText.setText(
                     time
                 )
+                calendar.set(
+                    Calendar.HOUR_OF_DAY,
+                    hourOfDay
+                )
+                calendar.set(
+                    Calendar.MINUTE,
+                    minute
+                )
             }
         timeToEditText.setOnClickListener {
-            val calendar =
-                Calendar.getInstance()
             val hour =
                 calendar.get(
                     Calendar.HOUR_OF_DAY
@@ -301,9 +551,15 @@ class ScriptSettingsFragment :
                 )
             timePicker.show()
         }
+        cbSensor.isChecked =
+            false
         cbTo.isChecked =
             false
         cbRepeat.isChecked =
+            false
+        condValueInput.isEnabled =
+            false
+        condValueEditText.isEnabled =
             false
         dateToInput.isEnabled =
             false
@@ -325,6 +581,34 @@ class ScriptSettingsFragment :
                     scriptId,
                     this
                 )
+            }
+        }
+        cbSensor.setOnCheckedChangeListener { _, isChecked ->
+            val sensorListHelper =
+                SensorsListHelper(
+                    app.getApi()
+                )
+            sensorListHelper.getListOfSensors(
+                controllerId!!,
+                this
+            )
+            val conditionListHelper =
+                ConditionTypeListHelper(
+                    app.getApi()
+                )
+            conditionListHelper.getTypes(
+                this
+            )
+            if (isChecked) {
+                condValueInput.isEnabled =
+                    true
+                condValueEditText.isEnabled =
+                    true
+            } else {
+                condValueInput.isEnabled =
+                    false
+                condValueEditText.isEnabled =
+                    false
             }
         }
         cbTo.setOnCheckedChangeListener { _, isChecked ->
@@ -367,23 +651,63 @@ class ScriptSettingsFragment :
             )
         buttonSave.setOnClickListener {
             if (validateAll()) {
+                val id: Int =
+                    if (scriptId == 0) {
+                        0
+                    } else {
+                        script.id
+                    }
+                val timeFrom: String =
+                    if (scriptId == 0) {
+                        SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss:",
+                            Locale.UK
+                        ).format(
+                            Date()
+                        )
+                    } else {
+                        script.timeFrom
+                    }
+                val timeTo: String? =
+                    if (cbTo.isChecked) {
+                        SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss",
+                            Locale.UK
+                        ).format(
+                            calendar.time
+                        )
+                    } else {
+                        null
+                    }
+                val repeatTimes: Int =
+                    if (cbRepeat.isChecked) {
+                        scriptRepeatEditText.text
+                            .toString()
+                            .toInt()
+                    } else {
+                        -1
+                    }
+                val condValue: Double? =
+                    if (cbSensor.isChecked) {
+                        scriptConditionValueEditText.text.toString()
+                            .toDouble()
+                    } else {
+                        null
+                    }
                 val checkData =
                     ScriptModel(
-                        scriptId!!,
-                        scriptNameEditText.text.toString(),
-                        0.0,
-                        1,
-                        controllerId!!,
-                        Date(),
-                        1,
-                        Date(),
-                        Date(),
-                        1.0,
-                        1,
-                        completed = false,
-                        visible = true,
-                        priority = 1,
-                        commands = null
+                        id = id,
+                        name = scriptNameEditText.text.toString(),
+                        conditionValue = condValue,
+                        conditionTypeId = selectedCondType,
+                        controllerId = controllerId!!,
+                        sensorId = selectedSensorId,
+                        timeFrom = timeFrom,
+                        timeTo = timeTo,
+                        delta = 0.5,
+                        repeatTimes = repeatTimes,
+                        status = scriptSwitch.isChecked,
+                        priority = prioritySlider.value.toInt()
                     )
                 if (scriptId == 0) {
                     scriptHelper.addScript(
@@ -427,6 +751,35 @@ class ScriptSettingsFragment :
 
     override fun onResume() {
         super.onResume()
+        val bundle =
+            this.arguments
+        val scriptId =
+            bundle?.getInt(
+                "scriptId",
+                0
+            )
+        val app =
+            context?.applicationContext as MainApplication
+        val scriptHelper =
+            ScriptHelper(
+                app.getApi()
+            )
+        val progressBar =
+            view?.findViewById<ProgressBar>(
+                R.id.progressBar
+            )
+        progressBar?.visibility =
+            View.GONE
+        if (scriptId != null) {
+            if (scriptId != 0) {
+                progressBar?.visibility =
+                    View.VISIBLE
+                scriptHelper.getScript(
+                    scriptId,
+                    this
+                )
+            }
+        }
     }
 
     private fun validateAll(): Boolean {

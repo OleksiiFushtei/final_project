@@ -34,13 +34,6 @@
     <string name="no_available_sensors">You don\'t have any available sensors</string>
     <string name="no_available_users">You don\'t have any available users</string>
     <string name="script_name">Script name</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">
-        Hello
-        blank
-        fragment
-    </string>
     <string name="commands">Commands</string>
     <string name="command_name">Command name</string>
     <string name="no_available_scripts">You don\'t have any available scripts</string>

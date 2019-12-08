@@ -17,31 +17,27 @@ data class ScriptModel(
     @SerializedName(
         "conditionValue"
     )
-    override val conditionValue: Double,
+    override val conditionValue: Double?,
     @SerializedName(
         "conditionTypeId"
     )
-    override val conditionTypeId: Int,
+    override val conditionTypeId: Int?,
     @SerializedName(
         "controllerId"
     )
     override val controllerId: Int,
     @SerializedName(
-        "lastModificationDate"
-    )
-    override val lastModificationDate: Date,
-    @SerializedName(
         "sensorId"
     )
-    override val sensorId: Int,
+    override val sensorId: Int?,
     @SerializedName(
         "timeFrom"
     )
-    override val timeFrom: Date,
+    override val timeFrom: String,
     @SerializedName(
         "timeTo"
     )
-    override val timeTo: Date,
+    override val timeTo: String?,
     @SerializedName(
         "delta"
     )
@@ -51,31 +47,11 @@ data class ScriptModel(
     )
     override val repeatTimes: Int,
     @SerializedName(
-        "complited"
+        "status"
     )
-    override val completed: Boolean,
-    @SerializedName(
-        "visible"
-    )
-    override val visible: Boolean,
+    override val status: Boolean,
     @SerializedName(
         "priority"
     )
-    override val priority: Int,
-    @SerializedName(
-        "commands"
-    )
-    override val commands: ArrayList<CommandModel>?
-//    @SerializedName(
-//        "sensor"
-//    )
-//    override val sensor: SensorModel,
-//    @SerializedName(
-//        "conditionType"
-//    )
-//    override val conditionType: ConditionTypeModel,
-//    @SerializedName(
-//        "controller"
-//    )
-//    override val controller: ControllerModel
+    override val priority: Int
 ) : IScriptModel

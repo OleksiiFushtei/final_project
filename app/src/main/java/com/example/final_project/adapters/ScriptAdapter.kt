@@ -17,8 +17,7 @@ class ScriptAdapter(
     private val context: Context?,
     private val controllerId: Int?,
     private val isAdmin: Boolean?
-) :
-    RecyclerView.Adapter<ViewHolderScript>() {
+) : RecyclerView.Adapter<ViewHolderScript>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -58,6 +57,10 @@ class ScriptAdapter(
             scriptSettingsIntent.putExtra(
                 "scriptId",
                 items[position].id
+            )
+            scriptSettingsIntent.putExtra(
+                "scriptName",
+                items[position].name
             )
             context?.startActivity(
                 scriptSettingsIntent
