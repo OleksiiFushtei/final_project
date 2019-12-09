@@ -141,7 +141,11 @@ class SignUpActivity :
                     "Username should be 3 to 50 characters long"
                 false
             }
-            else -> true
+            else -> {
+                usernameTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validateEmail(): Boolean =
@@ -153,7 +157,11 @@ class SignUpActivity :
             }
             EMAIL_ADDRESS.matcher(
                 emailEditText.text.toString().trim()
-            ).matches() -> true
+            ).matches() -> {
+                emailTextInput.error =
+                    null
+                true
+            }
             else -> {
                 emailTextInput.error =
                     "Invalid email address"
@@ -173,7 +181,11 @@ class SignUpActivity :
                     "Password must be at least 6 characters long"
                 false
             }
-            else -> true
+            else -> {
+                passwordTextInput.error =
+                    null
+                true
+            }
         }
 
 
@@ -189,7 +201,11 @@ class SignUpActivity :
                     "Passwords should match"
                 false
             }
-            else -> true
+            else -> {
+                confPasswordTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validateName(): Boolean =
@@ -199,7 +215,11 @@ class SignUpActivity :
                     "Name field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                nameTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validateSurName(): Boolean =
@@ -209,6 +229,10 @@ class SignUpActivity :
                     "Surname field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                surnameTextInput.error =
+                    null
+                true
+            }
         }
 }

@@ -1,7 +1,5 @@
 package com.example.final_project.models.interfaces
 
-import java.util.*
-
 interface IScriptModel {
     val id: Int
     val name: String

@@ -260,7 +260,7 @@ class SensorSettingsActivity :
     }
 
     private fun validateAll(): Boolean =
-        validateName()
+        validateName() && validatePin()
 
     private fun validateName(): Boolean =
         when {
@@ -269,7 +269,25 @@ class SensorSettingsActivity :
                     "Name field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                sensorNameTextInput.error =
+                    null
+                true
+            }
+        }
+
+    private fun validatePin(): Boolean =
+        when {
+            sensorPinEditText.text.toString().isEmpty() -> {
+                sensorPinTextInput.error =
+                    "Pin field shouldn't be empty"
+                false
+            }
+            else -> {
+                sensorPinTextInput.error =
+                    null
+                true
+            }
         }
 
 }

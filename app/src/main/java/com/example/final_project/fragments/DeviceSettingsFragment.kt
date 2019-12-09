@@ -432,7 +432,11 @@ class DeviceSettingsFragment :
                     "Name field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                deviceNameTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validateConnection(): Boolean =
@@ -451,9 +455,13 @@ class DeviceSettingsFragment :
                     ) -> {
                         devicePinTextInput.error =
                             "Pin should greater than 0"
+                        false
+                    }
+                    else -> {
+                        devicePinTextInput.error =
+                            null
                         true
                     }
-                    else -> true
                 }
             }
             rbMAC.isChecked -> {
@@ -468,7 +476,11 @@ class DeviceSettingsFragment :
                             "MAC Address should be 12 character long"
                         false
                     }
-                    else -> true
+                    else -> {
+                        deviceMACTextInput.error =
+                            null
+                        true
+                    }
                 }
             }
             else -> false

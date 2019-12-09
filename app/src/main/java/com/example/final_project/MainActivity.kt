@@ -46,6 +46,8 @@ class MainActivity :
             )
         viewPager.adapter =
             fragmentAdapter
+        viewPager.offscreenPageLimit =
+            4
         tabLayout.setupWithViewPager(
             viewPager
         )

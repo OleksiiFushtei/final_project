@@ -100,6 +100,9 @@ class UserGiveAccessActivity :
                     "Username should be 3 to 50 characters long"
                 false
             }
-            else -> true
+            else -> {
+                usernameTextInput.error = null
+                true
+            }
         }
 }

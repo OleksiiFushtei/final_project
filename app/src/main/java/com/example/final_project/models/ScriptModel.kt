@@ -2,8 +2,6 @@ package com.example.final_project.models
 
 import com.example.final_project.models.interfaces.IScriptModel
 import com.google.gson.annotations.SerializedName
-import java.util.*
-import kotlin.collections.ArrayList
 
 data class ScriptModel(
     @SerializedName(

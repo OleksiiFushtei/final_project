@@ -120,32 +120,6 @@ class ListOfControllersActivity :
         )
 
         toolbar.setOnMenuItemClickListener {
-            //            MaterialAlertDialogBuilder(
-//                this.applicationContext
-//            ).setTitle(
-//                "Sign out"
-//            )
-//                .setMessage(
-//                    "ARE YOU SURE ABOUT THAT"
-//                )
-//                .setPositiveButton(
-//                    "Sign out"
-//                ) { _: DialogInterface?, _: Int ->
-//                    val signInIntent =
-//                        Intent(
-//                            this@ListOfControllersActivity,
-//                            SignInActivity::class.java
-//                        )
-//                    startActivity(
-//                        signInIntent
-//                    )
-//                    finish()
-//                }
-//                .setNegativeButton(
-//                    "Cancel",
-//                    null
-//                )
-//                .show()
             val signInIntent =
                 Intent(
                     this@ListOfControllersActivity,

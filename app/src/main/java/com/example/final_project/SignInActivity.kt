@@ -48,7 +48,7 @@ class SignInActivity :
             View.GONE
         Snackbar.make(
             root_layout,
-            "Username or password in not correct",
+            "Username or password is not correct",
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -143,7 +143,11 @@ class SignInActivity :
                     "Username field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                usernameTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validatePassword(): Boolean =
@@ -158,7 +162,10 @@ class SignInActivity :
                     "Password must be at least 6 characters long"
                 false
             }
-            else -> true
+            else -> {
+                passwordTextInput.error =
+                    null
+                true
+            }
         }
 }
-
