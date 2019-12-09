@@ -2,6 +2,7 @@ package com.example.final_project.api.helpers
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.models.SensorModel
+import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
 import io.reactivex.Single
@@ -26,19 +27,34 @@ class SensorHubHelper(
         view: RecyclerView,
         callback: (sensorModel: SensorModel, view: RecyclerView) -> Unit
     ) {
-        hubConnection.on("UpdateSensor", {
-            callback(it, view)
-        }, SensorModel::class.java)
+        hubConnection.on(
+            "UpdateSensor",
+            {
+                callback(
+                    it,
+                    view
+                )
+            },
+            SensorModel::class.java
+        )
     }
 
     fun hubInit() {
-        hubConnection.start().blockingAwait()
+        hubConnection.start()
+            .blockingAwait()
     }
 
     fun hubStop() {
         hubConnection.stop()
     }
 
-    fun hubCheck(): Boolean =
+    fun hubCheck() {
+        if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
+            hubStop()
+        } else
+            hubInit()
+    }
+
+    fun hubState(): Boolean =
         hubConnection.connectionState == HubConnectionState.CONNECTED
 }

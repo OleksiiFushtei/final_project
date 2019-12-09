@@ -176,7 +176,6 @@ class DeviceSettingsFragment :
     }
 
     override fun onDeviceDeleteResponseSuccess() {
-        //go to the list
         activity?.finish()
     }
 
@@ -214,10 +213,6 @@ class DeviceSettingsFragment :
             .show()
     }
 
-    private val deviceTypes: ArrayList<DeviceTypeModel> =
-        ArrayList()
-    private val deviceTypesList: ArrayList<String> =
-        ArrayList()
     private var deviceTypeId: Int =
         0
 
@@ -226,7 +221,6 @@ class DeviceSettingsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view: View =
             inflater.inflate(
                 R.layout.fragment_device_settings,
@@ -255,19 +249,19 @@ class DeviceSettingsFragment :
             DeviceHelper(
                 app.getApi()
             )
-        val PinTIL =
+        val pinTIL =
             view.findViewById<TextInputLayout>(
                 R.id.devicePinTextInput
             )
-        val PinET =
+        val pinET =
             view.findViewById<TextInputEditText>(
                 R.id.devicePinEditText
             )
-        val MACTIL =
+        val macTIL =
             view.findViewById<TextInputLayout>(
                 R.id.deviceMACTextInput
             )
-        val MACET =
+        val macET =
             view.findViewById<TextInputEditText>(
                 R.id.deviceMACEditText
             )
@@ -291,10 +285,6 @@ class DeviceSettingsFragment :
             view.findViewById(
                 R.id.rbPin
             )
-        val rbMAC: RadioButton =
-            view.findViewById(
-                R.id.rbMAC
-            )
         val rgTypes =
             view.findViewById<RadioGroup>(
                 R.id.rgTypes
@@ -317,9 +307,9 @@ class DeviceSettingsFragment :
                 View.INVISIBLE
             progressBar.visibility =
                 View.GONE
-            MACTIL.isEnabled =
+            macTIL.isEnabled =
                 false
-            MACET.isEnabled =
+            macET.isEnabled =
                 false
         } else {
             deviceHelper.getDevice(
@@ -333,29 +323,29 @@ class DeviceSettingsFragment :
                 checkedId
             )) {
                 rbPin -> {
-                    PinTIL.isEnabled =
+                    pinTIL.isEnabled =
                         true
-                    PinET.isEnabled =
+                    pinET.isEnabled =
                         true
                     rgConnection.check(
                         R.id.rbPin
                     )
-                    MACTIL.isEnabled =
+                    macTIL.isEnabled =
                         false
-                    MACET.isEnabled =
+                    macET.isEnabled =
                         false
                 }
                 else -> {
-                    PinTIL.isEnabled =
+                    pinTIL.isEnabled =
                         false
-                    PinET.isEnabled =
+                    pinET.isEnabled =
                         false
                     rgConnection.check(
                         R.id.rbMAC
                     )
-                    MACTIL.isEnabled =
+                    macTIL.isEnabled =
                         true
-                    MACET.isEnabled =
+                    macET.isEnabled =
                         true
                 }
             }
@@ -374,53 +364,6 @@ class DeviceSettingsFragment :
                     else -> 1
                 }
         }
-
-//        val array: Array = deviceTypesList.toTypedArray()
-//        val adapter = ArrayAdapter<String>(view.context, R.layout.device_type_row, array)
-//        val dropdown: MaterialAutoCompleteTextView = view.findViewById(R.id.exposedDropdown)
-//        val dropdown: AutoCompleteTextView = view.findViewById(R.id.exposedDropdown)
-//        dropdown.setAdapter(adapter)
-//        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//
-//            override fun onNothingSelected(
-//                parent: AdapterView<*>?
-//            ) {
-//                Snackbar.make(root_layout, "NothingSelected", Snackbar.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                deviceTypeId = deviceTypes[position].id
-//                Snackbar.make(root_layout, deviceTypeId, Snackbar.LENGTH_SHORT).show()
-//            }
-//
-//        }
-
-        val typesList: ArrayList<String> =
-            ArrayList()
-        for (item in deviceTypes) {
-            typesList.add(
-                item.typeName
-            )
-        }
-//        val adapter =
-//            ArrayAdapter<String>(
-//                context!!,
-//                R.layout.device_type_row,
-//                typesList
-//            )
-//        val ddlist =
-//            view.findViewById<AutoCompleteTextView>(
-//                R.id.exposedDropdown
-//            )
-//        ddlist.setAdapter(
-//            adapter
-//        )
-
 
         saveButton.setOnClickListener {
             if (validateAll()) {

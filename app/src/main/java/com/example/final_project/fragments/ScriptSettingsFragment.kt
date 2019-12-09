@@ -231,6 +231,8 @@ class ScriptSettingsFragment :
     override fun onScriptGetResponseSuccess(
         scriptModel: ScriptModel
     ) {
+        progressBar.visibility =
+            View.GONE
         script =
             scriptModel
         scriptNameEditText.setText(
@@ -239,6 +241,12 @@ class ScriptSettingsFragment :
         if (scriptModel.conditionValue != null) {
             cbSensor.isChecked =
                 true
+            sensorId.setSelection(
+                scriptModel.sensorId!!
+            )
+            conditionType.setSelection(
+                scriptModel.conditionTypeId!!
+            )
             scriptConditionValueEditText.setText(
                 scriptModel.conditionValue.toDouble()
                     .toString()
@@ -694,23 +702,29 @@ class ScriptSettingsFragment :
                     } else null
                 val repeatTimes: Int =
                     if (cbRepeat.isChecked) {
-                        scriptRepeatEditText.text
-                            .toString()
+                        scriptRepeatEditText.text.toString()
                             .toInt()
                     } else -1
                 val condValue: Double? =
-                    if (cbSensor.isChecked) {
-                        scriptConditionValueEditText.text.toString()
-                            .toDouble()
-                    } else null
+                    if (cbSensor.isChecked)
+                        scriptConditionValueEditText.text.toString().toDouble()
+                    else null
+                val finalSensorId: Int? =
+                    if (cbSensor.isChecked)
+                        selectedSensorId
+                    else null
+                val finalContType: Int? =
+                    if (cbSensor.isChecked)
+                        selectedCondType
+                    else null
                 val checkData =
                     ScriptModel(
                         id = id,
                         name = scriptNameEditText.text.toString(),
                         conditionValue = condValue,
-                        conditionTypeId = selectedCondType,
+                        conditionTypeId = finalContType,
                         controllerId = controllerId!!,
-                        sensorId = selectedSensorId,
+                        sensorId = finalSensorId,
                         timeFrom = timeFrom,
                         timeTo = timeTo,
                         delta = 0.5,
@@ -792,7 +806,7 @@ class ScriptSettingsFragment :
     }
 
     private fun validateAll(): Boolean =
-        validateName()
+        validateName() && validateConditionValue() && validateTimeTo()
 
     private fun validateName(): Boolean =
         when {
@@ -801,7 +815,60 @@ class ScriptSettingsFragment :
                     "Name field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                scriptNameTextInput.error =
+                    null
+                true
+            }
         }
 
+    private fun validateConditionValue(): Boolean =
+        when {
+            cbSensor.isChecked -> when {
+                scriptConditionValueEditText.text.toString().isEmpty() -> {
+                    scriptConditionValueInput.error =
+                        "Condition value field shouldn't be empty"
+                    false
+                }
+                else -> {
+                    scriptConditionValueInput.error =
+                        null
+                    true
+                }
+            }
+            else -> {
+                true
+            }
+        }
+
+    private fun validateTimeTo(): Boolean =
+        when {
+            cbTimeTo.isChecked -> when {
+                scriptDateToEditText.text.toString().isEmpty() && scriptTimeToEditText.text.toString().isEmpty() -> {
+                    scriptDateToInput.error =
+                        "Date to field shouldn't be empty"
+                    scriptTimeToInput.error =
+                        "Time to field shouldn't be empty"
+                    false
+                }
+                scriptDateToEditText.text.toString().isNotEmpty() && scriptTimeToEditText.text.toString().isEmpty() -> {
+                    scriptDateToInput.error =
+                        null
+                    false
+                }
+                scriptDateToEditText.text.toString().isEmpty() && scriptTimeToEditText.text.toString().isNotEmpty() -> {
+                    scriptTimeToInput.error =
+                        null
+                    false
+                }
+                else -> {
+                    scriptDateToInput.error =
+                        null
+                    scriptTimeToInput.error =
+                        null
+                    true
+                }
+            }
+            else -> true
+        }
 }

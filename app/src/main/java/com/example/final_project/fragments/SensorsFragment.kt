@@ -95,7 +95,7 @@ class SensorsFragment :
                     "token"
                 )
             )
-        if (!sensorHubHelper.hubCheck()) {
+        if (!sensorHubHelper.hubState()) {
             sensorHubHelper.hubInit()
         }
         sensorHubHelper.updateSensor(
@@ -118,7 +118,7 @@ class SensorsFragment :
                 }
             }
         }
-        sensorHubHelper.hubInit()
+//        sensorHubHelper.hubInit()
         when {
             list.isEmpty() -> {
                 listOfSensors.visibility =
@@ -269,7 +269,7 @@ class SensorsFragment :
                     "token"
                 )
             )
-        if (sensorHubHelper.hubCheck()) {
+        if (sensorHubHelper.hubState()) {
             sensorHubHelper.hubStop()
         }
     }

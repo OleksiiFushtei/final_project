@@ -57,7 +57,8 @@ class DeviceHelper(
                     }
                 }
 
-            })
+            }
+        )
     }
 
     override fun editDevice(
