@@ -101,17 +101,6 @@ class ScriptSettingsFragment :
                     position: Int,
                     id: Long
                 ) {
-                    val selected =
-                        parent?.getItemAtPosition(
-                            position
-                        )
-                            .toString()
-                    Toast.makeText(
-                        context,
-                        selected,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
                     selectedCondType =
                         list[position].id
                 }
@@ -165,17 +154,6 @@ class ScriptSettingsFragment :
                     position: Int,
                     id: Long
                 ) {
-                    val selected =
-                        parent?.getItemAtPosition(
-                            position
-                        )
-                            .toString()
-                    Toast.makeText(
-                        context,
-                        selected,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
                     selectedSensorId =
                         list[position].id
                 }
@@ -187,7 +165,17 @@ class ScriptSettingsFragment :
     override fun onGetSensorsListResponseFailure(
         errorModel: ErrorModel
     ) {
-
+        val message: String =
+            when {
+                errorModel.message.isEmpty() -> "An error occupied. Try again"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetSensorsListCancelled() {
@@ -205,7 +193,17 @@ class ScriptSettingsFragment :
     override fun onScriptSaveResponseFailure(
         errorModel: ErrorModel
     ) {
-
+        val message: String =
+            when {
+                errorModel.message.isEmpty() -> "An error occupied. Try again"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onScriptSaveCancelled() {
@@ -304,6 +302,9 @@ class ScriptSettingsFragment :
         }
         scriptPrioritySlider.value =
             scriptModel.priority.toFloat()
+        scriptPrioritySlider.value =
+            scriptModel.priority.toDouble()
+                .toFloat()
         scriptSwitch.isChecked =
             scriptModel.status
     }
@@ -311,7 +312,17 @@ class ScriptSettingsFragment :
     override fun onScriptGetResponseFailure(
         errorModel: ErrorModel
     ) {
-
+        val message: String =
+            when {
+                errorModel.message.isEmpty() -> "An error occupied. Try again"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onScriptGetCancelled() {
@@ -343,7 +354,17 @@ class ScriptSettingsFragment :
     override fun onScriptDeleteResponseFailure(
         errorModel: ErrorModel
     ) {
-
+        val message: String =
+            when {
+                errorModel.message.isEmpty() -> "An error occupied. Try again"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            message,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onScriptDeleteCancelled() {
@@ -652,11 +673,7 @@ class ScriptSettingsFragment :
         buttonSave.setOnClickListener {
             if (validateAll()) {
                 val id: Int =
-                    if (scriptId == 0) {
-                        0
-                    } else {
-                        script.id
-                    }
+                    if (scriptId == 0) 0 else script.id
                 val timeFrom: String =
                     if (scriptId == 0) {
                         SimpleDateFormat(
@@ -665,9 +682,7 @@ class ScriptSettingsFragment :
                         ).format(
                             Date()
                         )
-                    } else {
-                        script.timeFrom
-                    }
+                    } else script.timeFrom
                 val timeTo: String? =
                     if (cbTo.isChecked) {
                         SimpleDateFormat(
@@ -676,24 +691,18 @@ class ScriptSettingsFragment :
                         ).format(
                             calendar.time
                         )
-                    } else {
-                        null
-                    }
+                    } else null
                 val repeatTimes: Int =
                     if (cbRepeat.isChecked) {
                         scriptRepeatEditText.text
                             .toString()
                             .toInt()
-                    } else {
-                        -1
-                    }
+                    } else -1
                 val condValue: Double? =
                     if (cbSensor.isChecked) {
                         scriptConditionValueEditText.text.toString()
                             .toDouble()
-                    } else {
-                        null
-                    }
+                    } else null
                 val checkData =
                     ScriptModel(
                         id = id,
@@ -782,7 +791,17 @@ class ScriptSettingsFragment :
         }
     }
 
-    private fun validateAll(): Boolean {
-        return true
-    }
+    private fun validateAll(): Boolean =
+        validateName()
+
+    private fun validateName(): Boolean =
+        when {
+            scriptNameEditText.text.toString().isEmpty() -> {
+                scriptNameTextInput.error =
+                    "Name field shouldn't be empty"
+                false
+            }
+            else -> true
+        }
+
 }
