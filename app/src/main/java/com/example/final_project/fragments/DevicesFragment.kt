@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.DeviceSettingsActivity
@@ -163,24 +162,12 @@ class DevicesFragment :
                 "id",
                 0
             )
-        val app =
-            context?.applicationContext as MainApplication
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
             )
         progressBar?.visibility =
             View.VISIBLE
-        val devicesListHelper =
-            DevicesListHelper(
-                app.getApi()
-            )
-        if (controllerId != null) {
-            devicesListHelper.getListOfDevices(
-                controllerId,
-                this
-            )
-        }
         val addButton =
             view.findViewById<FloatingActionButton>(
                 R.id.addDeviceButton

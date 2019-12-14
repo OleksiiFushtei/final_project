@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns.*
 import android.view.View
-import android.widget.Toast
 import com.example.final_project.api.helpers.SignUpHelper
 import com.example.final_project.api.interfaces.SignUpInterface
 import com.example.final_project.core.MainApplication
@@ -74,18 +73,14 @@ class SignUpActivity :
         setContentView(
             R.layout.activity_sign_up
         )
-
         val app: MainApplication =
             application as MainApplication
-
         val signUpHelper =
             SignUpHelper(
                 app.getApi()
             )
-
         progressBar.visibility =
             View.GONE
-
         buttonSU.setOnClickListener {
             //do final check
             if (validateAll()) {
@@ -108,7 +103,6 @@ class SignUpActivity :
                 )
             }
         }
-
         buttonBack.setOnClickListener {
             val signInIntent =
                 Intent(

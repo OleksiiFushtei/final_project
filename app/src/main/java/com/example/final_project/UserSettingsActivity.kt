@@ -18,17 +18,16 @@ class UserSettingsActivity :
         finish()
     }
 
-    override fun onDeleteUserFromListResponseFailue(
-        errorModel: ErrorModel
+    override fun onDeleteUserFromListResponseFailure(
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
-        var errorMessage =
-            errorModel.message
-        when {
-            errorMessage.isEmpty() -> errorMessage =
-                "Response failure. Try again"
-        }
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
             errorMessage,

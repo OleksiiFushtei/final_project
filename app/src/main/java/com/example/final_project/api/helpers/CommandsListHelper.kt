@@ -14,7 +14,7 @@ class CommandsListHelper(
 
     override fun getListOfCommands(
         id: Int,
-        commandListListener: CommandsListInterface.CommandListListener
+        commandsListListener: CommandsListInterface.CommandsListListener
     ) {
         val call =
             apiInterface.listCommands(
@@ -29,8 +29,8 @@ class CommandsListHelper(
                     t: Throwable
                 ) {
                     when {
-                        call.isCanceled -> commandListListener.onGetCommandsListCancelled()
-                        else -> commandListListener.onGetCommandsListFailure()
+                        call.isCanceled -> commandsListListener.onGetCommandsListCancelled()
+                        else -> commandsListListener.onGetCommandsListFailure()
                     }
                 }
 
@@ -39,20 +39,23 @@ class CommandsListHelper(
                     response: Response<List<CommandModel>>
                 ) {
                     when {
-                        response.isSuccessful -> commandListListener.onGetCommandsListResponseSuccess(
-                            list = ArrayList(
-                                response.body()!!
-                            )
-                        )
-                        else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
+                        response.isSuccessful ->
+                            commandsListListener.onGetCommandsListResponseSuccess(
+                                list = ArrayList(
+                                    response.body()!!
                                 )
-                            commandListListener.onGetCommandsListResponseFailure(
+                            )
+                        else -> {
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            commandsListListener.onGetCommandsListResponseFailure(
                                 errorModel = errorModel
                             )
                         }

@@ -51,5 +51,13 @@ data class ScriptModel(
     @SerializedName(
         "priority"
     )
-    override val priority: Int
+    override val priority: Int,
+    @SerializedName(
+        "sensor"
+    )
+    override val sensor: SensorModel,
+    @SerializedName(
+        "conditionType"
+    )
+    override val conditionType: ConditionTypeModel
 ) : IScriptModel

@@ -48,13 +48,6 @@ class SensorHubHelper(
         hubConnection.stop()
     }
 
-    fun hubCheck() {
-        if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-            hubStop()
-        } else
-            hubInit()
-    }
-
     fun hubState(): Boolean =
         hubConnection.connectionState == HubConnectionState.CONNECTED
 }

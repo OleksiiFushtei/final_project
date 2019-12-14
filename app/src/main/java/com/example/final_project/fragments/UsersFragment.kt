@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.R
 import com.example.final_project.UserGiveAccessActivity
 import com.example.final_project.adapters.UserAdapter
 import com.example.final_project.api.helpers.ControllerAccessHelper
 import com.example.final_project.api.interfaces.ControllerAccessInterface
-import com.example.final_project.api.interfaces.ControllerAccessInterface.ControllerAccessDeleteUser
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerListItemModel
 import com.example.final_project.models.ErrorModel
@@ -71,8 +68,6 @@ class UsersFragment :
         userList.addAll(
             list
         )
-        val app =
-            context?.applicationContext as MainApplication
         listOfUsers.layoutManager =
             LinearLayoutManager(
                 context
@@ -101,14 +96,13 @@ class UsersFragment :
     }
 
     override fun onGetUsersForControllersResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
-        var errorMessage =
-            errorModel.message
-        when {
-            errorMessage.isEmpty() -> errorMessage =
-                "Response failure. Try again"
-        }
+        val errorMessage =
+            when (errorModel) {
+                null -> "You don't have access to this list"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
             errorMessage,
@@ -118,11 +112,21 @@ class UsersFragment :
     }
 
     override fun onGetUsersForControllerCancelled() {
-
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetUsersForControllerFailure() {
-
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     private val userList: ArrayList<ControllerListItemModel> =
@@ -150,18 +154,6 @@ class UsersFragment :
             bundle?.getBoolean(
                 "isAdmin"
             )
-        val app =
-            context?.applicationContext as MainApplication
-        val controllerAccessHelper =
-            ControllerAccessHelper(
-                app.getApi()
-            )
-        if (controllerId != null) {
-            controllerAccessHelper.getListOfUsers(
-                controllerId,
-                this
-            )
-        }
 
         val buttonAdd =
             view.findViewById<FloatingActionButton>(

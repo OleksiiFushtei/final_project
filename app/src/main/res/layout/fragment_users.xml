@@ -17,7 +17,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical"
+                android:visibility="gone">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -27,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/no_available_users"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addUserButton"

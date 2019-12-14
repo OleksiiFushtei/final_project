@@ -118,7 +118,6 @@ class SensorsFragment :
                 }
             }
         }
-//        sensorHubHelper.hubInit()
         when {
             list.isEmpty() -> {
                 listOfSensors.visibility =
@@ -192,24 +191,12 @@ class SensorsFragment :
                 "id",
                 0
             )
-        val app =
-            context?.applicationContext as MainApplication
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
             )
         progressBar?.visibility =
             View.VISIBLE
-        val sensorsListHelper =
-            SensorsListHelper(
-                app.getApi()
-            )
-        if (controllerId != null) {
-            sensorsListHelper.getListOfSensors(
-                controllerId,
-                this
-            )
-        }
         val addButton =
             view.findViewById<FloatingActionButton>(
                 R.id.addSensorButton

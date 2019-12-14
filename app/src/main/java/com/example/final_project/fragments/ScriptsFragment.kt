@@ -156,24 +156,12 @@ class ScriptsFragment :
                 "id",
                 0
             )
-        val app =
-            context?.applicationContext as MainApplication
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
             )
         progressBar?.visibility =
             View.VISIBLE
-        val scriptsListHelper =
-            ScriptsListHelper(
-                app.getApi()
-            )
-        if (controllerId != null) {
-            scriptsListHelper.getListOfScripts(
-                controllerId,
-                this
-            )
-        }
         val addButton =
             view.findViewById<FloatingActionButton>(
                 R.id.addScriptButton

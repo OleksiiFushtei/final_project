@@ -1,6 +1,5 @@
 package com.example.final_project.fragments
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import com.example.final_project.api.helpers.DeviceHelper
 import com.example.final_project.api.interfaces.DeviceInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.DeviceModel
-import com.example.final_project.models.DeviceTypeModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "52162267249",
-    "firebase_url": "https://final-project-of99.firebaseio.com",
-    "project_id": "final-project-of99",
-    "storage_bucket": "final-project-of99.appspot.com"
+    "project_number": "685654752804",
+    "firebase_url": "https://fudoko-smart-home.firebaseio.com",
+    "project_id": "fudoko-smart-home",
+    "storage_bucket": "fudoko-smart-home.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:52162267249:android:5e71af049629d399d0f3d0",
+        "mobilesdk_app_id": "1:685654752804:android:e591f9ea8503d373ba62b1",
         "android_client_info": {
           "package_name": "com.example.final_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "52162267249-3jcerm429ufu9tgggc9ku0ci6aqb0uo8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.final_project",
-            "certificate_hash": "c36f16055f6a4469129e15cda73e99e5c5e5a43c"
-          }
-        },
-        {
-          "client_id": "52162267249-pps97g24g0gbi3qndt6kh20c060ekilm.apps.googleusercontent.com",
+          "client_id": "685654752804-8jd54qmfgp436ho5bt95k4a70113gla7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzMp5KHrzPrR9fbjXQ8mqRxwdv9Z6WrCM"
+          "current_key": "AIzaSyBQ6M-BgzaxrCog1AxXkCvlrMDHTOJA0lE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "52162267249-pps97g24g0gbi3qndt6kh20c060ekilm.apps.googleusercontent.com",
+              "client_id": "685654752804-8jd54qmfgp436ho5bt95k4a70113gla7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

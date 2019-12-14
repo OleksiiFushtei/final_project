@@ -8,6 +8,7 @@ import com.example.final_project.models.ErrorModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
+import kotlin.Exception
 
 class ControllerAccessHelper(
     private val apiInterface: ApiInterface
@@ -47,13 +48,15 @@ class ControllerAccessHelper(
                             )
                         )
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             getUsersForControllersListener.onGetUsersForControllersResponseFailure(
                                 errorModel = errorModel
                             )
@@ -94,14 +97,16 @@ class ControllerAccessHelper(
                     when {
                         response.isSuccessful -> deleteUserFromListListener.onDeleteUserFromListResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
-                            deleteUserFromListListener.onDeleteUserFromListResponseFailue(
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            deleteUserFromListListener.onDeleteUserFromListResponseFailure(
                                 errorModel = errorModel
                             )
                         }

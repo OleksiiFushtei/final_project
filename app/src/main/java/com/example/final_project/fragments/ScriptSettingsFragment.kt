@@ -103,21 +103,49 @@ class ScriptSettingsFragment :
                 ) {
                     selectedCondType =
                         list[position].id
+                    selectedConditionType =
+                        list[position]
                 }
 
             }
     }
 
-    override fun onResponseFailure() {
-
+    override fun onResponseFailure(
+        errorModel: ErrorModel?
+    ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "You don't have access to this list"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            errorMessage,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onCancelled() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onFailure() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetSensorsListResponseSuccess(
@@ -156,6 +184,8 @@ class ScriptSettingsFragment :
                 ) {
                     selectedSensorId =
                         list[position].id
+                    selectedSensor =
+                        list[position]
                 }
 
             }
@@ -179,11 +209,25 @@ class ScriptSettingsFragment :
     }
 
     override fun onGetSensorsListCancelled() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetSensorsListFailure() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onScriptSaveResponseSuccess() {
@@ -242,10 +286,14 @@ class ScriptSettingsFragment :
             cbSensor.isChecked =
                 true
             sensorId.setSelection(
-                scriptModel.sensorId!!
+                sensorsList.indexOf(
+                    scriptModel.sensor.name
+                )
             )
             conditionType.setSelection(
-                scriptModel.conditionTypeId!!
+                condTypesList.indexOf(
+                    scriptModel.conditionType.type
+                )
             )
             scriptConditionValueEditText.setText(
                 scriptModel.conditionValue.toDouble()
@@ -398,6 +446,8 @@ class ScriptSettingsFragment :
     }
 
     private lateinit var script: ScriptModel
+    private lateinit var selectedSensor: SensorModel
+    private lateinit var selectedConditionType: ConditionTypeModel
     private var sensorsList: ArrayList<String> =
         ArrayList()
     private var condTypesList: ArrayList<String> =
@@ -730,7 +780,10 @@ class ScriptSettingsFragment :
                         delta = 0.5,
                         repeatTimes = repeatTimes,
                         status = scriptSwitch.isChecked,
-                        priority = prioritySlider.value.toInt()
+                        priority = prioritySlider.value.toInt(),
+                        sensor = selectedSensor,
+                        conditionType = selectedConditionType
+
                     )
                 if (scriptId == 0) {
                     scriptHelper.addScript(

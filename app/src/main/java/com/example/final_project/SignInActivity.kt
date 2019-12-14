@@ -4,11 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.example.final_project.api.helpers.SignInHelper
 import com.example.final_project.api.interfaces.SignInInterface
 import com.example.final_project.core.MainApplication
-import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 import com.google.android.material.snackbar.Snackbar
@@ -86,18 +84,28 @@ class SignInActivity :
         setContentView(
             R.layout.activity_sign_in
         )
-
+        if (Hawk.contains(
+                "token"
+            )
+        ) {
+            val mainActivity =
+                Intent(
+                    this@SignInActivity,
+                    ListOfControllersActivity::class.java
+                )
+            startActivity(
+                mainActivity
+            )
+            finish()
+        }
         val app: MainApplication =
             application as MainApplication
-
         val signInHelper =
             SignInHelper(
                 app.getApi()
             )
-
         progressBar.visibility =
             View.GONE
-
         buttonSI.setOnClickListener {
             if (validateAll()) {
                 //send data to server
@@ -115,7 +123,6 @@ class SignInActivity :
                 )
             }
         }
-
         buttonSU.setOnClickListener {
             val signUpIntent =
                 Intent(
@@ -126,7 +133,6 @@ class SignInActivity :
                 signUpIntent
             )
         }
-
         buttonFP.setOnClickListener {
             //maybe? idk
         }

@@ -40,4 +40,5 @@
     <string name="no_available_commands">You don\'t have any available commands</string>
     <string name="delete_script">Delete script</string>
     <string name="device_configurations">Device configurations</string>
+    <string name="delete_command">Delete command</string>
 </resources>

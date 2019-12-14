@@ -172,15 +172,12 @@ class SensorSettingsActivity :
         setContentView(
             R.layout.activity_sensor_settings
         )
-
         val app: MainApplication =
             application as MainApplication
-
         val sensorHelper =
             SensorHelper(
                 app.getApi()
             )
-
         val controllerId =
             intent.getIntExtra(
                 "controllerId",
@@ -191,7 +188,6 @@ class SensorSettingsActivity :
                 "sensorId",
                 0
             )
-
         if (sensorId == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
@@ -203,7 +199,6 @@ class SensorSettingsActivity :
                 this
             )
         }
-
         rgTypes.setOnCheckedChangeListener { _, checkedId ->
             val rButton: RadioButton =
                 findViewById(
@@ -217,7 +212,6 @@ class SensorSettingsActivity :
                 }
 
         }
-
         buttonSave.setOnClickListener {
             if (validateAll()) {
                 progressBar.visibility =
@@ -245,11 +239,9 @@ class SensorSettingsActivity :
                 }
             }
         }
-
         buttonBack.setOnClickListener {
             finish()
         }
-
         buttonDelete.setOnClickListener {
             sensorHelper.deleteSensor(
                 sensorId,

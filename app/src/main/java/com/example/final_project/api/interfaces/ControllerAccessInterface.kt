@@ -26,7 +26,7 @@ interface ControllerAccessInterface {
         )
 
         fun onGetUsersForControllersResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetUsersForControllerCancelled()
@@ -35,8 +35,8 @@ interface ControllerAccessInterface {
 
     interface DeleteUserFromListListener {
         fun onDeleteUserFromListResponseSuccess()
-        fun onDeleteUserFromListResponseFailue(
-            errorModel: ErrorModel
+        fun onDeleteUserFromListResponseFailure(
+            errorModel: ErrorModel?
         )
 
         fun onDeleteUserFromListCancelled()

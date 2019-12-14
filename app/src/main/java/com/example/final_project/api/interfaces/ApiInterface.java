@@ -120,9 +120,9 @@ public interface ApiInterface {
     @POST("/api/Script")
     Call<ScriptModel> editScript(@Body ScriptModel scriptModel);
 
-    //measures
-    @GET("/api/Measure/{deviceTypeId}")
-    Call<MeasureModel> getMeasure(@Path("deviceTypeId") int id);
+    //get condition types
+    @GET("/api/ConditionType")
+    Call<List<ConditionTypeModel>> listTypes();
 
 
     //commands
@@ -164,9 +164,9 @@ public interface ApiInterface {
     @POST("/api/DeviceConfiguration")
     Call<DeviceConfigurationModel> editConfig(@Body DeviceConfigurationModel deviceConfigurationModel);
 
-    //idk
-    @GET("/api/ConditionType")
-    Call<List<ConditionTypeModel>> listTypes();
+    //measures
+    @GET("/api/Measure/{deviceTypeId}")
+    Call<List<MeasureModel>> listMeasures(@Path("deviceTypeId") int id);
 
     //access
     //controllers

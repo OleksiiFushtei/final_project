@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.microsoft.signalr:signalr:1.0.0'
     implementation 'org.slf4j:slf4j-jdk14:1.7.25'
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+    implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

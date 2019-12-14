@@ -20,22 +20,30 @@ import com.example.final_project.core.MainApplication
 import com.example.final_project.models.CommandModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_script.progressBar
 import kotlinx.android.synthetic.main.fragment_script_commands.*
 
 class ScriptCommandsFragment :
     Fragment(),
-    CommandsListInterface.CommandListListener {
+    CommandsListInterface.CommandsListListener {
 
     companion object {
+        private const val CONTROLLERID =
+            "controllerId"
         private const val SCRIPTID =
             "scriptId"
 
         fun newInstance(
+            caughtId: Int,
             caughtScriptId: Int
         ): ScriptCommandsFragment {
             val args =
                 Bundle()
+            args.putSerializable(
+                CONTROLLERID,
+                caughtId
+            )
             args.putSerializable(
                 SCRIPTID,
                 caughtScriptId
@@ -51,11 +59,20 @@ class ScriptCommandsFragment :
     override fun onGetCommandsListResponseSuccess(
         list: ArrayList<CommandModel>
     ) {
+        commandsList.clear()
+        commandsList.addAll(
+            list
+        )
         val bundle =
             this.arguments
         val scriptId =
             bundle?.getInt(
                 "scriptId",
+                0
+            )
+        val controllerId =
+            bundle?.getInt(
+                "controllerId",
                 0
             )
         progressBar?.visibility =
@@ -66,15 +83,13 @@ class ScriptCommandsFragment :
             )
         listOfCommands?.adapter =
             CommandAdapter(
-                list,
-                context,
+                commandsList,
+                context = context,
+                controllerId = controllerId,
                 scriptId = scriptId
             )
-        commandsList.addAll(
-            list
-        )
         when {
-            list.isEmpty() -> {
+            commandsList.isEmpty() -> {
                 listOfCommands?.visibility =
                     View.GONE
                 emptyListSC?.visibility =
@@ -90,17 +105,41 @@ class ScriptCommandsFragment :
     }
 
     override fun onGetCommandsListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
-
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            errorMessage,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetCommandsListCancelled() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onGetCommandsListFailure() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     private val commandsList: ArrayList<CommandModel> =
@@ -119,13 +158,16 @@ class ScriptCommandsFragment :
             )
         val bundle =
             this.arguments
+        val controllerId =
+            bundle?.getInt(
+                "controllerId",
+                0
+            )
         val scriptId =
             bundle?.getInt(
                 "scriptId",
                 0
             )
-        val app =
-            context?.applicationContext as MainApplication
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
@@ -138,18 +180,6 @@ class ScriptCommandsFragment :
             view.findViewById<TextView>(
                 R.id.emptyListSC
             )
-        val commandsListHelper =
-            CommandsListHelper(
-                app.getApi()
-            )
-        if (scriptId != null && scriptId != 0) {
-            progressBar?.visibility =
-                View.VISIBLE
-            commandsListHelper.getListOfCommands(
-                scriptId,
-                this
-            )
-        }
         if (scriptId == 0) {
             progressBar?.visibility =
                 View.GONE
@@ -169,6 +199,10 @@ class ScriptCommandsFragment :
                     CommandSettingsActivity::class.java
                 )
             addCommand.putExtra(
+                "controllerId",
+                controllerId
+            )
+            addCommand.putExtra(
                 "scriptId",
                 scriptId
             )
@@ -183,5 +217,28 @@ class ScriptCommandsFragment :
         return view
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val bundle =
+            this.arguments
+        val scriptId =
+            bundle?.getInt(
+                "scriptId",
+                0
+            )
+        val app =
+            context?.applicationContext as MainApplication
+        val commandsListHelper =
+            CommandsListHelper(
+                app.getApi()
+            )
+        if (scriptId != null && scriptId != 0) {
+            progressBar?.visibility =
+                View.VISIBLE
+            commandsListHelper.getListOfCommands(
+                scriptId,
+                this
+            )
+        }
+    }
 }

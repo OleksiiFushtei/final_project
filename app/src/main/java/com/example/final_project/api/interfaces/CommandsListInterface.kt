@@ -4,19 +4,18 @@ import com.example.final_project.models.CommandModel
 import com.example.final_project.models.ErrorModel
 
 interface CommandsListInterface {
-
     fun getListOfCommands(
         id: Int,
-        commandListListener: CommandListListener
+        commandsListListener: CommandsListListener
     )
 
-    interface CommandListListener {
+    interface CommandsListListener {
         fun onGetCommandsListResponseSuccess(
             list: ArrayList<CommandModel>
         )
 
         fun onGetCommandsListResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetCommandsListCancelled()

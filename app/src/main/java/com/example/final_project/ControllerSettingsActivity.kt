@@ -1,6 +1,5 @@
 package com.example.final_project
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,7 +21,9 @@ class ControllerSettingsActivity :
         finish()
     }
 
-    override fun onControllerSaveResponseFailure(errorModel: ErrorModel) {
+    override fun onControllerSaveResponseFailure(
+        errorModel: ErrorModel
+    ) {
         progressBar.visibility =
             View.GONE
         Snackbar.make(
@@ -59,7 +60,9 @@ class ControllerSettingsActivity :
         finish()
     }
 
-    override fun onDeleteControllerResponseFailure(errorModel: ErrorModel) {
+    override fun onDeleteControllerResponseFailure(
+        errorModel: ErrorModel
+    ) {
         progressBar.visibility =
             View.GONE
         Snackbar.make(
@@ -72,13 +75,14 @@ class ControllerSettingsActivity :
 
     override fun onDeleteControllerCancelled() {
         progressBar.visibility =
-        View.GONE
+            View.GONE
         Snackbar.make(
             root_layout,
             "Deleting cancelled. Try again",
             Snackbar.LENGTH_SHORT
         )
-            .show()}
+            .show()
+    }
 
     override fun onDeleteControllerFailure() {
         progressBar.visibility =
@@ -106,7 +110,9 @@ class ControllerSettingsActivity :
             controller.status
     }
 
-    override fun onGetControllerResponseFailure(errorModel: ErrorModel) {
+    override fun onGetControllerResponseFailure(
+        errorModel: ErrorModel
+    ) {
         progressBar.visibility =
             View.GONE
         Snackbar.make(
@@ -148,21 +154,17 @@ class ControllerSettingsActivity :
         setContentView(
             R.layout.activity_controller_settings
         )
-
         val app: MainApplication =
             application as MainApplication
-
         val controllerHelper =
             ControllerHelper(
                 app.getApi()
             )
-
         val id =
             intent.getIntExtra(
                 "id",
                 0
             )
-
         if (id == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
@@ -174,7 +176,6 @@ class ControllerSettingsActivity :
                 this
             )
         }
-
         buttonSave.setOnClickListener {
             if (validateAll()) {
                 //send data to server
@@ -198,11 +199,10 @@ class ControllerSettingsActivity :
                 }
             }
         }
-
         buttonBack.setOnClickListener {
+//            onBackPressed()
             finish()
         }
-
         buttonDelete.setOnClickListener {
             controllerHelper.deleteController(
                 id,

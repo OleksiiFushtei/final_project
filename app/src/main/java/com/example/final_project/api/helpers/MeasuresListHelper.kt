@@ -1,41 +1,45 @@
 package com.example.final_project.api.helpers
 
 import com.example.final_project.api.interfaces.ApiInterface
-import com.example.final_project.api.interfaces.ConditionTypeListInterface
-import com.example.final_project.models.ConditionTypeModel
+import com.example.final_project.api.interfaces.MeasuresListInterface
 import com.example.final_project.models.ErrorModel
+import com.example.final_project.models.MeasureModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
-class ConditionTypeListHelper(
+class MeasuresListHelper(
     private val apiInterface: ApiInterface
-) : ConditionTypeListInterface {
+) : MeasuresListInterface {
 
-    override fun getTypes(
-        listener: ConditionTypeListInterface.ConditionTypeListListener
+    override fun getListOfDevices(
+        id: Int,
+        measuresListListener: MeasuresListInterface.MeasuresListListener
     ) {
         val call =
-            apiInterface.listTypes()
+            apiInterface.listMeasures(
+                id
+            )
         call.enqueue(
             object :
-                retrofit2.Callback<List<ConditionTypeModel>> {
+                retrofit2.Callback<List<MeasureModel>> {
+
                 override fun onFailure(
-                    call: Call<List<ConditionTypeModel>>,
+                    call: Call<List<MeasureModel>>,
                     t: Throwable
                 ) {
                     when {
-                        call.isCanceled -> listener.onCancelled()
-                        else -> listener.onFailure()
+                        call.isCanceled -> measuresListListener.onGetMeasuresListCancelled()
+                        else -> measuresListListener.onGetMeasuresListFailure()
                     }
                 }
 
                 override fun onResponse(
-                    call: Call<List<ConditionTypeModel>>,
-                    response: Response<List<ConditionTypeModel>>
+                    call: Call<List<MeasureModel>>,
+                    response: Response<List<MeasureModel>>
                 ) {
                     when {
-                        response.isSuccessful -> listener.onResponseSuccess(
+                        response.isSuccessful -> measuresListListener.onGetMeasuresListResponseSuccess(
                             list = ArrayList(
                                 response.body()!!
                             )
@@ -50,7 +54,7 @@ class ConditionTypeListHelper(
                                 } catch (e: Exception) {
                                     null
                                 }
-                            listener.onResponseFailure(
+                            measuresListListener.onGetMeasuresListResponseFailure(
                                 errorModel = errorModel
                             )
                         }

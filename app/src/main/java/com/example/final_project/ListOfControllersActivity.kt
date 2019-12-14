@@ -12,6 +12,7 @@ import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerListItemModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
+import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_list_of_controllers.*
 import kotlinx.android.synthetic.main.activity_list_of_controllers.root_layout
 import kotlinx.android.synthetic.main.activity_list_of_controllers.toolbar
@@ -88,15 +89,6 @@ class ListOfControllersActivity :
         setContentView(
             R.layout.activity_list_of_controllers
         )
-
-        val app: MainApplication =
-            application as MainApplication
-
-        val controllersListHelper =
-            ControllersListHelper(
-                app.getApi()
-            )
-
         progressBar.visibility =
             View.VISIBLE
 
@@ -114,12 +106,10 @@ class ListOfControllersActivity :
                 addControllerIntent
             )
         }
-
-        controllersListHelper.getListOfController(
-            this
-        )
-
         toolbar.setOnMenuItemClickListener {
+            Hawk.delete(
+                "token"
+            )
             val signInIntent =
                 Intent(
                     this@ListOfControllersActivity,
@@ -131,23 +121,18 @@ class ListOfControllersActivity :
             finish()
             false
         }
-
     }
-
 
     override fun onResume() {
         super.onResume()
         val app: MainApplication =
             application as MainApplication
-
         val controllersListHelper =
             ControllersListHelper(
                 app.getApi()
             )
-
         progressBar.visibility =
             View.VISIBLE
-
         controllersListHelper.getListOfController(
             this
         )

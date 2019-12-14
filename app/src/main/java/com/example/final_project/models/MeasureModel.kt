@@ -15,13 +15,5 @@ data class MeasureModel(
     @SerializedName(
         "deviceTypeId"
     )
-    override val deviceTypeId: Int,
-    @SerializedName(
-        "deviceConfigurations"
-    )
-    override val deviceConfigurations: ArrayList<DeviceConfigurationModel>,
-    @SerializedName(
-        "deviceType"
-    )
-    override val deviceType: DeviceTypeModel
+    override val deviceTypeId: Int
 ) : IMeasureModel

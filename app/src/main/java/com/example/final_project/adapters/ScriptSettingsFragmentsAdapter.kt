@@ -22,6 +22,7 @@ class ScriptSettingsFragmentsAdapter(
                 scriptId
             )
             else -> ScriptCommandsFragment.newInstance(
+                controllerId,
                 scriptId
             )
         }

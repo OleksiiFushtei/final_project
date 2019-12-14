@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.command_row.view.*
 class CommandAdapter(
     private val items: ArrayList<CommandModel>,
     private val context: Context?,
+    private val controllerId: Int?,
     private val scriptId: Int?
 ) : RecyclerView.Adapter<ViewHolderCommand>() {
 
@@ -50,6 +51,10 @@ class CommandAdapter(
                     CommandSettingsActivity::class.java
                 )
             commandSettingsIntent.putExtra(
+                "controllerId",
+                controllerId
+            )
+            commandSettingsIntent.putExtra(
                 "scriptId",
                 scriptId
             )
@@ -62,8 +67,6 @@ class CommandAdapter(
             )
         }
     }
-
-
 }
 
 class ViewHolderCommand(
