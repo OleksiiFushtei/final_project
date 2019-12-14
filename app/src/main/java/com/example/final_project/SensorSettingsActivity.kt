@@ -251,8 +251,13 @@ class SensorSettingsActivity :
 
     }
 
-    private fun validateAll(): Boolean =
-        validateName() && validatePin()
+    private fun validateAll(): Boolean {
+        sensorNameTextInput.error =
+            null
+        sensorPinTextInput.error =
+            null
+        return validateName() && validatePin()
+    }
 
     private fun validateName(): Boolean =
         when {

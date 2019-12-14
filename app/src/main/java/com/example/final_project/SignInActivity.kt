@@ -108,7 +108,6 @@ class SignInActivity :
             View.GONE
         buttonSI.setOnClickListener {
             if (validateAll()) {
-                //send data to server
                 progressBar.visibility =
                     View.VISIBLE
                 val checkData =
@@ -139,8 +138,13 @@ class SignInActivity :
 
     }
 
-    private fun validateAll(): Boolean =
-        validateUserName() && validatePassword()
+    private fun validateAll(): Boolean {
+        usernameTextInput.error =
+            null
+        passwordTextInput.error =
+            null
+        return validateUserName() && validatePassword()
+    }
 
     private fun validateUserName(): Boolean =
         when {

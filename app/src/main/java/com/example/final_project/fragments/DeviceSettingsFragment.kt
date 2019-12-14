@@ -212,7 +212,7 @@ class DeviceSettingsFragment :
     }
 
     private var deviceTypeId: Int =
-        0
+        1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -381,7 +381,7 @@ class DeviceSettingsFragment :
                 }
                 progressBar.visibility =
                     View.VISIBLE
-                val deviceData =
+                val checkData =
                     DeviceModel(
                         deviceId,
                         deviceNameEditText.text.toString(),
@@ -394,12 +394,12 @@ class DeviceSettingsFragment :
                     )
                 if (deviceId == 0) {
                     deviceHelper.addDevice(
-                        deviceData,
+                        checkData,
                         this
                     )
                 } else {
                     deviceHelper.editDevice(
-                        deviceData,
+                        checkData,
                         this
                     )
                 }
@@ -420,8 +420,18 @@ class DeviceSettingsFragment :
         return view
     }
 
-    private fun validateAll(): Boolean =
-        validateName() && validateConnection()
+    private fun validateAll(): Boolean {
+        deviceNameTextInput.error =
+            null
+        if (rbPin.isChecked) {
+            devicePinTextInput.error =
+                null
+        } else {
+            deviceMACTextInput.error =
+                null
+        }
+        return validateName() && validateConnection()
+    }
 
     private fun validateName(): Boolean =
         when {

@@ -858,8 +858,25 @@ class ScriptSettingsFragment :
         }
     }
 
-    private fun validateAll(): Boolean =
-        validateName() && validateConditionValue() && validateTimeTo()
+    private fun validateAll(): Boolean {
+        scriptNameTextInput.error =
+            null
+        if (cbSensor.isChecked) {
+            scriptConditionValueInput.error =
+                null
+        }
+        if (cbTimeTo.isChecked) {
+            scriptDateToInput.error =
+                null
+            scriptTimeToInput.error =
+                null
+        }
+        if (cbRepeat.isChecked) {
+            scriptRepeatInput.error =
+                null
+        }
+        return validateName() && validateConditionValue() && validateTimeTo() && validateRepeatTimes()
+    }
 
     private fun validateName(): Boolean =
         when {
@@ -918,6 +935,23 @@ class ScriptSettingsFragment :
                     scriptDateToInput.error =
                         null
                     scriptTimeToInput.error =
+                        null
+                    true
+                }
+            }
+            else -> true
+        }
+
+    private fun validateRepeatTimes(): Boolean =
+        when {
+            cbRepeat.isChecked -> when {
+                scriptRepeatEditText.text.toString().isEmpty() -> {
+                    scriptRepeatInput.error =
+                        "Repeat times field shouldn't be empty"
+                    false
+                }
+                else -> {
+                    scriptRepeatInput.error =
                         null
                     true
                 }

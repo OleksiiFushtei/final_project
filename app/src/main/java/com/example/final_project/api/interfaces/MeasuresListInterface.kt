@@ -5,7 +5,7 @@ import com.example.final_project.models.MeasureModel
 
 interface MeasuresListInterface {
 
-    fun getListOfDevices(
+    fun getListOfMeasures(
         id: Int,
         measuresListListener: MeasuresListListener
     )

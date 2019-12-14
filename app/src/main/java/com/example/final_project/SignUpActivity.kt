@@ -116,8 +116,21 @@ class SignUpActivity :
         }
     }
 
-    private fun validateAll(): Boolean =
-        validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
+    private fun validateAll(): Boolean {
+        usernameTextInput.error =
+            null
+        emailTextInput.error =
+            null
+        passwordTextInput.error =
+            null
+        confPasswordTextInput.error =
+            null
+        nameTextInput.error =
+            null
+        surnameTextInput.error =
+            null
+        return validateUserName() && validateEmail() && validatePassword() && validateConfPassword() && validateName() && validateSurName()
+    }
 
     private fun validateUserName(): Boolean =
         when {

@@ -12,7 +12,7 @@ class MeasuresListHelper(
     private val apiInterface: ApiInterface
 ) : MeasuresListInterface {
 
-    override fun getListOfDevices(
+    override fun getListOfMeasures(
         id: Int,
         measuresListListener: MeasuresListInterface.MeasuresListListener
     ) {

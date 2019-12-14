@@ -1,50 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/root_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_dodgeInsetEdges="bottom">-->
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="?attr/colorPrimary"-->
-<!--            android:minHeight="?attr/actionBarSize"-->
-<!--            android:theme="?attr/actionBarTheme"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:theme="@style/ThemeOverlay.AppCompat.Dark"-->
-<!--            app:title="New command"-->
-<!--            app:titleTextColor="#fff" />-->
-
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--            android:id="@+id/tabLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/colorPrimary"-->
-<!--            app:tabSelectedTextColor="#ffffff"-->
-<!--            app:tabTextColor="#BFBFBF">-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/settings" />-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/device_configurations" />-->
-
-<!--    </com.google.android.material.tabs.TabLayout>-->
-
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--            android:id="@+id/viewPager"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
-
-<!--</LinearLayout>-->
-
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -54,9 +8,9 @@
         tools:context=".CommandSettingsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
         <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/deviceId"
@@ -79,27 +33,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/deviceId" />
-
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/measureTextInput"-->
-<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginEnd="16dp"-->
-<!--                android:hint="Measure"-->
-<!--                app:errorEnabled="true"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/deviceId">-->
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/measureEditText"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/valueTextInput"
@@ -149,8 +82,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:hint="Time span"
+                android:hint="Delay"
                 app:errorEnabled="true"
+                app:helperTextEnabled="true"
+                app:helperText="Delay should be entered in seconds (max. 600)"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nameTextInput">

@@ -200,7 +200,7 @@ class ControllerSettingsActivity :
             }
         }
         buttonBack.setOnClickListener {
-//            onBackPressed()
+            //            onBackPressed()
             finish()
         }
         buttonDelete.setOnClickListener {
@@ -211,8 +211,13 @@ class ControllerSettingsActivity :
         }
     }
 
-    private fun validateAll(): Boolean =
-        validateName() && validateMAC()
+    private fun validateAll(): Boolean {
+        controllerNameTextInput.error =
+            null
+        MACAddressTextInput.error =
+            null
+        return validateName() && validateMAC()
+    }
 
     private fun validateName(): Boolean =
         when {
@@ -221,7 +226,11 @@ class ControllerSettingsActivity :
                     "Name field shouldn't be empty"
                 false
             }
-            else -> true
+            else -> {
+                controllerNameTextInput.error =
+                    null
+                true
+            }
         }
 
     private fun validateMAC(): Boolean =
@@ -236,6 +245,10 @@ class ControllerSettingsActivity :
                     "MAC Address should be 12 or 16 characters long"
                 false
             }
-            else -> true
+            else -> {
+                MACAddressTextInput.error =
+                    null
+                true
+            }
         }
 }

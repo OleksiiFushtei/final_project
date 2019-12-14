@@ -38,6 +38,7 @@ class CommandSettingsActivity :
             MeasuresListHelper(
                 app.getApi()
             )
+        devicesList.clear()
         for (item in list) {
             devicesList.add(
                 item.name
@@ -76,7 +77,7 @@ class CommandSettingsActivity :
                         devices[position].id
                     deviceTypeId =
                         devices[position].deviceTypeId
-                    measureListHelper.getListOfDevices(
+                    measureListHelper.getListOfMeasures(
                         deviceTypeId,
                         object :
                             MeasuresListInterface.MeasuresListListener {
@@ -87,7 +88,8 @@ class CommandSettingsActivity :
                                 measures.addAll(
                                     list
                                 )
-                                for (item in list) {
+                                measuresList.clear()
+                                for (item in measures) {
                                     measuresList.add(
                                         item.measureName
                                     )
@@ -101,6 +103,7 @@ class CommandSettingsActivity :
                                 adapterForMeasures.setDropDownViewResource(
                                     android.R.layout.simple_spinner_dropdown_item
                                 )
+                                adapterForMeasures.notifyDataSetChanged()
                                 measureId.adapter =
                                     adapterForMeasures
                                 measureId.onItemSelectedListener =
@@ -120,9 +123,9 @@ class CommandSettingsActivity :
                                             id: Long
                                         ) {
                                             selectedMeasure =
-                                                measures[position]
+                                                list[position]
                                             selectedMeasureId =
-                                                measures[position].id
+                                                list[position].id
                                         }
 
                                     }
@@ -628,6 +631,16 @@ class CommandSettingsActivity :
         }
     }
 
+    private fun validateAll(): Boolean {
+        valueTextInput.error =
+            null
+        nameTextInput.error =
+            null
+        timeSpanTextInput.error =
+            null
+        return validateValue() && validateName() && validateTimeSpan()
+    }
+
     private fun validateValue(): Boolean =
         when {
             valueEditText.text.toString().isEmpty() -> {
@@ -651,10 +664,6 @@ class CommandSettingsActivity :
                 true
             }
         }
-
-    private fun validateAll(): Boolean =
-        validateValue() && validateName() && validateTimeSpan()
-
 
     private fun validateName(): Boolean =
         when {

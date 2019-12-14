@@ -12,5 +12,4 @@ data class DeviceTypeModel(
         "typeName"
     )
     override val typeName: String
-) : IDeviceTypeModel {
-}
+) : IDeviceTypeModel
