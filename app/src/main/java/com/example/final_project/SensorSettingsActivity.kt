@@ -24,13 +24,18 @@ class SensorSettingsActivity :
     }
 
     override fun onSensorSaveResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -63,13 +68,18 @@ class SensorSettingsActivity :
     }
 
     override fun onSensorDeleteResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -126,13 +136,18 @@ class SensorSettingsActivity :
     }
 
     override fun onSensorGetResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()

@@ -16,6 +16,6 @@ interface IScriptModel {
     val delta: Double
     val repeatTimes: Int
     val priority: Int
-    val sensor: SensorModel
-    val conditionType: ConditionTypeModel
+    val sensor: SensorModel?
+    val conditionType: ConditionTypeModel?
 }

@@ -26,33 +26,50 @@ class ListOfControllersActivity :
     ) {
         progressBar.visibility =
             View.GONE
-        listOfControllers.layoutManager =
+        val llm =
             LinearLayoutManager(
                 this
             )
-        listOfControllers.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfControllers.layoutManager =
+            llm
+        val controllerAdapter =
             ControllerAdapter(
                 list,
                 this
             )
-        if (list.isEmpty()) {
-            Snackbar.make(
-                root_layout,
-                "You don't have any available controllers",
-                Snackbar.LENGTH_SHORT
-            )
-                .show()
+        listOfControllers.adapter =
+            controllerAdapter
+        when {
+            list.isEmpty() -> {
+                listOfControllers.visibility =
+                    View.GONE
+                emptyList.visibility =
+                    View.VISIBLE
+            }
+            else -> {
+                listOfControllers.visibility =
+                    View.VISIBLE
+                emptyList.visibility =
+                    View.GONE
+            }
         }
     }
 
     override fun onGetControllersListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -101,6 +118,10 @@ class ListOfControllersActivity :
             addControllerIntent.putExtra(
                 "id",
                 0
+            )
+            addControllerIntent.putExtra(
+                "isAdmin",
+                true
             )
             startActivity(
                 addControllerIntent

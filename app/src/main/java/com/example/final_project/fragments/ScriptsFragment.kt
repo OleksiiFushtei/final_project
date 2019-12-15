@@ -70,17 +70,23 @@ class ScriptsFragment :
             )
         progressBar?.visibility =
             View.GONE
-        listOfScripts.layoutManager =
+        val llm =
             LinearLayoutManager(
-                context
+                this.context
             )
-        listOfScripts.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfScripts.layoutManager =
+            llm
+        val scriptAdapter =
             ScriptAdapter(
                 list,
                 context,
                 controllerId = controllerId,
                 isAdmin = isAdmin
             )
+        listOfScripts.adapter =
+            scriptAdapter
         scriptsList.addAll(
             list
         )
@@ -101,13 +107,18 @@ class ScriptsFragment :
     }
 
     override fun onGetScriptsListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()

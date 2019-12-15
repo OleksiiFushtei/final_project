@@ -6,6 +6,7 @@ import com.example.final_project.models.ErrorModel
 interface DevicesListInterface {
     fun getListOfDevices(
         id: Int,
+        virtual: Boolean,
         devicesListListener: DevicesListListener
     )
 

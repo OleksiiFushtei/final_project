@@ -46,13 +46,15 @@ class SensorsListHelper(
                                 )
                             )
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             sensorsListListener.onGetSensorsListResponseFailure(
                                 errorModel = errorModel
                             )

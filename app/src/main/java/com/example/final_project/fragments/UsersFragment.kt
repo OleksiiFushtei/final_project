@@ -68,17 +68,23 @@ class UsersFragment :
         userList.addAll(
             list
         )
-        listOfUsers.layoutManager =
+        val llm =
             LinearLayoutManager(
-                context
+                this.context
             )
-        listOfUsers?.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfUsers.layoutManager =
+            llm
+        val userAdapter =
             UserAdapter(
                 list,
                 context,
                 controllerId = controllerId,
                 isAdmin = isAdmin
             )
+        listOfUsers.adapter =
+            userAdapter
         when {
             list.isEmpty() -> {
                 listOfUsers.visibility =

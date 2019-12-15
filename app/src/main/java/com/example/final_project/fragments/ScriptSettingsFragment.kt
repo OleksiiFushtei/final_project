@@ -193,16 +193,16 @@ class ScriptSettingsFragment :
     }
 
     override fun onGetSensorsListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
-        val message: String =
-            when {
-                errorModel.message.isEmpty() -> "An error occupied. Try again"
+        val errorMessage =
+            when (errorModel) {
+                null -> "You don't have access to this list"
                 else -> errorModel.message
             }
         Snackbar.make(
             root_layout,
-            message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -287,12 +287,12 @@ class ScriptSettingsFragment :
                 true
             sensorId.setSelection(
                 sensorsList.indexOf(
-                    scriptModel.sensor.name
+                    scriptModel.sensor?.name
                 )
             )
             conditionType.setSelection(
                 condTypesList.indexOf(
-                    scriptModel.conditionType.type
+                    scriptModel.conditionType?.type
                 )
             )
             scriptConditionValueEditText.setText(
@@ -446,8 +446,10 @@ class ScriptSettingsFragment :
     }
 
     private lateinit var script: ScriptModel
-    private lateinit var selectedSensor: SensorModel
-    private lateinit var selectedConditionType: ConditionTypeModel
+    private var selectedSensor: SensorModel? =
+        null
+    private var selectedConditionType: ConditionTypeModel? =
+        null
     private var sensorsList: ArrayList<String> =
         ArrayList()
     private var condTypesList: ArrayList<String> =
@@ -767,6 +769,12 @@ class ScriptSettingsFragment :
                     if (cbSensor.isChecked)
                         selectedCondType
                     else null
+                if (!cbSensor.isChecked) {
+                    selectedSensor =
+                        null
+                    selectedConditionType =
+                        null
+                }
                 val checkData =
                     ScriptModel(
                         id = id,

@@ -69,17 +69,23 @@ class DevicesFragment :
             )
         progressBar.visibility =
             View.GONE
-        listOfDevices.layoutManager =
+        val llm =
             LinearLayoutManager(
-                context
+                this.context
             )
-        listOfDevices.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfDevices.layoutManager =
+            llm
+        val deviceAdapter =
             DeviceAdapter(
                 list,
                 context,
                 controllerId = controllerId,
                 isAdmin = isAdmin
             )
+        listOfDevices.adapter =
+            deviceAdapter
         devicesList.addAll(
             list
         )
@@ -148,7 +154,6 @@ class DevicesFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view: View =
             inflater.inflate(
                 R.layout.fragment_device,
@@ -214,6 +219,7 @@ class DevicesFragment :
         if (controllerId != null) {
             devicesListHelper.getListOfDevices(
                 controllerId,
+                false,
                 this
             )
         }

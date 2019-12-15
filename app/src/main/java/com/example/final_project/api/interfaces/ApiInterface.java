@@ -23,6 +23,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -80,7 +81,7 @@ public interface ApiInterface {
     //devices
     //get list of available devices
     @GET("/api/Device/All/{controllerId}")
-    Call<List<DeviceModel>> listDevices(@Path("controllerId") int id);
+    Call<List<DeviceModel>> listDevices(@Path("controllerId") int id, @Query("virtual") boolean virtual);
 
     //get selected device
     @GET("/api/Device/{id}")

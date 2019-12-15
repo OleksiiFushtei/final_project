@@ -36,7 +36,7 @@ interface ControllerInterface {
     interface ControllerSaveListener {
         fun onControllerSaveResponseSuccess()
         fun onControllerSaveResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onControllerSaveCancelled()
@@ -49,7 +49,7 @@ interface ControllerInterface {
         )
 
         fun onGetControllerResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetControllerCancelled()
@@ -59,7 +59,7 @@ interface ControllerInterface {
     interface ControllerDeleteListener {
         fun onDeleteControllerResponseSuccess()
         fun onDeleteControllerResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onDeleteControllerCancelled()

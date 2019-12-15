@@ -10,6 +10,11 @@ import com.example.final_project.models.ControllerModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_controller_settings.*
+import kotlinx.android.synthetic.main.activity_controller_settings.buttonBack
+import kotlinx.android.synthetic.main.activity_controller_settings.buttonDelete
+import kotlinx.android.synthetic.main.activity_controller_settings.buttonSave
+import kotlinx.android.synthetic.main.activity_controller_settings.progressBar
+import kotlinx.android.synthetic.main.activity_controller_settings.root_layout
 
 class ControllerSettingsActivity :
     AppCompatActivity(),
@@ -22,13 +27,18 @@ class ControllerSettingsActivity :
     }
 
     override fun onControllerSaveResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -61,13 +71,18 @@ class ControllerSettingsActivity :
     }
 
     override fun onDeleteControllerResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -111,13 +126,18 @@ class ControllerSettingsActivity :
     }
 
     override fun onGetControllerResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -165,6 +185,11 @@ class ControllerSettingsActivity :
                 "id",
                 0
             )
+        val isAdmin =
+            intent.getBooleanExtra(
+                "isAdmin",
+                false
+            )
         if (id == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
@@ -176,10 +201,25 @@ class ControllerSettingsActivity :
                 this
             )
         }
+        if (!isAdmin) {
+            val changesSnackbar =
+                Snackbar.make(
+                    root_layout,
+                    "Any changes won't be saved",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+            changesSnackbar.setAction(
+                "OK, got it!"
+            ) { changesSnackbar.dismiss() }
+            changesSnackbar.show()
+            buttonDelete.visibility =
+                View.GONE
+            buttonSave.visibility =
+                View.GONE
+        }
         buttonSave.setOnClickListener {
             if (validateAll()) {
-                //send data to server
-                val controllerData =
+                val checkData =
                     ControllerModel(
                         id,
                         controllerNameEditText.text.toString(),
@@ -188,19 +228,18 @@ class ControllerSettingsActivity :
                     )
                 if (id == 0) {
                     controllerHelper.addController(
-                        controllerData,
+                        checkData,
                         this
                     )
                 } else {
                     controllerHelper.editController(
-                        controllerData,
+                        checkData,
                         this
                     )
                 }
             }
         }
         buttonBack.setOnClickListener {
-            //            onBackPressed()
             finish()
         }
         buttonDelete.setOnClickListener {

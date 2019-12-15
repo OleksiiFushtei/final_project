@@ -14,7 +14,7 @@ interface ControllersListInterface {
         )
 
         fun onGetControllersListResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetControllersListCancelled()

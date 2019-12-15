@@ -135,6 +135,17 @@ class DeviceSettingsFragment :
                     false
             }
         }
+        when (device.deviceTypeId) {
+            1 -> rgTypes.check(
+                R.id.rbSwitch
+            )
+            2 -> rgTypes.check(
+                R.id.rbLamp
+            )
+            else -> rgTypes.check(
+                R.id.rbLED
+            )
+        }
         deviceSwitch.isChecked =
             device.status
     }
@@ -358,8 +369,7 @@ class DeviceSettingsFragment :
                 when (rButton) {
                     rbSwitch -> 1
                     rbLamp -> 2
-                    rbLED -> 3
-                    else -> 1
+                    else -> 3
                 }
         }
 

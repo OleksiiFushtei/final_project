@@ -14,11 +14,13 @@ class DevicesListHelper(
 
     override fun getListOfDevices(
         id: Int,
+        virtual: Boolean,
         devicesListListener: DevicesListInterface.DevicesListListener
     ) {
         val call =
             apiInterface.listDevices(
-                id
+                id,
+                virtual
             )
         call.enqueue(
             object :

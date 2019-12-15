@@ -45,13 +45,15 @@ class ControllerHelper(
                     when {
                         response.isSuccessful -> controllerSaveListener.onControllerSaveResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             controllerSaveListener.onControllerSaveResponseFailure(
                                 errorModel = errorModel
                             )
@@ -91,13 +93,15 @@ class ControllerHelper(
                     when {
                         response.isSuccessful -> controllerSaveListener.onControllerSaveResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             controllerSaveListener.onControllerSaveResponseFailure(
                                 errorModel = errorModel
                             )
@@ -139,13 +143,15 @@ class ControllerHelper(
                             response.body()!!
                         )
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             controllerGetListener.onGetControllerResponseFailure(
                                 errorModel = errorModel
                             )
@@ -185,13 +191,15 @@ class ControllerHelper(
                     when {
                         response.isSuccessful -> controllerDeleteListener.onDeleteControllerResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             controllerDeleteListener.onDeleteControllerResponseFailure(
                                 errorModel = errorModel
                             )

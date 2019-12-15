@@ -44,13 +44,15 @@ class SensorHelper(
                     when {
                         response.isSuccessful -> sensorSaveListener.onSensorSaveResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody()?.string(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             sensorSaveListener.onSensorSaveResponseFailure(
                                 errorModel = errorModel
                             )
@@ -92,13 +94,15 @@ class SensorHelper(
                     when {
                         response.isSuccessful -> sensorSaveListener.onSensorSaveResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             sensorSaveListener.onSensorSaveResponseFailure(
                                 errorModel = errorModel
                             )
@@ -141,13 +145,15 @@ class SensorHelper(
                             response.body()!!
                         )
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             sensorGetListener.onSensorGetResponseFailure(
                                 errorModel = errorModel
                             )
@@ -188,13 +194,15 @@ class SensorHelper(
                     when {
                         response.isSuccessful -> sensorDeleteListener.onSensorDeleteResponseSuccess()
                         else -> {
-                            val gson =
-                                Gson()
-                            val errorModel: ErrorModel =
-                                gson.fromJson(
-                                    response.errorBody().toString(),
-                                    ErrorModel::class.java
-                                )
+                            val errorModel: ErrorModel? =
+                                try {
+                                    Gson().fromJson(
+                                        response.errorBody().toString(),
+                                        ErrorModel::class.java
+                                    )
+                                } catch (e: Exception) {
+                                    null
+                                }
                             sensorDeleteListener.onSensorDeleteResponseFailure(
                                 errorModel = errorModel
                             )

@@ -431,6 +431,7 @@ class CommandSettingsActivity :
             )
         deviceListHelper.getListOfDevices(
             controllerId,
+            true,
             this
         )
         val commandHelper =

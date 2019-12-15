@@ -41,4 +41,5 @@
     <string name="delete_script">Delete script</string>
     <string name="device_configurations">Device configurations</string>
     <string name="delete_command">Delete command</string>
+    <string name="no_available_controllers">You don\'t have any available controllers</string>
 </resources>

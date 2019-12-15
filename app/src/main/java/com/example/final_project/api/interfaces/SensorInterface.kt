@@ -36,7 +36,7 @@ interface SensorInterface {
     interface SensorSaveListener {
         fun onSensorSaveResponseSuccess()
         fun onSensorSaveResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onSensorSaveCancelled()
@@ -49,7 +49,7 @@ interface SensorInterface {
         )
 
         fun onSensorGetResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onSensorGetCancelled()
@@ -59,7 +59,7 @@ interface SensorInterface {
     interface SensorDeleteListener {
         fun onSensorDeleteResponseSuccess()
         fun onSensorDeleteResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onSensorDeleteCancelled()

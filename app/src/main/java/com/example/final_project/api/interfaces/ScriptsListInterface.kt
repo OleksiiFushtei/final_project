@@ -15,7 +15,7 @@ interface ScriptsListInterface {
         )
 
         fun onGetScriptsListResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetScriptsListCancelled()

@@ -55,9 +55,9 @@ data class ScriptModel(
     @SerializedName(
         "sensor"
     )
-    override val sensor: SensorModel,
+    override val sensor: SensorModel?,
     @SerializedName(
         "conditionType"
     )
-    override val conditionType: ConditionTypeModel
+    override val conditionType: ConditionTypeModel?
 ) : IScriptModel

@@ -77,17 +77,23 @@ class ScriptCommandsFragment :
             )
         progressBar?.visibility =
             View.GONE
-        listOfCommands?.layoutManager =
+        val llm =
             LinearLayoutManager(
-                context
+                this.context
             )
-        listOfCommands?.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfCommands.layoutManager =
+            llm
+        val commandAdapter =
             CommandAdapter(
                 commandsList,
                 context = context,
                 controllerId = controllerId,
                 scriptId = scriptId
             )
+        listOfCommands.adapter =
+            commandAdapter
         when {
             commandsList.isEmpty() -> {
                 listOfCommands?.visibility =

@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.fragment_sensor.*
-import java.lang.Exception
+import kotlin.Exception
 
 class SensorsFragment :
     Fragment(),
@@ -75,17 +75,23 @@ class SensorsFragment :
             )
         progressBar?.visibility =
             View.GONE
-        listOfSensors.layoutManager =
+        val llm =
             LinearLayoutManager(
-                context
+                this.context
             )
-        listOfSensors.adapter =
+        llm.orientation =
+            LinearLayoutManager.VERTICAL
+        listOfSensors.layoutManager =
+            llm
+        val sensorsAdapter =
             SensorAdapter(
                 list,
                 context,
                 controlledId = controllerId,
                 isAdmin = isAdmin
             )
+        listOfSensors.adapter =
+            sensorsAdapter
         sensorsList.addAll(
             list
         )
@@ -95,9 +101,26 @@ class SensorsFragment :
                     "token"
                 )
             )
-        if (!sensorHubHelper.hubState()) {
-            sensorHubHelper.hubInit()
+        try {
+            if (!sensorHubHelper.hubState()) {
+                sensorHubHelper.hubInit()
+            }
+        } catch (e: NullPointerException) {
+            Snackbar.make(
+                root_layout,
+                "Gotcha!",
+                Snackbar.LENGTH_SHORT
+            )
+                .show()
         }
+//        if (!sensorHubHelper.hubState()) {
+//            try {
+//                sensorHubHelper.hubInit()
+//            }
+//            catch (e: Exception) {
+//                Snackbar.make(root_layout, "SignalR will try to connect again", Snackbar.LENGTH_SHORT).show()
+//            }
+//        }
         sensorHubHelper.updateSensor(
             listOfSensors
         ) { sensorModel: SensorModel, view: RecyclerView ->
@@ -135,13 +158,18 @@ class SensorsFragment :
     }
 
     override fun onGetSensorsListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         progressBar.visibility =
             View.GONE
         Snackbar.make(
             root_layout,
-            errorModel.message,
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()

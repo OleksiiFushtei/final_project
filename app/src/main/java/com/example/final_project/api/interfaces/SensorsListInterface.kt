@@ -15,7 +15,7 @@ interface SensorsListInterface {
         )
 
         fun onGetSensorsListResponseFailure(
-            errorModel: ErrorModel
+            errorModel: ErrorModel?
         )
 
         fun onGetSensorsListCancelled()
