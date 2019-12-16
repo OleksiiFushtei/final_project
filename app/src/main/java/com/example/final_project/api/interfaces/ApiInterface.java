@@ -100,6 +100,14 @@ public interface ApiInterface {
     @POST("/api/Device")
     Call<DeviceModel> editDevice(@Body DeviceModel deviceModel);
 
+    //devices
+    //
+//    @GET("/api/Access/Device/{id}")
+//    Call<List<DeviceAccessModel>> listUsersForDevices(@Path("id") int id);
+
+    //
+//    @PUT("/api/Access/Device")
+//    Call<DeviceAccessModel> putSth(@Body DeviceAccessModel deviceAccessModel);
 
     //scripts
     //get list of available scripts
@@ -184,19 +192,10 @@ public interface ApiInterface {
     @PUT("/api/Access/Controller")
     Call<ControllerListItemModel> addAccessToController(@Body ControllerAccessModel controllerAccessModel);
 
-    //devices
-    //
-//    @GET("/api/Access/Device/{id}")
-//    Call<List<DeviceAccessModel>> listUsersForDevices(@Path("id") int id);
-
-    //
-//    @PUT("/api/Access/Device")
-//    Call<DeviceAccessModel> putSth(@Body DeviceAccessModel deviceAccessModel);
-
     //Firebase
     @POST("/api/User/Firebase")
-    Call<String> postToken(@Body String token);
-//    Call<String> postToken(@Query("token") String token);
+//    Call<String> postToken(@Body String token);
+    Call<String> postToken(@Query("token") String token);
 
     @DELETE("/api/User/Firebase")
     Call<String> deleteToken();

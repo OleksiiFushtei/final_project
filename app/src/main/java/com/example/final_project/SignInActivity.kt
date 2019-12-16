@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import com.example.final_project.api.helpers.FirebaseHelper
 import com.example.final_project.api.helpers.SignInHelper
+import com.example.final_project.api.interfaces.FirebaseInteface
 import com.example.final_project.api.interfaces.SignInInterface
 import com.example.final_project.core.MainApplication
+import com.example.final_project.models.ErrorModel
 import com.example.final_project.models.SignInDataModel
 import com.example.final_project.models.TokenModel
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +29,8 @@ import kotlinx.android.synthetic.main.activity_sign_in.usernameEditText
 
 class SignInActivity :
     AppCompatActivity(),
-    SignInInterface.SignInListener {
+    SignInInterface.SignInListener,
+    FirebaseInteface.PostTokenListener {
 
     override fun onSignInResponseSuccess(
         token: TokenModel
@@ -35,15 +39,47 @@ class SignInActivity :
             "token",
             token.token
         )
+        val app: MainApplication =
+            application as MainApplication
+        val firebaseHelper =
+            FirebaseHelper(
+                app.getApi()
+            )
         val mainActivity =
             Intent(
                 this@SignInActivity,
                 ListOfControllersActivity::class.java
             )
+        firebaseHelper.postToken(
+            Hawk.get(
+                "firebaseToken"
+            ),
+            this
+        )
         startActivity(
             mainActivity
         )
         finish()
+    }
+
+    override fun onPostTokenResponseSuccess(
+        token: String
+    ) {
+
+    }
+
+    override fun onPostTokenResponseFailure(
+        errorModel: ErrorModel?
+    ) {
+
+    }
+
+    override fun onPostTokenCancelled() {
+
+    }
+
+    override fun onPostTokenFailure() {
+
     }
 
     override fun onSignInResponseFailure(

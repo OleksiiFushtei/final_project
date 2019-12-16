@@ -10,9 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.final_project.ListOfControllersActivity
 import com.example.final_project.R
-import com.example.final_project.api.helpers.FirebaseHelper
 import com.example.final_project.api.interfaces.FirebaseInteface
-import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ErrorModel
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -167,16 +165,6 @@ class MyFirebaseMessagingService :
             Hawk.put(
                 "firebaseToken",
                 p0
-            )
-            val app: MainApplication =
-                application as MainApplication
-            val firebaseHelper =
-                FirebaseHelper(
-                    app.getApi()
-                )
-            firebaseHelper.postToken(
-                p0,
-                this
             )
         }
     }
