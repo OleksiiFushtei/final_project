@@ -1,8 +1,14 @@
 package com.example.final_project
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import com.example.final_project.api.helpers.SignInHelper
 import com.example.final_project.api.interfaces.SignInInterface
@@ -84,6 +90,7 @@ class SignInActivity :
         setContentView(
             R.layout.activity_sign_in
         )
+        channelSettings()
         if (Hawk.contains(
                 "token"
             )
@@ -136,6 +143,72 @@ class SignInActivity :
             //maybe? idk
         }
 
+    }
+
+    private fun channelSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager =
+                getSystemService(
+                    Context.NOTIFICATION_SERVICE
+                ) as NotificationManager
+            if (notificationManager.notificationChannels.isEmpty()) {
+                val channelId =
+                    getString(
+                        R.string.default_notification_channel_id
+                    )
+                val channelName: CharSequence =
+                    "My channel"
+                val importance =
+                    NotificationManager.IMPORTANCE_HIGH
+                val notificationChannel =
+                    NotificationChannel(
+                        channelId,
+                        channelName,
+                        importance
+                    )
+                notificationChannel.enableLights(
+                    true
+                )
+                notificationChannel.lightColor =
+                    Color.RED
+                notificationChannel.enableVibration(
+                    true
+                )
+                notificationChannel.vibrationPattern =
+                    longArrayOf(
+                        100,
+                        200,
+                        300,
+                        400,
+                        500,
+                        400,
+                        300,
+                        200,
+                        400
+                    )
+                notificationChannel.lockscreenVisibility =
+                    View.VISIBLE
+                notificationManager.createNotificationChannel(
+                    notificationChannel
+                )
+
+                val intent =
+                    Intent(
+                        Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
+                    )
+                intent.putExtra(
+                    Settings.EXTRA_CHANNEL_ID,
+                    notificationChannel.id
+                )
+                intent.putExtra(
+                    Settings.EXTRA_APP_PACKAGE,
+                    packageName
+                )
+                startActivity(
+                    intent
+                )
+            }
+        }
     }
 
     private fun validateAll(): Boolean {

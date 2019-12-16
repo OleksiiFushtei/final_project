@@ -16,6 +16,7 @@ import com.example.final_project.models.TokenModel;
 
 import java.util.List;
 
+import dagger.BindsOptionalOf;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -191,4 +192,12 @@ public interface ApiInterface {
     //
 //    @PUT("/api/Access/Device")
 //    Call<DeviceAccessModel> putSth(@Body DeviceAccessModel deviceAccessModel);
+
+    //Firebase
+    @POST("/api/User/Firebase")
+    Call<String> postToken(@Body String token);
+//    Call<String> postToken(@Query("token") String token);
+
+    @DELETE("/api/User/Firebase")
+    Call<String> deleteToken();
 }

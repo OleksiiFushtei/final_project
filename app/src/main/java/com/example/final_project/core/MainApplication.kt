@@ -1,6 +1,15 @@
 package com.example.final_project.core
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import android.provider.Settings
+import android.view.View
+import com.example.final_project.R
 import com.example.final_project.api.inteceptors.SignInInterceptor
 import com.example.final_project.api.interfaces.ApiInterface
 import com.orhanobut.hawk.Hawk
@@ -8,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MainApplication :
     Application() {
@@ -33,6 +43,10 @@ class MainApplication :
                     loggingInterceptor
                 )
                 .build()
+
+//            FirebaseMessaging.getInstance()
+//                .isAutoInitEnabled =
+//                true
 
         retrofit =
             Retrofit.Builder()

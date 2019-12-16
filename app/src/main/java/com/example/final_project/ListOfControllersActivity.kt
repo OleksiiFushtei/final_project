@@ -7,11 +7,14 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.adapters.ControllerAdapter
 import com.example.final_project.api.helpers.ControllersListHelper
+import com.example.final_project.api.helpers.FirebaseHelper
 import com.example.final_project.api.interfaces.ControllersListInterface
+import com.example.final_project.api.interfaces.FirebaseInteface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ControllerListItemModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_list_of_controllers.*
 import kotlinx.android.synthetic.main.activity_list_of_controllers.root_layout
@@ -19,7 +22,8 @@ import kotlinx.android.synthetic.main.activity_list_of_controllers.toolbar
 
 class ListOfControllersActivity :
     AppCompatActivity(),
-    ControllersListInterface.ControllersListListener {
+    ControllersListInterface.ControllersListListener,
+    FirebaseInteface.DeleteTokenListener {
 
     override fun onGetControllersListResponseSuccess(
         list: ArrayList<ControllerListItemModel>
@@ -97,6 +101,46 @@ class ListOfControllersActivity :
             .show()
     }
 
+    override fun onDeleteTokenResponseSuccess() {
+        Hawk.delete(
+            "firebaseToken"
+        )
+    }
+
+    override fun onDeleteTokenResponseFailure(
+        errorModel: ErrorModel?
+    ) {
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            errorMessage,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
+
+    override fun onDeleteTokenCancelled() {
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
+
+    override fun onDeleteTokenFailure() {
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+    }
+
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
@@ -108,7 +152,12 @@ class ListOfControllersActivity :
         )
         progressBar.visibility =
             View.VISIBLE
-
+        FirebaseMessaging.getInstance()
+            .isAutoInitEnabled =
+            false
+        FirebaseMessaging.getInstance()
+            .isAutoInitEnabled =
+            true
         addControllerButton.setOnClickListener {
             val addControllerIntent =
                 Intent(
@@ -128,6 +177,15 @@ class ListOfControllersActivity :
             )
         }
         toolbar.setOnMenuItemClickListener {
+            val app: MainApplication =
+                application as MainApplication
+            val firebaseHelper =
+                FirebaseHelper(
+                    app.getApi()
+                )
+            firebaseHelper.deleteToken(
+                this
+            )
             Hawk.delete(
                 "token"
             )
