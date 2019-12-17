@@ -113,33 +113,42 @@ class SensorsFragment :
             )
                 .show()
         }
-//        if (!sensorHubHelper.hubState()) {
-//            try {
-//                sensorHubHelper.hubInit()
-//            }
-//            catch (e: Exception) {
-//                Snackbar.make(root_layout, "SignalR will try to connect again", Snackbar.LENGTH_SHORT).show()
-//            }
-//        }
-        sensorHubHelper.updateSensor(
-            listOfSensors
-        ) { sensorModel: SensorModel, view: RecyclerView ->
-            activity?.runOnUiThread {
-                val sensorAdapter =
-                    view.adapter as SensorAdapter
-                try {
-                    val item =
-                        sensorAdapter.getItems()
-                            .first {
-                                it.id == sensorModel.id
-                            }
-                    item.value =
-                        sensorModel.value
-                    sensorAdapter.notifyDataSetChanged()
-                } catch (e: Exception) {
-
+        if (!sensorHubHelper.hubState()) {
+            sensorHubHelper.hubInit()
+        }
+        try {
+            sensorHubHelper.updateSensor(
+                listOfSensors
+            ) { sensorModel: SensorModel, view: RecyclerView ->
+                activity?.runOnUiThread {
+                    val sensorAdapter =
+                        view.adapter as SensorAdapter
+                    try {
+                        val item =
+                            sensorAdapter.getItems()
+                                .first {
+                                    it.id == sensorModel.id
+                                }
+                        item.value =
+                            sensorModel.value
+                        sensorAdapter.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            root_layout,
+                            "Server error",
+                            Snackbar.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
+        } catch (e: Exception) {
+            Snackbar.make(
+                root_layout,
+                "SignalR will soon resume it's work",
+                Snackbar.LENGTH_SHORT
+            )
+                .show()
         }
         when {
             list.isEmpty() -> {

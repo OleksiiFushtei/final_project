@@ -186,14 +186,17 @@ class ListOfControllersActivity :
             firebaseHelper.deleteToken(
                 this
             )
-            Hawk.delete(
-                "token"
-            )
             val signInIntent =
                 Intent(
                     this@ListOfControllersActivity,
                     SignInActivity::class.java
                 )
+            Hawk.delete(
+                "firebaseToken"
+            )
+            Hawk.delete(
+                "token"
+            )
             startActivity(
                 signInIntent
             )

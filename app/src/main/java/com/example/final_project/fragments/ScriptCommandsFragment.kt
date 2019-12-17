@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.CommandSettingsActivity
@@ -186,6 +187,23 @@ class ScriptCommandsFragment :
             view.findViewById<TextView>(
                 R.id.emptyListSC
             )
+        val addButton =
+            view.findViewById<FloatingActionButton>(
+                R.id.addCommandButton
+            )
+        val rootLayout: CoordinatorLayout =
+            view.findViewById(
+                R.id.root_layout
+            )
+        val snackbarCommands =
+            Snackbar.make(
+                rootLayout,
+                "Please, save your script first",
+                Snackbar.LENGTH_INDEFINITE
+            )
+        snackbarCommands.setAction(
+            "OK, got it!"
+        ) { snackbarCommands.dismiss() }
         if (scriptId == 0) {
             progressBar?.visibility =
                 View.GONE
@@ -193,11 +211,10 @@ class ScriptCommandsFragment :
                 View.GONE
             emptyList.visibility =
                 View.VISIBLE
+            addButton.visibility =
+                View.GONE
+            snackbarCommands.show()
         }
-        val addButton =
-            view.findViewById<FloatingActionButton>(
-                R.id.addCommandButton
-            )
         addButton.setOnClickListener {
             val addCommand =
                 Intent(

@@ -27,31 +27,11 @@ class MyFirebaseMessagingService :
         super.onMessageReceived(
             p0
         )
-        val from =
-            p0.from
-        Log.i(
-            "firebase",
-            "Message received from: $from"
-        )
         if (p0.notification != null) {
-            Log.i(
-                "firebase",
-                "Notification: " + p0.notification!!.body.toString()
-            )
-            Log.i(
-                "firebase",
-                p0.notification!!.channelId.toString()
-            )
 
             sendNotification(
                 p0.notification?.title,
                 p0.notification?.body
-            )
-        }
-        if (p0.data.isNotEmpty()) {
-            Log.i(
-                "firebase",
-                "Data: " + p0.data.toString()
             )
         }
     }
@@ -157,6 +137,10 @@ class MyFirebaseMessagingService :
         Log.i(
             "firebase",
             "Token: $p0"
+        )
+        Hawk.put(
+            "firebaseTokenBackUp",
+            p0
         )
         if (!Hawk.contains(
                 "firebaseToken"

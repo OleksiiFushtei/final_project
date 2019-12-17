@@ -115,7 +115,7 @@ class ScriptSettingsFragment :
     ) {
         val errorMessage =
             when (errorModel) {
-                null -> "You don't have access to this list"
+                null -> "Server error"
                 else -> errorModel.message
             }
         Snackbar.make(
@@ -197,7 +197,7 @@ class ScriptSettingsFragment :
     ) {
         val errorMessage =
             when (errorModel) {
-                null -> "You don't have access to this list"
+                null -> "Server error"
                 else -> errorModel.message
             }
         Snackbar.make(
@@ -237,14 +237,9 @@ class ScriptSettingsFragment :
     override fun onScriptSaveResponseFailure(
         errorModel: ErrorModel
     ) {
-        val message: String =
-            when {
-                errorModel.message.isEmpty() -> "An error occupied. Try again"
-                else -> errorModel.message
-            }
         Snackbar.make(
             root_layout,
-            message,
+            "Server error",
             Snackbar.LENGTH_SHORT
         )
             .show()

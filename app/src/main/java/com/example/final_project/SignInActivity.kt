@@ -1,5 +1,7 @@
 package com.example.final_project
 
+import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -50,12 +52,21 @@ class SignInActivity :
                 this@SignInActivity,
                 ListOfControllersActivity::class.java
             )
+        val tokenToSend: String =
+            try {
+                Hawk.get<String>(
+                    "firebaseToken"
+                )
+            } catch (e: Exception) {
+                Hawk.get<String>(
+                    "firebaseTokenBackUp"
+                )
+            }
         firebaseHelper.postToken(
-            Hawk.get(
-                "firebaseToken"
-            ),
+            tokenToSend,
             this
         )
+
         startActivity(
             mainActivity
         )
@@ -65,21 +76,48 @@ class SignInActivity :
     override fun onPostTokenResponseSuccess(
         token: String
     ) {
-
+        Hawk.put<String>(
+            "firebaseToken",
+            token
+        )
     }
 
     override fun onPostTokenResponseFailure(
         errorModel: ErrorModel?
     ) {
-
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
+        Snackbar.make(
+            root_layout,
+            errorMessage,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onPostTokenCancelled() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Something went wrong. Try again",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onPostTokenFailure() {
-
+        progressBar.visibility =
+            View.GONE
+        Snackbar.make(
+            root_layout,
+            "Check your connection to the Internet",
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 
     override fun onSignInResponseFailure(
@@ -223,7 +261,7 @@ class SignInActivity :
                         400
                     )
                 notificationChannel.lockscreenVisibility =
-                    View.VISIBLE
+                    Notification.VISIBILITY_PUBLIC
                 notificationManager.createNotificationChannel(
                     notificationChannel
                 )

@@ -467,12 +467,12 @@ class CommandSettingsActivity :
                 timeSpan =
                     when {
                         minutes < 10 -> when {
-                            seconds < 10 -> "0$minutes:0$seconds:000"
-                            else -> "0$minutes:$seconds:000"
+                            seconds < 10 -> "0$minutes:0$seconds:00"
+                            else -> "0$minutes:$seconds:00"
                         }
                         else -> when {
-                            seconds < 10 -> "$minutes:0$seconds:000"
-                            else -> "$minutes:$seconds:000"
+                            seconds < 10 -> "$minutes:0$seconds:00"
+                            else -> "$minutes:$seconds:00"
                         }
                     }
                 val deviceConfiguration =
