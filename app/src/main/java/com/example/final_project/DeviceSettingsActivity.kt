@@ -38,6 +38,10 @@ class DeviceSettingsActivity :
                 intent.getIntExtra(
                     "deviceId",
                     0
+                ),
+                intent.getBooleanExtra(
+                    "isAdmin",
+                    false
                 )
             )
         viewPager.offscreenPageLimit =

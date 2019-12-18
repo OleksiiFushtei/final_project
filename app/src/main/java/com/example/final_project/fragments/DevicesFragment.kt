@@ -167,6 +167,11 @@ class DevicesFragment :
                 "id",
                 0
             )
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin",
+                false
+            )
         val progressBar =
             view.findViewById<ProgressBar>(
                 R.id.progressBar
@@ -190,6 +195,10 @@ class DevicesFragment :
             addDevice.putExtra(
                 "deviceId",
                 0
+            )
+            addDevice.putExtra(
+                "isAdmin",
+                isAdmin
             )
             startActivity(
                 addDevice

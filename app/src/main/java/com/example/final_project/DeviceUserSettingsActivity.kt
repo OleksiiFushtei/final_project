@@ -3,16 +3,20 @@ package com.example.final_project
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.final_project.api.helpers.ControllerAccessHelper
-import com.example.final_project.api.interfaces.ControllerAccessInterface
+import com.example.final_project.api.helpers.DeviceAccessHelper
+import com.example.final_project.api.helpers.DeviceHelper
+import com.example.final_project.api.interfaces.DeviceAccessInterface
 import com.example.final_project.core.MainApplication
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_user_settings.*
+import kotlinx.android.synthetic.main.activity_device_user_settings.*
+import kotlinx.android.synthetic.main.fragment_device_users.*
+import kotlinx.android.synthetic.main.fragment_device_users.progressBar
+import kotlinx.android.synthetic.main.fragment_device_users.root_layout
 
-class UserSettingsActivity :
+class DeviceUserSettingsActivity :
     AppCompatActivity(),
-    ControllerAccessInterface.DeleteUserFromListListener {
+    DeviceAccessInterface.DeleteUserFromListListener {
 
     override fun onDeleteUserFromListResponseSuccess() {
         finish()
@@ -65,7 +69,7 @@ class UserSettingsActivity :
             savedInstanceState
         )
         setContentView(
-            R.layout.activity_user_settings
+            R.layout.activity_device_user_settings
         )
 
         progressBar.visibility =
@@ -77,24 +81,19 @@ class UserSettingsActivity :
             )
         val username =
             intent.getStringExtra(
-                "userUserName"
+                "deviceUserUserName"
             )
         val name =
             intent.getStringExtra(
-                "userName"
+                "deviceUserName"
             )
         val surname =
             intent.getStringExtra(
-                "userSurname"
+                "deviceUserSurname"
             )
         val email =
             intent.getStringExtra(
-                "userEmail"
-            )
-        val isAdmin =
-            intent.getBooleanExtra(
-                "isAdmin",
-                false
+                "deviceUserEmail"
             )
         userUserNameTextView.text =
             username
@@ -113,27 +112,19 @@ class UserSettingsActivity :
         )
         emailEditText.keyListener =
             null
-        if (!isAdmin) {
-            buttonDelete.visibility =
-                View.GONE
-        }
         val app =
             application as MainApplication
-        val controllerAccessHelper =
-            ControllerAccessHelper(
+        val deviceAccessHelper =
+            DeviceAccessHelper(
                 app.getApi()
             )
         buttonDelete.setOnClickListener {
             progressBar.visibility =
                 View.VISIBLE
-            controllerAccessHelper.deleteUser(
+            deviceAccessHelper.deleteUser(
                 id,
                 this
             )
         }
-        buttonBack.setOnClickListener {
-            finish()
-        }
-
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 import com.example.final_project.R
 import com.example.final_project.api.helpers.DeviceHelper
@@ -32,10 +33,13 @@ class DeviceSettingsFragment :
             "controllerId"
         private const val DEVICEID =
             "deviceId"
+        private const val ISADMIN =
+            "isAdmin"
 
         fun newInstance(
             caughtControllerId: Int,
-            caughtDeviceId: Int
+            caughtDeviceId: Int,
+            caughtIsAdmin: Boolean
         ): DeviceSettingsFragment {
             val args =
                 Bundle()
@@ -46,6 +50,10 @@ class DeviceSettingsFragment :
             args.putSerializable(
                 DEVICEID,
                 caughtDeviceId
+            )
+            args.putSerializable(
+                ISADMIN,
+                caughtIsAdmin
             )
             val fragment =
                 DeviceSettingsFragment()
@@ -248,6 +256,10 @@ class DeviceSettingsFragment :
                 "deviceId",
                 0
             )
+        val isAdmin =
+            bundle?.getBoolean(
+                "isAdmin"
+            )
         val app =
             context?.applicationContext as MainApplication
         val progressBar =
@@ -305,10 +317,6 @@ class DeviceSettingsFragment :
         val rbLamp =
             view.findViewById<RadioButton>(
                 R.id.rbLamp
-            )
-        val rbLED =
-            view.findViewById<RadioButton>(
-                R.id.rbLED
             )
 
         if (deviceId == 0) {
@@ -420,6 +428,27 @@ class DeviceSettingsFragment :
             activity?.finish()
         }
 
+        val root =
+            view.findViewById<CoordinatorLayout>(
+                R.id.root_layout
+            )
+
+        if (!isAdmin!! && deviceId != 0) {
+            val changesSnackbar =
+                Snackbar.make(
+                    root,
+                    "Any changes won't be saved",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+            changesSnackbar.setAction(
+                "OK, got it!"
+            ) { changesSnackbar.dismiss() }
+            changesSnackbar.show()
+            deleteButton.visibility =
+                View.GONE
+            saveButton.visibility =
+                View.GONE
+        }
         deleteButton.setOnClickListener {
             deviceHelper.deleteDevice(
                 deviceId,

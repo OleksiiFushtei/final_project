@@ -9,7 +9,8 @@ import com.example.final_project.fragments.DeviceUsersFragment
 class DeviceSettingsFragmentsAdapter(
     fm: FragmentManager,
     private val controllerId: Int,
-    private val deviceId: Int
+    private val deviceId: Int,
+    private val isAdmin: Boolean
 ) : FragmentPagerAdapter(
     fm
 ) {
@@ -19,11 +20,13 @@ class DeviceSettingsFragmentsAdapter(
         return when (position) {
             0 -> DeviceSettingsFragment.newInstance(
                 controllerId,
-                deviceId
+                deviceId,
+                isAdmin
             )
             else -> DeviceUsersFragment.newInstance(
                 controllerId,
-                deviceId
+                deviceId,
+                isAdmin
             )
         }
     }

@@ -56,11 +56,6 @@ class UsersFragment :
     ) {
         val bundle =
             this.arguments
-        val controllerId =
-            bundle?.getInt(
-                "id",
-                0
-            )
         val isAdmin =
             bundle?.getBoolean(
                 "isAdmin"
@@ -68,6 +63,8 @@ class UsersFragment :
         userList.addAll(
             list
         )
+        progressBar.visibility =
+            View.GONE
         val llm =
             LinearLayoutManager(
                 this.context
@@ -80,7 +77,6 @@ class UsersFragment :
             UserAdapter(
                 list,
                 context,
-                controllerId = controllerId,
                 isAdmin = isAdmin
             )
         listOfUsers.adapter =
@@ -104,6 +100,8 @@ class UsersFragment :
     override fun onGetUsersForControllersResponseFailure(
         errorModel: ErrorModel?
     ) {
+        progressBar.visibility =
+            View.GONE
         val errorMessage =
             when (errorModel) {
                 null -> "You don't have access to this list"
@@ -118,6 +116,8 @@ class UsersFragment :
     }
 
     override fun onGetUsersForControllerCancelled() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
             "Something went wrong. Try again",
@@ -127,6 +127,8 @@ class UsersFragment :
     }
 
     override fun onGetUsersForControllerFailure() {
+        progressBar.visibility =
+            View.GONE
         Snackbar.make(
             root_layout,
             "Check your connection to the internet",
@@ -160,7 +162,6 @@ class UsersFragment :
             bundle?.getBoolean(
                 "isAdmin"
             )
-
         val buttonAdd =
             view.findViewById<FloatingActionButton>(
                 R.id.addUserButton

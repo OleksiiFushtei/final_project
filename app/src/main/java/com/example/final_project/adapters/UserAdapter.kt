@@ -5,20 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.R
 import com.example.final_project.UserSettingsActivity
-import com.example.final_project.api.interfaces.ControllerAccessInterface
 import com.example.final_project.models.ControllerListItemModel
-import com.example.final_project.models.ErrorModel
 import kotlinx.android.synthetic.main.user_row.view.*
 
 class UserAdapter(
     private val items: ArrayList<ControllerListItemModel>,
     private val context: Context?,
-    private val controllerId: Int?,
     private val isAdmin: Boolean?
 ) : RecyclerView.Adapter<ViewHolderUser>() {
 

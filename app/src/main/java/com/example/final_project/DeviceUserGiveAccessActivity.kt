@@ -3,32 +3,37 @@ package com.example.final_project
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.final_project.api.helpers.ControllerAccessAddUserHelper
-import com.example.final_project.api.interfaces.ControllerAccessAddUserInterface
+import com.example.final_project.api.helpers.DeviceAccessAddUserHelper
+import com.example.final_project.api.interfaces.DeviceAccessAddUserInterface
 import com.example.final_project.core.MainApplication
-import com.example.final_project.models.ControllerAccessModel
+import com.example.final_project.models.DeviceAccessModel
 import com.example.final_project.models.ErrorModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_user_give_access.*
+import kotlinx.android.synthetic.main.activity_device_user_give_access.*
+import kotlinx.android.synthetic.main.activity_device_user_give_access.buttonBack
+import kotlinx.android.synthetic.main.activity_device_user_give_access.progressBar
 
-class UserGiveAccessActivity :
+class DeviceUserGiveAccessActivity :
     AppCompatActivity(),
-    ControllerAccessAddUserInterface.AddUserToListListener {
+    DeviceAccessAddUserInterface.AddUserToListListener {
 
     override fun onAddUserToListResponseSuccess() {
-        progressBar.visibility =
-            View.GONE
         finish()
     }
 
     override fun onAddUserToListResponseFailure(
-        errorModel: ErrorModel
+        errorModel: ErrorModel?
     ) {
         progressBar.visibility =
             View.GONE
+        val errorMessage =
+            when (errorModel) {
+                null -> "Server error"
+                else -> errorModel.message
+            }
         Snackbar.make(
             root_layout,
-            "Server error",
+            errorMessage,
             Snackbar.LENGTH_SHORT
         )
             .show()
@@ -48,8 +53,6 @@ class UserGiveAccessActivity :
     override fun onAddUserToListFailure() {
         progressBar.visibility =
             View.GONE
-        progressBar.visibility =
-            View.GONE
         Snackbar.make(
             root_layout,
             "Check your connection to the internet",
@@ -65,40 +68,37 @@ class UserGiveAccessActivity :
             savedInstanceState
         )
         setContentView(
-            R.layout.activity_user_give_access
+            R.layout.activity_device_user_give_access
         )
 
-        val controllerId =
+        val deviceId =
             intent.getIntExtra(
-                "id",
+                "deviceId",
                 0
             )
-
         val app =
             application as MainApplication
-        val controllerAccessAddUserHelper =
-            ControllerAccessAddUserHelper(
+        val deviceAccessAddUserHelper =
+            DeviceAccessAddUserHelper(
                 app.getApi()
             )
         progressBar.visibility =
             View.GONE
-
         buttonSave.setOnClickListener {
             if (validateUserName()) {
                 progressBar.visibility =
                     View.VISIBLE
                 val checkData =
-                    ControllerAccessModel(
-                        controllerId,
+                    DeviceAccessModel(
+                        deviceId,
                         usernameEditText.text?.trim().toString()
                     )
-                controllerAccessAddUserHelper.addUser(
+                deviceAccessAddUserHelper.addUser(
                     checkData,
                     this
                 )
             }
         }
-
         buttonBack.setOnClickListener { finish() }
     }
 

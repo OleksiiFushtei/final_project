@@ -203,6 +203,11 @@ class SensorSettingsActivity :
                 "sensorId",
                 0
             )
+        val isAdmin =
+            intent.getBooleanExtra(
+                "isAdmin",
+                false
+            )
         if (sensorId == 0) {
             buttonDelete.visibility =
                 View.INVISIBLE
@@ -263,7 +268,22 @@ class SensorSettingsActivity :
                 this
             )
         }
-
+        if (!isAdmin && sensorId != 0) {
+            val changesSnackbar =
+                Snackbar.make(
+                    root_layout,
+                    "Any changes won't be saved",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+            changesSnackbar.setAction(
+                "OK, got it!"
+            ) { changesSnackbar.dismiss() }
+            changesSnackbar.show()
+            buttonDelete.visibility =
+                View.GONE
+            buttonSave.visibility =
+                View.GONE
+        }
     }
 
     private fun validateAll(): Boolean {

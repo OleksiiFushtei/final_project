@@ -1,35 +1,35 @@
 package com.example.final_project.api.interfaces
 
-import com.example.final_project.models.ControllerListItemModel
+import com.example.final_project.models.DeviceListItemModel
 import com.example.final_project.models.ErrorModel
 
-interface ControllerAccessInterface {
+interface DeviceAccessInterface {
 
-    interface ControllerAccessGetListInterface {
+    interface DeviceAccessGetListInterface {
         fun getListOfUsers(
             id: Int,
-            getUsersForControllersListener: GetUsersForControllersListener
+            getUsersForDevicesListener: GetUsersForDevicesListener
         )
     }
 
-    interface ControllerAccessDeleteUser {
+    interface DeviceAccessDeleteUserInterface {
         fun deleteUser(
             id: Int,
             deleteUserFromListListener: DeleteUserFromListListener
         )
     }
 
-    interface GetUsersForControllersListener {
-        fun onGetUsersForControllersResponseSuccess(
-            list: ArrayList<ControllerListItemModel>
+    interface GetUsersForDevicesListener {
+        fun onGetUsersFroDevicesResponseSuccess(
+            list: ArrayList<DeviceListItemModel>
         )
 
-        fun onGetUsersForControllersResponseFailure(
+        fun onGetUsersForDevicesResponseFailure(
             errorModel: ErrorModel?
         )
 
-        fun onGetUsersForControllerCancelled()
-        fun onGetUsersForControllerFailure()
+        fun onGetUsersForDevicesCancelled()
+        fun onGetUsersForDevicesFailure()
     }
 
     interface DeleteUserFromListListener {

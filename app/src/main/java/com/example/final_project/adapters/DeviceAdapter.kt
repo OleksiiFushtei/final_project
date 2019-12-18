@@ -71,10 +71,6 @@ class DeviceAdapter(
             )
         }
     }
-
-    fun getItems(): ArrayList<DeviceModel> {
-        return items
-    }
 }
 
 class ViewHolderDevice(

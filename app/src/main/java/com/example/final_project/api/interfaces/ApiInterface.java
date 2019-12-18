@@ -5,7 +5,9 @@ import com.example.final_project.models.ConditionTypeModel;
 import com.example.final_project.models.ControllerAccessModel;
 import com.example.final_project.models.ControllerListItemModel;
 import com.example.final_project.models.ControllerModel;
+import com.example.final_project.models.DeviceAccessModel;
 import com.example.final_project.models.DeviceConfigurationModel;
+import com.example.final_project.models.DeviceListItemModel;
 import com.example.final_project.models.DeviceModel;
 import com.example.final_project.models.MeasureModel;
 import com.example.final_project.models.ScriptModel;
@@ -100,14 +102,6 @@ public interface ApiInterface {
     @POST("/api/Device")
     Call<DeviceModel> editDevice(@Body DeviceModel deviceModel);
 
-    //devices
-    //
-//    @GET("/api/Access/Device/{id}")
-//    Call<List<DeviceAccessModel>> listUsersForDevices(@Path("id") int id);
-
-    //
-//    @PUT("/api/Access/Device")
-//    Call<DeviceAccessModel> putSth(@Body DeviceAccessModel deviceAccessModel);
 
     //scripts
     //get list of available scripts
@@ -192,9 +186,21 @@ public interface ApiInterface {
     @PUT("/api/Access/Controller")
     Call<ControllerListItemModel> addAccessToController(@Body ControllerAccessModel controllerAccessModel);
 
+    //devices
+    //get list of users for devices
+    @GET("/api/Access/Device/{id}")
+    Call<List<DeviceListItemModel>> listUsersForDevices(@Path("id") int id);
+
+    //add user
+    @PUT("/api/Access/Device")
+    Call<DeviceListItemModel> addAccessToDevice(@Body DeviceAccessModel deviceAccessModel);
+
+    //delete user
+    @DELETE("/api/Access/Device/UserHasDevice/{id}")
+    Call<DeviceAccessModel> revokeAccessFromDevice(@Path("id") int id);
+
     //Firebase
     @POST("/api/User/Firebase")
-//    Call<String> postToken(@Body String token);
     Call<String> postToken(@Query("token") String token);
 
     @DELETE("/api/User/Firebase")
