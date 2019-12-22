@@ -304,7 +304,7 @@ class ScriptSettingsFragment :
                 true
             val format =
                 SimpleDateFormat(
-                    "yyyy-MM-dd'T'HH:mm:ss",
+                    "yyyy-MM-dd'T'HH:mm:ss:SSS",
                     Locale.UK
                 )
             val dateTo: Date? =
@@ -732,7 +732,7 @@ class ScriptSettingsFragment :
                 val timeFrom: String =
                     if (scriptId == 0) {
                         SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss:",
+                            "yyyy-MM-dd'T'HH:mm:ss:SSS",
                             Locale.UK
                         ).format(
                             Date()
@@ -741,7 +741,7 @@ class ScriptSettingsFragment :
                 val timeTo: String? =
                     if (cbTo.isChecked) {
                         SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss",
+                            "yyyy-MM-dd'T'HH:mm:ss:SSS",
                             Locale.UK
                         ).format(
                             calendar.time
